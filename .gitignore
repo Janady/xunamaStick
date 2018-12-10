@@ -1,0 +1,77 @@
+# =============== #
+# Unity generated #
+# =============== #
+[Tt]emp/
+[Oo]bj/
+[Bb]uild
+/[Ll]ibrary/
+Gen/
+Gen.meta
+sysinfo.txt
+*.stackdump
+*ProjectSettings.asset
+ProjectSettings/GraphicsSettings.asset
+ProjectVersion.txt
+dahema_classes.jar*
+CopyAsset.ps1
+
+/Assets/StreamingAssets/AssetBundles
+/Assets/StreamingAssets/AssetBundles/*
+/Assets/StreamingAssets/AssetBundles.meta
+
+# ============================================= #
+# Visual Studio / MonoDevelop / Rider generated #
+# ============================================= #
+[Ee]xported[Oo]bj/
+.vs/
+/*.userprefs
+/*.csproj
+/*.pidb
+/*.suo
+/*.sln*
+/*.user
+/*.unityproj
+/*.booproj
+/.idea*/
+ 
+
+# ============ #
+# OS generated #
+# ============ #
+.DS_Store*
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+[Tt]humbs.db
+[Dd]esktop.ini
+
+# ============ #
+# Database     #
+# ============ #
+**.db
+**.db.meta
+
+# =============#
+# sourceInsight#
+#==============#
+*.IAD
+*.IMB
+*.IMD
+*.PFI
+*.PO
+*.PR
+*.PRI
+*.PS
+*.WK3
+*.IAB
+*.SearchResults
+
+# =============#
+# custom config#
+#==============#
+Assets/Scripts/Util/ClientConfig.cs*
+
+
+
+/ProjectSettings/ProjectVersion.txt
