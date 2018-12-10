@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class Pin : MonoBehaviour {
-    public float speed = 5f;
+    private float speed = 100f;
     private Rigidbody2D rb;
 	// Use this for initialization
 	void Start () {
@@ -29,6 +29,16 @@ public class Pin : MonoBehaviour {
         else if (collision.tag == "Pin")
         {
             GameObject.FindObjectOfType<GameManager>().GameOver();
+            // float lAngle = Vector3.Angle(transform.up, Vector3.right);
+            // transform.Rotate(Vector3.forward * 2.0f * lAngle * fFlag);
         }
+    }
+
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        Debug.Log("OnCollisionEnter2D");
+        Rigidbody2D r = gameObject.GetComponent<Rigidbody2D>();
+        r.velocity = 10 * r.velocity;
+        // GameObject.FindObjectOfType<GameManager>().GameOver();
     }
 }

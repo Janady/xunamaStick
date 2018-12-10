@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections;
+using Libs.Event;
 
 public class GameManager : MonoBehaviour {
     private bool isGameOver = false;
@@ -15,6 +16,14 @@ public class GameManager : MonoBehaviour {
 	void Update () {
 	
 	}
+    private void OnEnable()
+    {
+        EventMgr.Instance.AddEvent(EventNameData.GameStatus, OnGameStatus);
+    }
+    private void OnDisable()
+    {
+        
+    }
     public void GameOver()
     {
         if (!isGameOver)
@@ -29,5 +38,12 @@ public class GameManager : MonoBehaviour {
     public void RestartGame()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    /*
+     * event handler
+     */
+    private void OnGameStatus(object dispatcher, string eventName, object value)
+    {
     }
 }
