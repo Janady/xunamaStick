@@ -39,6 +39,6 @@ public class Pin : MonoBehaviour {
         Debug.Log("OnCollisionEnter2D");
         Rigidbody2D r = gameObject.GetComponent<Rigidbody2D>();
         r.velocity = 10 * r.velocity;
-        // GameObject.FindObjectOfType<GameManager>().GameOver();
+        GameObject.FindObjectOfType<GameManager>().GameOver();
     }
 }
