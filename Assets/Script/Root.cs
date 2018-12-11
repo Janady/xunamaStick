@@ -19,17 +19,12 @@ public class Root : MonoBehaviour {
         DontDestroyOnLoad(gameObject);
     }
 
-    IEnumerator Init()
-    {
-        Libs.Resource.UIManager.CloseUI();
-        yield return true;
-    }
     // Use this for initialization
     void Start ()
     {
         gameObject.AddComponent<Libs.Coroutine.CoroutineHandler>();
-        Libs.Coroutine.CoroutineHandler.Instance().MultiDoCoroutine(Init());
-        //StartCoroutine("Init");
+        gameObject.AddComponent<GameManager>();
+
     }
 	
 	// Update is called once per frame

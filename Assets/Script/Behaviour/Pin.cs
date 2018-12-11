@@ -16,6 +16,8 @@ public class Pin : MonoBehaviour {
 	}
     private void OnTriggerEnter2D(Collider2D collision)
     {
+
+        Debug.Log("OnTriggerEnter2D: " + collision.tag);
         if (collision.tag == "Rotator")
         {
             Score.scoreValue++;
@@ -28,7 +30,6 @@ public class Pin : MonoBehaviour {
         }
         else if (collision.tag == "Pin")
         {
-            GameObject.FindObjectOfType<GameManager>().GameOver();
             // float lAngle = Vector3.Angle(transform.up, Vector3.right);
             // transform.Rotate(Vector3.forward * 2.0f * lAngle * fFlag);
         }
@@ -39,6 +40,5 @@ public class Pin : MonoBehaviour {
         Debug.Log("OnCollisionEnter2D");
         Rigidbody2D r = gameObject.GetComponent<Rigidbody2D>();
         r.velocity = 10 * r.velocity;
-        GameObject.FindObjectOfType<GameManager>().GameOver();
     }
 }

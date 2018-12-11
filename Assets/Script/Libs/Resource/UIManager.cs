@@ -20,7 +20,7 @@ namespace Libs.Resource
         {
             go.transform.SetParent(root().transform);
             go.transform.localPosition = Vector3.zero;
-            go.transform.localScale = Vector3.zero;
+            // go.transform.localScale = Vector3.zero;
         }
 
         private static GameObject root()

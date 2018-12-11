@@ -76,5 +76,11 @@ namespace Libs.Resource
                 obj = null;
             }
         }
+
+        public static GameObject InstantiatePrefab(string name)
+        {
+            string fullPath = "Prefabs/" + name;
+            return InstantiateResource(fullPath) as GameObject;
+        }
     }
 }

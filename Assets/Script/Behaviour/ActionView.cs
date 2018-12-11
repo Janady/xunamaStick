@@ -24,7 +24,7 @@ public class ActionView : MonoBehaviour {
     
     private void OnStartButtonClick(GameObject go)
     {
-        EventMgr.Instance.DispatchEvent(EventNameData.ButtonTry);
+        EventMgr.Instance.DispatchEvent(EventNameData.ButtonTry, GameManager.GameStatus.GameStart);
     }
 
     private void OnGameStatus(object dispatcher, string eventName, object value)

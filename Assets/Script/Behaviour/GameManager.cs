@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
-using UnityEngine.SceneManagement;
 using System.Collections;
 using Libs.Event;
+using Libs.Resource;
 
 public class GameManager : MonoBehaviour {
     public enum GameStatus
@@ -11,43 +11,31 @@ public class GameManager : MonoBehaviour {
         GameOver
     }
     private bool isGameOver = false;
-    public Spawner spawner;
-    public Rotator rotator;
 	// Use this for initialization
 	void Start () {
-        // Setting.instance.Show();
-	}
+        UIManager.OpenUI(Config.UI.UIPath.ActionPanel);
+    }
 	
 	// Update is called once per frame
-	void Update () {
-	
-	}
     private void OnEnable()
     {
-        EventMgr.Instance.AddEvent(EventNameData.GameStatus, OnGameStatus);
+        EventMgr.Instance.AddEvent(EventNameData.ButtonTry, OnGameStatus);
     }
     private void OnDisable()
     {
-        
+        EventMgr.Instance.RemoveEvent(EventNameData.ButtonTry, OnGameStatus);
     }
     public void GameOver()
     {
         if (!isGameOver)
         {
             isGameOver = true;
-            spawner.enabled = false;
-            rotator.enabled = false;
             Debug.Log("GameOver!");
             foreach (GameObject go in GameObject.FindGameObjectsWithTag("Pin"))
             {
                 Destroy(go);
             }
         }
-    }
-
-    public void RestartGame()
-    {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     /*
@@ -60,11 +48,20 @@ public class GameManager : MonoBehaviour {
         switch (gs)
         {
             case GameStatus.GameStart:
+                startGame();
                 break;
             case GameStatus.GamePass:
                 break;
             case GameStatus.GameOver:
                 break;
         }
+    }
+
+    private void startGame()
+    {
+        UI.Widget.CommonTips.OpenTips(UI.Widget.TipsType.AUTO_CLOSE, "第一关", ()=> {
+            ResourceManager.InstantiatePrefab("pinSpawn");
+            ResourceManager.InstantiatePrefab("target");
+        });
     }
 }
