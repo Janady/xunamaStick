@@ -5,9 +5,10 @@ namespace Libs.Event
     public class EventNameData
     {
         #region Game
-        public static string GameStatus = "GameStatus";
+        public static string ButtonStart = "ButtonStart";
+        public static string GameLevel = "GameLevel";
         #endregion
- 
+
         #region ButtonEvent
         public static string ButtonTry = "ButtonTry";
         #endregion

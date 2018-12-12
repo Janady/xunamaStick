@@ -6,21 +6,24 @@ namespace Libs.Resource
     public class UIManager
     {
         private static GameObject _root;
-        public static GameObject OpenUI(string path)
+        
+        public static GameObject OpenUI(string name, string dir = null, Transform transform = null)
         {
-            string fullPath = "UI/" + path;
+            string fullPath = "UI/" + (dir == null ? "" : dir + "/") + name;
             GameObject go = ResourceManager.InstantiateResource(fullPath) as GameObject;
             if (null == go) throw new Exception("load resource null, path = " + fullPath);
-            go.name = path;
-            AddParent(go);
+            go.name = name;
+            AddParent(go, transform);
             return go;
         }
 
-        private static void AddParent(GameObject go)
+        private static void AddParent(GameObject go, Transform transform = null)
         {
-            go.transform.SetParent(root().transform);
+            if (transform == null) transform = root().transform;
+
+            go.transform.SetParent(transform);
             go.transform.localPosition = Vector3.zero;
-            // go.transform.localScale = Vector3.zero;
+            go.transform.localScale = Vector3.one;
         }
 
         private static GameObject root()
@@ -33,12 +36,13 @@ namespace Libs.Resource
             return _root;
         }
 
-        public static void CloseUI(string path = null)
+        public static void CloseUI(Transform transform = null, string path = null)
         {
-            int count = root().transform.childCount;
+            if (transform == null) transform = root().transform;
+            int count = transform.childCount;
             for (int i=0; i<count; i++)
             {
-                GameObject go = root().transform.GetChild(i).gameObject;
+                GameObject go = transform.GetChild(i).gameObject;
                 if (path == null || go.name.Equals(path))
                 {
                     // go.GetComponent<BaseView>(); // custom on close function
