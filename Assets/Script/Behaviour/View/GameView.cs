@@ -75,12 +75,26 @@ public class GameView : MonoBehaviour
         passLevel(level);
         prepareLips.prepareLips(lipsCount);
         actionSet.gameObject.SetActive(false);
+        startCountdown(30);
     }
     public void stopGame()
     {
         passLevel(0);
         prepareLips.prepareLips(0);
         actionSet.gameObject.SetActive(true);
+        cancelCountdown();
+    }
+    private void startCountdown(int seconds)
+    {
+        Text txt = transform.FindChild("Countdown").GetChild(0).GetComponent<Text>();
+        UI.Widget.CountDown.countDown(seconds, txt, ()=> {
+            EventMgr.Instance.DispatchEvent(EventNameData.GamePass, false);
+        });
+    }
+    private void cancelCountdown()
+    {
+        Text txt = transform.FindChild("Countdown").GetChild(0).GetComponent<Text>();
+        UI.Widget.CountDown.cancel(txt);
     }
     #region registor event
     private void OnEnable()
