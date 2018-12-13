@@ -10,14 +10,14 @@ public class GameLevel
         current = 0;
     }
 
-    public int next()
+    public bool next()
     {
         current++;
         if (current > total)
         {
-            return 0;
+            return false;
         }
-        return current;
+        return true;
     }
     public int level()
     {

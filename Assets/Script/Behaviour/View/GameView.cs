@@ -2,6 +2,7 @@
 using UnityEngine.UI;
 using Libs.Event;
 using Libs.Resource;
+using UI.Widget;
 
 public class GameView : MonoBehaviour
 {
@@ -13,6 +14,9 @@ public class GameView : MonoBehaviour
     private Transform passSet;
     private Transform prepareSet;
     private PrepareLipsView prepareLips;
+    private OnButtonCallBack tryCallback;
+    private OnButtonCallBack playCallback;
+    private OnButtonCallBack buyCallback;
 
     private void Start()
     {
@@ -24,9 +28,16 @@ public class GameView : MonoBehaviour
         playBtn = actionSet.FindChild("Play").gameObject.GetComponent<Button>();
         EventTriggerListener.Get(playBtn.gameObject).onClick = OnPlayButtonClick;
         buyBtn = actionSet.FindChild("Buy").gameObject.GetComponent<Button>();
-        EventTriggerListener.Get(buyBtn.gameObject).onClick = OnPlayButtonClick;
+        EventTriggerListener.Get(buyBtn.gameObject).onClick = OnBuyButtonClick;
         tryBtn = actionSet.FindChild("Try").gameObject.GetComponent<Button>();
         EventTriggerListener.Get(tryBtn.gameObject).onClick = OnTryButtonClick;
+    }
+
+    public void setupCallback(OnButtonCallBack tryCallback, OnButtonCallBack playCallback, OnButtonCallBack buyCallback)
+    {
+        this.tryCallback = tryCallback;
+        this.buyCallback = buyCallback;
+        this.playCallback = playCallback;
     }
 
     private void passLevel(int level)
@@ -57,23 +68,38 @@ public class GameView : MonoBehaviour
     {
         actionSet.gameObject.SetActive(false);
         passLevel(level);
-        prepareLips.prepareLips(5);
+    }
+
+    public void startGame(int level, int lipsCount)
+    {
+        passLevel(level);
+        prepareLips.prepareLips(lipsCount);
+        actionSet.gameObject.SetActive(false);
+    }
+    public void stopGame()
+    {
+        passLevel(0);
+        prepareLips.prepareLips(0);
+        actionSet.gameObject.SetActive(true);
     }
     #region registor event
     private void OnEnable()
     {
-        EventMgr.Instance.AddEvent(EventNameData.GameLevel, OnGameLavel);
+        EventMgr.Instance.AddEvent(EventNameData.GameFacts, OnGameFacts);
     }
     private void OnDisable()
     {
-        EventMgr.Instance.RemoveEvent(EventNameData.GameLevel, OnGameLavel);
+        EventMgr.Instance.RemoveEvent(EventNameData.GameFacts, OnGameFacts);
     }
 #endregion
     #region game level event
-    private void OnGameLavel(object dispatcher, string eventName, object value)
+    private void OnGameFacts(object dispatcher, string eventName, object value)
     {
-        int level = 0;
-        if (value != null) level = (int)value;
+        Debug.Log("OnGameFacts-gameview");
+        if (value == null || !(value is GameFacts)) return;
+        GameFacts fact = value as GameFacts;
+        prepareLips.prepareLips(fact.Count);
+        int level = fact.Level;
         switch (level)
         {
             case 0:
@@ -89,11 +115,18 @@ public class GameView : MonoBehaviour
     #region button click event
     private void OnTryButtonClick(GameObject go)
     {
-        EventMgr.Instance.DispatchEvent(EventNameData.ButtonStart, true);
+        if (tryCallback != null) tryCallback();
+        // EventMgr.Instance.DispatchEvent(EventNameData.ButtonStart, true);
     }
     private void OnPlayButtonClick(GameObject go)
     {
-        EventMgr.Instance.DispatchEvent(EventNameData.ButtonStart, false);
+        if (playCallback != null) playCallback();
+        // EventMgr.Instance.DispatchEvent(EventNameData.ButtonStart, false);
     }
-#endregion
+    private void OnBuyButtonClick(GameObject go)
+    {
+        if (buyCallback != null) buyCallback();
+        // EventMgr.Instance.DispatchEvent(EventNameData.ButtonStart, false);
+    }
+    #endregion
 }

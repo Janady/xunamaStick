@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using System.Collections;
+using Libs.Event;
 
 public class Pin : MonoBehaviour {
     private float speed = 100f;
@@ -14,31 +14,12 @@ public class Pin : MonoBehaviour {
 	void Update () {
 	
 	}
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-
-        Debug.Log("OnTriggerEnter2D: " + collision.tag);
-        if (collision.tag == "Rotator")
-        {
-            Score.scoreValue++;
-            rb.velocity = Vector2.zero;
-            transform.SetParent(collision.transform);
-            if (Random.Range(0,1f) > 0.6)
-            {
-                collision.GetComponent<Rotator>().speed *= -1;
-            }
-        }
-        else if (collision.tag == "Pin")
-        {
-            // float lAngle = Vector3.Angle(transform.up, Vector3.right);
-            // transform.Rotate(Vector3.forward * 2.0f * lAngle * fFlag);
-        }
-    }
-
     void OnCollisionEnter2D(Collision2D collision)
     {
         Debug.Log("OnCollisionEnter2D");
         Rigidbody2D r = gameObject.GetComponent<Rigidbody2D>();
         r.velocity = 10 * r.velocity;
+
+        EventMgr.Instance.DispatchEvent(EventNameData.GamePass, false);
     }
 }

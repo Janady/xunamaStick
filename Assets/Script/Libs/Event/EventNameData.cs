@@ -6,7 +6,8 @@ namespace Libs.Event
     {
         #region Game
         public static string ButtonStart = "ButtonStart";
-        public static string GameLevel = "GameLevel";
+        public static string GamePass = "GamePass";
+        public static string GameFacts = "GameFacts";
         #endregion
 
         #region ButtonEvent
