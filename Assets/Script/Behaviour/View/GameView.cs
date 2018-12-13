@@ -86,6 +86,7 @@ public class GameView : MonoBehaviour
     }
     private void startCountdown(int seconds)
     {
+        transform.FindChild("Countdown").gameObject.SetActive(true);
         Text txt = transform.FindChild("Countdown").GetChild(0).GetComponent<Text>();
         UI.Widget.CountDown.countDown(seconds, txt, ()=> {
             EventMgr.Instance.DispatchEvent(EventNameData.GamePass, false);
@@ -93,6 +94,7 @@ public class GameView : MonoBehaviour
     }
     private void cancelCountdown()
     {
+        transform.FindChild("Countdown").gameObject.SetActive(false);
         Text txt = transform.FindChild("Countdown").GetChild(0).GetComponent<Text>();
         UI.Widget.CountDown.cancel(txt);
     }

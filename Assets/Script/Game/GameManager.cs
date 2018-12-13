@@ -41,6 +41,7 @@ public class GameManager : MonoBehaviour {
      */
     private void OnGamePass(object dispatcher, string eventName, object value)
     {
+        gameView.stopGame();
         bool pass = true;
         if (value != null) pass = (bool)value;
         clear();
@@ -90,13 +91,13 @@ public class GameManager : MonoBehaviour {
     private void passAll()
     {
         UI.Widget.CommonTips.OpenTips(UI.Widget.TipsType.AUTO_CLOSE, "挑战成功！", null, null, () => {
-            gameView.stopGame();
+            
         }, 1);
     }
     private void failed()
     {
         UI.Widget.CommonTips.OpenTips(UI.Widget.TipsType.AUTO_CLOSE, "挑战失败！", null, null, () => {
-                gameView.stopGame();
+                
             }, 1);
     }
     #region view callback
