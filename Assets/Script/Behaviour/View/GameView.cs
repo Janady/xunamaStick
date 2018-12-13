@@ -21,6 +21,7 @@ public class GameView : MonoBehaviour
     private void Start()
     {
         remaining = transform.FindChild("Remaining");
+        remaining.gameObject.SetActive(true);
         passSet = transform.FindChild("PassSet");
         actionSet = transform.FindChild("ActionSet");
         prepareSet = transform.FindChild("PrepareSet");

@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using Libs.Event;
+using DG.Tweening;
 
 public class Rotator : MonoBehaviour {
     private int total = 0;
@@ -7,6 +8,7 @@ public class Rotator : MonoBehaviour {
     private float speed = 120f;
 	// Use this for initialization
 	void Start () {
+        // DOTween.Init(autoKillMode, useSafeMode, logBehaviour);
     }
 	
 	// Update is called once per frame
@@ -17,7 +19,6 @@ public class Rotator : MonoBehaviour {
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (total <= 0) return;
-        Debug.Log("OnTriggerEnter2D: " + collision.tag);
         if (collision.tag == "Pin")
         {
             Rigidbody2D rb = collision.GetComponent<Rigidbody2D>();
@@ -33,6 +34,7 @@ public class Rotator : MonoBehaviour {
                 GetComponent<Rotator>().speed *= -1;
             }
         }
+        MyShake(transform);
     }
     private void GamePass()
     {
@@ -52,6 +54,14 @@ public class Rotator : MonoBehaviour {
         set
         {
             speed = value;
+        }
+    }
+
+    public void MyShake(Transform tf)
+    {
+        if (tf != null)
+        {
+            tf.DOShakePosition(1, new Vector3(0, 1, 0), 20);
         }
     }
 }
