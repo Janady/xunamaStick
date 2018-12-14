@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using Libs.Event;
 using Libs.Resource;
 using UI.Widget;
+using DG.Tweening;
 
 public class GameView : MonoBehaviour
 {
@@ -26,6 +27,7 @@ public class GameView : MonoBehaviour
         actionSet = transform.FindChild("ActionSet");
         prepareSet = transform.FindChild("PrepareSet");
         prepareLips = prepareSet.gameObject.AddComponent<PrepareLipsView>();
+        actionSet.FindChild("Play").DOPunchScale(new Vector3(.9f,.9f,1f), 1f, 1).SetEase(Ease.Linear).SetLoops(-1, LoopType.Yoyo);
         playBtn = actionSet.FindChild("Play").gameObject.GetComponent<Button>();
         EventTriggerListener.Get(playBtn.gameObject).onClick = OnPlayButtonClick;
         buyBtn = actionSet.FindChild("Buy").gameObject.GetComponent<Button>();

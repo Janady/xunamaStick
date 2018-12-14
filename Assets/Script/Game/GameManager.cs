@@ -90,8 +90,10 @@ public class GameManager : MonoBehaviour {
     }
     private void passAll()
     {
+        string effect = "starEffect";
+        EffectManager.LoadEffect(effect);
         UI.Widget.CommonTips.OpenTips(UI.Widget.TipsType.AUTO_CLOSE, "挑战成功！", null, null, () => {
-            
+            EffectManager.ReleaseEffect(effect);
         }, 1);
     }
     private void failed()
