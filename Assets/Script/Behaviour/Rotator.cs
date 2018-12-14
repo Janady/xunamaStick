@@ -19,6 +19,7 @@ public class Rotator : MonoBehaviour {
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (total <= 0) return;
+        Handheld.Vibrate();
         if (collision.tag == "Pin")
         {
             Rigidbody2D rb = collision.GetComponent<Rigidbody2D>();
