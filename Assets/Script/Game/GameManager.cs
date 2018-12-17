@@ -114,7 +114,9 @@ public class GameManager : MonoBehaviour {
 
     private void buy()
     {
-
+        AndroidJavaClass jc = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
+        AndroidJavaObject jo = jc.GetStatic<AndroidJavaObject>("currentActivity");
+        jo.Call("check");
     }
 #endregion
 }
