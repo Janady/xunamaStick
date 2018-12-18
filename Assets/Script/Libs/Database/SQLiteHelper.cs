@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
-using System.Collections;
 using Mono.Data.Sqlite;
 using System;
+using System.IO;
 
 public class SQLiteHelper
 {
@@ -24,12 +24,22 @@ public class SQLiteHelper
     /// 构造函数    
     /// </summary>
     /// <param name="connectionString">数据库连接字符串</param>
-    public SQLiteHelper(string connectionString)
+    public SQLiteHelper(string filepath)
     {
+        string DbConnectionString = "URI=file:" + filepath;
+        if (!File.Exists(filepath))
+        {
+            //如果数据库文件没有被创建，则创建数据库文件
+            WWW loadDB = new WWW("jar:file://" + Application.dataPath + "!/assets/" + "Victory.db");
+            while (!loadDB.isDone)
+            {
+            }
+            File.WriteAllBytes(filepath, loadDB.bytes);
+        }
         try
         {
             //构造数据库连接
-            dbConnection = new SqliteConnection(connectionString);
+            dbConnection = new SqliteConnection(DbConnectionString);
             //打开数据库
             dbConnection.Open();
         }

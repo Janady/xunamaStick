@@ -14,7 +14,7 @@ public class SQLiteDemo : MonoBehaviour
     void Start()
     {
         //创建名为sqlite4unity的数据库
-        sql = new SQLiteHelper("data source=sqlite4unity.db");
+        sql = new SQLiteHelper(Config.DBPath.filepath);
 
         //创建名为table1的数据表
         sql.CreateTable("table1", new string[] { "ID", "Name", "Age", "Email" }, new string[] { "INTEGER", "TEXT", "INTEGER", "TEXT" });
