@@ -94,7 +94,7 @@ public class GameManager : MonoBehaviour {
         EffectManager.LoadEffect(effect);
         UI.Widget.CommonTips.OpenTips(UI.Widget.TipsType.AUTO_CLOSE, "挑战成功！", null, null, () => {
             EffectManager.ReleaseEffect(effect);
-        }, 1);
+        }, 5);
     }
     private void failed()
     {

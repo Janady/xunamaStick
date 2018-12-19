@@ -2,6 +2,8 @@
     package="com.xuanma.xunamaStick"
     android:theme="@android:style/Theme.NoTitleBar">
 
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <application
         android:icon="@drawable/app_icon"
         android:label="@string/app_name"

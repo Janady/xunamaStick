@@ -17,7 +17,9 @@ public class SQLiteDemo : MonoBehaviour
         sql = new SQLiteHelper(Config.DBPath.filepath);
 
         //创建名为table1的数据表
-        sql.CreateTable("table1", new string[] { "ID", "Name", "Age", "Email" }, new string[] { "INTEGER", "TEXT", "INTEGER", "TEXT" });
+        sql.CreateTable("table1",
+            new string[] { "ID", "Name", "Age", "Email" },
+            new string[] { "INTEGER  PRIMARY KEY AUTOINCREMENT", "TEXT", "INTEGER", "TEXT" });
 
         //插入两条数据
         sql.InsertValues("table1", new string[] { "'1'", "'张三'", "'22'", "'Zhang3@163.com'" });

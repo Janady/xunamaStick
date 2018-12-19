@@ -206,7 +206,7 @@ public class SQLiteHelper
     /// <param name="colTypes">字段名类型</param>
     public SqliteDataReader CreateTable(string tableName, string[] colNames, string[] colTypes)
     {
-        string queryString = "CREATE TABLE " + tableName + "( " + colNames[0] + " " + colTypes[0];
+        string queryString = "CREATE TABLE IF NOT EXISTS " + tableName + "( " + colNames[0] + " " + colTypes[0];
         for (int i = 1; i < colNames.Length; i++)
         {
             queryString += ", " + colNames[i] + " " + colTypes[i];
