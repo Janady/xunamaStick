@@ -86,38 +86,10 @@ public class DataService
 
         _connection.InsertAll(new[]{
             new Goods{
-                Id = 1,
                 Sku = "Tom",
                 Title = "Perez",
                 Price = 56
             }
         });
-    }
-
-    public IEnumerable<Goods> GetPersons()
-    {
-        return _connection.Table<Goods>();
-    }
-
-    public IEnumerable<Goods> GetPersonsNamedRoberto()
-    {
-        return _connection.Table<Goods>().Where(x => x.Title == "Roberto");
-    }
-
-    public Goods GetJohnny()
-    {
-        return _connection.Table<Goods>().Where(x => x.Title == "Johnny").FirstOrDefault();
-    }
-
-    public Goods CreatePerson()
-    {
-        var p = new Goods
-        {
-            Sku = "Johnny",
-            Title = "Mnemonic",
-            Price = 21
-        };
-        _connection.Insert(p);
-        return p;
     }
 }

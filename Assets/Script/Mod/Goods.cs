@@ -1,15 +1,30 @@
 ﻿using SQLite4Unity3d;
+using System.Collections.Generic;
 
 namespace Mod
 {
-    public class Goods
+    public class Goods : Model
     {
-        [PrimaryKey, AutoIncrement]
-        public int Id { get; set; }
         public string Sku { get; set; }
         public string Title { get; set; }
         public string ImagePath { get; set; }
         public int Price { get; set; }
+
+
+        public static IEnumerable<Goods> AllGoods()
+        {
+            return connection.Table<Goods>();
+        }
+
+        public static Goods GetGood(int id)
+        {
+            return connection.Find<Goods>(id);
+        }
+
+        public static Goods GetJohnny()
+        {
+            return connection.Table<Goods>().Where(x => x.Title == "Johnny").FirstOrDefault();
+        }
 
         public override string ToString()
         {
