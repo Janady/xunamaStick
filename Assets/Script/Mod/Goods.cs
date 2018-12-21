@@ -19,11 +19,7 @@ namespace Mod
         public static Goods GetGood(int id)
         {
             return connection.Find<Goods>(id);
-        }
-
-        public static Goods GetJohnny()
-        {
-            return connection.Table<Goods>().Where(x => x.Title == "Johnny").FirstOrDefault();
+            //return connection.Table<Goods>().Where(x => x.Title == "Johnny").FirstOrDefault();
         }
 
         public override string ToString()

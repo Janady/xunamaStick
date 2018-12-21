@@ -1,15 +1,14 @@
 ﻿using UnityEngine;
 using Libs.Resource;
 using UnityEngine.UI;
+using Libs.Event;
 
 public class PrepareLipsView : MonoBehaviour
 {
     private int lips = 0;
-    private Vector3 spawn;
     private GameObject text;
     private void Start()
     {
-        spawn = new Vector3(0, -8, 0);
     }
     public void prepareLips(int count)
     {
@@ -31,21 +30,19 @@ public class PrepareLipsView : MonoBehaviour
     }
     void Update()
     {
-        if (lips <= 0) return;
-        if (Input.GetButtonDown("Fire1"))
-        {
-            SpawnPin();
-        }
     }
-    private void SpawnPin()
+    private void OnEnable()
     {
-        useLips();
-        GameObject go = Libs.Resource.ResourceManager.InstantiatePrefab("pin");
-        go.transform.position = spawn;
+        EventMgr.Instance.AddEvent(EventNameData.LipsEmission, OnLipsEmission);
     }
-    private void useLips()
+    private void OnDisable()
+    {
+        EventMgr.Instance.RemoveEvent(EventNameData.LipsEmission, OnLipsEmission);
+    }
+    private void OnLipsEmission(object dispatcher, string eventName, object value)
     {
         lips--;
+        Debug.Log("OnLipsEmission: " + lips);
         if (lips == 0)
         {
             Destroy(text);

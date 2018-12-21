@@ -22,8 +22,8 @@ public class Root : MonoBehaviour {
     // Use this for initialization
     void Start ()
     {
-        //gameObject.AddComponent<Libs.Coroutine.CoroutineHandler>();
-        //gameObject.AddComponent<GameManager>();
+        gameObject.AddComponent<Libs.Coroutine.CoroutineHandler>();
+        gameObject.AddComponent<GameManager>();
 
     }
 	

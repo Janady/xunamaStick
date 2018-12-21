@@ -1,53 +1,110 @@
 ﻿using UnityEngine;
+using System.Collections;
 using Libs.Event;
 using DG.Tweening;
 
 public class Rotator : MonoBehaviour {
+    private const float initYPos = -16f;
+    private const float prepareYPos = -8f;
+    private const float destYPos = -1f;
     private int total = 0;
-    private int current = 0;
     private float speed = 120f;
-	// Use this for initialization
-	void Start () {
+    private Vector3 spawn;
+    private int lips = 0;
+    private int receiveLips = 0;
+    private Sequence seq;
+    private bool collided = false;
+    private GameObject lip;
+    // Use this for initialization
+    void Start () {
         // DOTween.Init(autoKillMode, useSafeMode, logBehaviour);
+        seq = DOTween.Sequence();
+        prepareLips();
     }
-	
-	// Update is called once per frame
-	void Update () {
+    private void OnEnable()
+    {
+        EventMgr.Instance.AddEvent(EventNameData.LipsCollision, OnLipsCollission);
+    }
+    private void OnDisable()
+    {
+        EventMgr.Instance.RemoveEvent(EventNameData.LipsCollision, OnLipsCollission);
+    }
+    // Update is called once per frame
+    void Update () {
         transform.Rotate(0f, 0f, speed * Time.deltaTime);
-	}
+        if (lips >= total) return;
+        if (Input.GetButtonDown("Fire1"))
+        {
+            SpawnPin();
+        }
+    }
+    private void prepareLips()
+    {
+        GameObject go = Libs.Resource.ResourceManager.InstantiatePrefab("pin");
+        go.transform.position = new Vector3(0, initYPos, 0);
+        lip = go;
+        float interval = 0.1f;
+        Tweener tweener = go.transform.DOLocalMoveY(prepareYPos, interval);
+        //seq.Append(tweener).AppendCallback(() => {
+        //    Received(go);
+        //});
+        tweener.SetEase(Ease.OutElastic);
+        tweener.OnComplete(() => {
+            EventMgr.Instance.DispatchEvent(EventNameData.LipsEmission);
+        });
+    }
+    private void SpawnPin()
+    {
+        lips++;
+        float interval = 0.1f;
+        Tweener tweener = lip.transform.DOLocalMoveY(destYPos, interval);
+        //seq.Append(tweener).AppendCallback(() => {
+        //    Received(go);
+        //});
+        tweener.SetEase(Ease.OutElastic);
+        tweener.OnComplete(() => {
+            Received(lip);
+            if (lips < total) prepareLips();
+        });
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (total <= 0) return;
-        Handheld.Vibrate();
+        // Handheld.Vibrate();
         if (collision.tag == "Pin")
         {
-            Rigidbody2D rb = collision.GetComponent<Rigidbody2D>();
-            rb.velocity = Vector2.zero;
-            collision.transform.SetParent(transform);
-            current++;
-            if (current >= total)
-            {
-                GamePass();
-            }
-            if (Random.Range(0, 1f) > 0.6)
-            {
-                GetComponent<Rotator>().speed *= -1;
-            }
+            //Received(collision.gameObject);
         }
-        MyShake(transform);
     }
-    private void GamePass()
+    private void Received(GameObject go)
     {
-        EventMgr.Instance.DispatchEvent(EventNameData.GamePass, true);
-        Destroy(gameObject);
+        if (go == null) return;
+        go.transform.SetParent(transform);
+        MyShake(transform);
+        receiveLips++;
+        if (receiveLips >= total)
+        {
+            StartCoroutine(GamePass());
+        }
+        if (Random.Range(0, 1f) > 0.6)
+        {
+            GetComponent<Rotator>().speed *= -1;
+        }
+    }
+    private IEnumerator GamePass()
+    {
+            yield return new WaitForSeconds(0.5f);
+            EventMgr.Instance.DispatchEvent(EventNameData.GamePass, !collided);
+            Destroy(gameObject);
     }
     public int Total
     {
         set
         {
             total = value;
-            current = 0;
+            receiveLips = 0;
+            lips = 0;
         }
     }
     public float Speed
@@ -58,11 +115,16 @@ public class Rotator : MonoBehaviour {
         }
     }
 
-    public void MyShake(Transform tf)
+    private void MyShake(Transform tf)
     {
         if (tf != null)
         {
-            tf.DOShakePosition(1, new Vector3(0, 1, 0), 20);
+            tf.DOShakePosition(0.2f, new Vector3(0, 1, 0), 20);
         }
+    }
+    private void OnLipsCollission(object dispatcher, string eventName, object value)
+    {
+        collided = true;
+        StartCoroutine(GamePass());
     }
 }
