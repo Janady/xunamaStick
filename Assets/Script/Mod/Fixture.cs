@@ -1,4 +1,6 @@
 ﻿using SQLite4Unity3d;
+using System.Collections.Generic;
+using System;
 
 namespace Mod
 {
@@ -32,20 +34,19 @@ namespace Mod
         {
             connection.DropTable<Cabinet>();
             connection.CreateTable<Cabinet>();
-            connection.InsertAll(new[] {
-                new Cabinet {
-                    Num = 1,
-                    Title = "1号箱",
-                    GoodsId = 1,
+
+            List<Cabinet> allCabinet = new List<Cabinet>();
+            for (int i=0; i<64; i++) {
+                Cabinet c = new Cabinet
+                {
+                    Num = i,
+                    Title = i + "号箱",
+                    GoodsId = new Random(Guid.NewGuid().GetHashCode()).Next(1,3),
                     Enabled = true
-                },
-                new Cabinet {
-                    Num = 2,
-                    Title = "2号箱",
-                    GoodsId = 2,
-                    Enabled = false
-                },
-            });
+                };
+                allCabinet.Add(c);
+            }
+            connection.InsertAll(allCabinet);
         }
     }
 }

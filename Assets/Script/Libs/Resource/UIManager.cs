@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.IO;
 using System;
 
 namespace Libs.Resource
@@ -51,11 +52,24 @@ namespace Libs.Resource
             }
         }
 
-        public static Sprite GetSprite(string path)
+        public static Sprite GenSprite(Texture2D texture)
         {
-            Texture2D texture = Resources.Load(path) as Texture2D;
             Sprite sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
             return sprite;
+        }
+        public static Texture2D loadImage(string filePath, bool local)
+        {
+            if (local) return Resources.Load(filePath) as Texture2D;
+            /*
+            byte[] bytes = File.ReadAllBytes(filePath);
+            Texture2D texture = new Texture2D((int)size.x, (int)size.y, TextureFormat.RGB24, false);
+            texture.filterMode = FilterMode.Trilinear;
+            texture.LoadImage(bytes);
+            */
+            //return texture;
+            //string filePath = "file://" + Application.dataPath + @"/_Image/grid.png";
+            WWW www = new WWW(filePath);
+            return www.texture;
         }
     }
 }
