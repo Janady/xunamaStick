@@ -11,7 +11,9 @@ namespace Libs.Event
         public static string LipsCollision = "LipsCollision";
         #endregion
 
-        #region ButtonEvent
+        #region SerialHandler
+        public static string AdminOpr = "AdminOpr";
+        public static string CoinInsert = "CoinInsert"; 
         #endregion
 
         #region Video
