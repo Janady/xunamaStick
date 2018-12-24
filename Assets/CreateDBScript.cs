@@ -16,15 +16,18 @@ public class CreateDBScript : MonoBehaviour {
 	}
     private void StartSync()
     {
-        var people = Goods.AllGoods();
-        ToConsole(people);
+        Fixture fixture = new Fixture();
+        fixture.InitGoods();
+        fixture.InitCabinet();
+        ToConsole(Goods.AllGoods());
+        ToConsole(Cabinet.All());
     }
 
-    private void ToConsole(IEnumerable<Goods> people)
+    private void ToConsole(System.Collections.IEnumerable objects)
     {
-        foreach (var person in people)
+        foreach (var obj in objects)
         {
-            ToConsole(person.ToString());
+            ToConsole(obj.ToString());
         }
     }
 

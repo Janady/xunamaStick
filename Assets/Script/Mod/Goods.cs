@@ -9,6 +9,7 @@ namespace Mod
         public string Title { get; set; }
         public string ImagePath { get; set; }
         public int Price { get; set; }
+        public string Type { get; set; }
 
 
         public static IEnumerable<Goods> AllGoods()
@@ -24,7 +25,7 @@ namespace Mod
 
         public override string ToString()
         {
-            return string.Format("[Person: Id={0}, Sku={1}, Title={2}, ImagePath={3}, Price={4}]", Id, Sku, Title, ImagePath, Price);
+            return string.Format("[Person: Id={0}, Sku={1}, Title={2}, ImagePath={3}, Price={4}], Type={5}", Id, Sku, Title, ImagePath, Price, Type);
         }
     }
 }

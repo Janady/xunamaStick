@@ -24,7 +24,6 @@ public class Root : MonoBehaviour {
     {
         gameObject.AddComponent<Libs.Coroutine.CoroutineHandler>();
         gameObject.AddComponent<GameManager>();
-
     }
 	
 	// Update is called once per frame
