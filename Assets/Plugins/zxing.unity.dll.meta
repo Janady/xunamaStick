@@ -3,32 +3,67 @@ guid: dc1673885138146aba07284ef63fd954
 timeCreated: 1545682068
 licenseType: Pro
 PluginImporter:
-  serializedVersion: 2
+  serializedVersion: 1
   iconMap: {}
   executionOrder: {}
   isPreloaded: 0
-  isOverridable: 0
   platformData:
+    Android:
+      enabled: 1
+      settings:
+        CPU: AnyCPU
+    Any:
+      enabled: 1
+      settings: {}
+    Editor:
+      enabled: 1
+      settings:
+        CPU: AnyCPU
+        DefaultValueInitialized: true
+        OS: AnyOS
+    Linux:
+      enabled: 1
+      settings:
+        CPU: x86
+    Linux64:
+      enabled: 1
+      settings:
+        CPU: x86_64
+    LinuxUniversal:
+      enabled: 1
+      settings:
+        CPU: AnyCPU
+    OSXIntel:
+      enabled: 0
+      settings:
+        CPU: AnyCPU
+    OSXIntel64:
+      enabled: 1
+      settings:
+        CPU: AnyCPU
+    OSXUniversal:
+      enabled: 1
+      settings:
+        CPU: x86_64
+    Win:
+      enabled: 0
+      settings:
+        CPU: None
+    Win64:
+      enabled: 1
+      settings:
+        CPU: AnyCPU
+    WindowsStoreApps:
+      enabled: 0
+      settings:
+        CPU: AnyCPU
+        DontProcess: False
+        PlaceholderPath: 
+        SDK: AnySDK
+        ScriptingBackend: AnyScriptingBackend
     data:
-      first:
-        Any: 
-      second:
-        enabled: 1
-        settings: {}
-    data:
-      first:
-        Editor: Editor
-      second:
-        enabled: 0
-        settings:
-          DefaultValueInitialized: true
-    data:
-      first:
-        Windows Store Apps: WindowsStoreApps
-      second:
-        enabled: 0
-        settings:
-          CPU: AnyCPU
+      enabled: 0
+      settings: {}
   userData: 
   assetBundleName: 
   assetBundleVariant: 

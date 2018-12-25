@@ -6,7 +6,7 @@ using DG.Tweening;
 public class Rotator : MonoBehaviour {
     private const float initYPos = -16f;
     private const float prepareYPos = -8f;
-    private const float destYPos = -1f;
+    private const float destYPos = 0f;
     private int total = 0;
     private float speed = 120f;
     private Vector3 spawn;
@@ -15,6 +15,7 @@ public class Rotator : MonoBehaviour {
     private Sequence seq;
     private bool collided = false;
     private GameObject lip;
+    private bool onAir = false;
     // Use this for initialization
     void Start () {
         // DOTween.Init(autoKillMode, useSafeMode, logBehaviour);
@@ -33,7 +34,7 @@ public class Rotator : MonoBehaviour {
     void Update () {
         transform.Rotate(0f, 0f, speed * Time.deltaTime);
         if (lips >= total) return;
-        if (Input.GetButtonDown("Fire1"))
+        if (Input.GetButtonDown("Fire1") && !onAir)
         {
             SpawnPin();
         }
@@ -48,13 +49,14 @@ public class Rotator : MonoBehaviour {
         //seq.Append(tweener).AppendCallback(() => {
         //    Received(go);
         //});
-        tweener.SetEase(Ease.OutElastic);
+        tweener.SetEase(Ease.Linear);
         tweener.OnComplete(() => {
             EventMgr.Instance.DispatchEvent(EventNameData.LipsEmission);
         });
     }
     private void SpawnPin()
     {
+        onAir = true;
         lips++;
         float interval = 0.1f;
         Tweener tweener = lip.transform.DOLocalMoveY(destYPos, interval);
@@ -63,6 +65,7 @@ public class Rotator : MonoBehaviour {
         //});
         tweener.SetEase(Ease.OutElastic);
         tweener.OnComplete(() => {
+            onAir = false;
             Received(lip);
             if (lips < total) prepareLips();
         });

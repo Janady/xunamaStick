@@ -42,7 +42,7 @@ public class PrepareLipsView : MonoBehaviour
     private void OnLipsEmission(object dispatcher, string eventName, object value)
     {
         lips--;
-        Debug.Log("OnLipsEmission: " + lips);
+        Debug.Log("Prepare OnLipsEmission: " + lips);
         if (lips == 0)
         {
             Destroy(text);

@@ -18,6 +18,7 @@ public class GameView : MonoBehaviour
     private OnButtonCallBack tryCallback;
     private OnButtonCallBack playCallback;
     private OnButtonCallBack buyCallback;
+    private GameObject girl;
 
     private void Start()
     {
@@ -28,6 +29,7 @@ public class GameView : MonoBehaviour
         prepareSet = transform.FindChild("PrepareSet");
         prepareLips = prepareSet.gameObject.AddComponent<PrepareLipsView>();
         actionSet.FindChild("Play").DOPunchScale(new Vector3(.9f,.9f,1f), 1f, 1).SetEase(Ease.Linear).SetLoops(-1, LoopType.Yoyo);
+        girl = transform.FindChild("Girl").gameObject;
         playBtn = actionSet.FindChild("Play").gameObject.GetComponent<Button>();
         EventTriggerListener.Get(playBtn.gameObject).onClick = OnPlayButtonClick;
         buyBtn = actionSet.FindChild("Buy").gameObject.GetComponent<Button>();
@@ -79,6 +81,7 @@ public class GameView : MonoBehaviour
         prepareLips.prepareLips(lipsCount);
         actionSet.gameObject.SetActive(false);
         startCountdown(30);
+        girl.SetActive(false);
     }
     public void stopGame()
     {
@@ -86,6 +89,7 @@ public class GameView : MonoBehaviour
         prepareLips.prepareLips(0);
         actionSet.gameObject.SetActive(true);
         cancelCountdown();
+        girl.SetActive(true);
     }
     private void startCountdown(int seconds)
     {
