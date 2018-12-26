@@ -91,7 +91,19 @@ public class GameManager : MonoBehaviour {
             return;
         }
         GameFacts fact = new GameFacts(gameLevel.level, 3 + gameLevel.level*2);
-        string targetStr = Random.Range(-1f, 1f) < 0 ? "target" : "targetStar";
+        string targetStr = null;
+        switch (Random.Range(0, 3))
+        {
+            case 0:
+                targetStr = "target";
+                break;
+            case 1:
+                targetStr = "targetStar";
+                break;
+            case 2:
+                targetStr = "targetDiamond";
+                break;
+        }
         GameObject go = ResourceManager.InstantiatePrefab(targetStr);
         Rotator target = go.AddComponent<Rotator>();
         target.Total = fact.Count;
@@ -110,8 +122,6 @@ public class GameManager : MonoBehaviour {
     }
     private void passAll()
     {
-        string effect = "starEffect";
-        EffectManager.LoadEffect(effect);
         UIManager.OpenUI(Config.UI.UIPath.WinPanel);
     }
     private void failed()

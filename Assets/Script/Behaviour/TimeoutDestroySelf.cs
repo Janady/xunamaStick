@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using DG.Tweening;
 
 public class TimeoutDestroySelf : MonoBehaviour
 {
@@ -12,9 +13,11 @@ public class TimeoutDestroySelf : MonoBehaviour
         UI.Widget.CountDown.countDown(timeout, text, () => {
             Destroy(gameObject);
         });
+        Image image = GetComponent<Image>();
+        image.DOColor(new Color(255,255,255,0), (float)timeout).SetEase(Ease.Linear);
     }
     private void OnDestroy()
     {
-        UI.Widget.CountDown.cancel();
+        UI.Widget.CountDown.cancel(text);
     }
 }
