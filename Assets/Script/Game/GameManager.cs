@@ -10,13 +10,11 @@ public class GameManager : MonoBehaviour {
     // Use this for initialization
     private GameView gameView;
     private GameObject bird;
-    private Sequence seq;
 
     void Start () {
         GameObject go = UIManager.OpenUI(Config.UI.UIPath.GamePanel);
         gameView = go.AddComponent<GameView>();
         gameView.setupCallback(tryGame, playGame, buy);
-        seq = DOTween.Sequence();
     }
     private void birdMovement()
     {
@@ -92,16 +90,23 @@ public class GameManager : MonoBehaviour {
             passAll();
             return;
         }
-        GameFacts fact = new GameFacts(gameLevel.level(), 3 + gameLevel.level()*2);
-        UIManager.OpenUI(Config.UI.UIPath.HintPanel);
-        GameObject go = ResourceManager.InstantiatePrefab("target");
+        GameFacts fact = new GameFacts(gameLevel.level, 3 + gameLevel.level*2);
+        string targetStr = Random.Range(-1f, 1f) < 0 ? "target" : "targetStar";
+        GameObject go = ResourceManager.InstantiatePrefab(targetStr);
         Rotator target = go.AddComponent<Rotator>();
         target.Total = fact.Count;
-        gameView.startGame(fact.Level, fact.Count);
+        gameView.startGame(gameLevel, fact.Count);
+        showHint();
         // EventMgr.Instance.DispatchEvent(EventNameData.GameFacts, fact);
         // UI.Widget.CommonTips.OpenTips(UI.Widget.TipsType.AUTO_CLOSE, gameLevel.ToString(), null, null, () => {
             //ResourceManager.InstantiatePrefab("pinSpawn");
         // }, 1);
+    }
+    private void showHint()
+    {
+        GameObject go = UIManager.OpenUI(Config.UI.UIPath.HintPanel);
+        Title title = go.GetComponent<Title>();
+        title.title = gameLevel.ToString();
     }
     private void passAll()
     {
@@ -116,7 +121,11 @@ public class GameManager : MonoBehaviour {
     #region view callback
     private void playGame()
     {
-        startGame(false);
+        // startGame(false);
+        GameObject go = UIManager.OpenUI(Config.UI.UIPath.PayPanel);
+        PayView pv = go.GetComponent<PayView>();
+        pv.amount = 4;
+        pv.qrcodeId = "60014000";
     }
     private void tryGame()
     {

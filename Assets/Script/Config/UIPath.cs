@@ -10,5 +10,6 @@
         public const string WinPanel = "WinPanel";
         public const string LosePanel = "LosePanel";
         public const string HintPanel = "HintPanel";
+        public const string PayPanel = "PayPanel";
     }
 }

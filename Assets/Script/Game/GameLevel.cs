@@ -19,9 +19,19 @@ public class GameLevel
         }
         return true;
     }
-    public int level()
+    public int level
     {
-        return current;
+        get
+        {
+            return current;
+        }
+    }
+    public int totalLevel
+    {
+        get
+        {
+            return total;
+        }
     }
 
     public override string ToString()

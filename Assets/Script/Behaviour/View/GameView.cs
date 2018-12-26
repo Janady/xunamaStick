@@ -28,7 +28,7 @@ public class GameView : MonoBehaviour
         actionSet = transform.FindChild("ActionSet");
         initPass();
         prepareLips = prepareSet.gameObject.GetComponent<PrepareLipsView>();
-        actionSet.FindChild("Play").DOPunchScale(new Vector3(.9f, .9f, 1f), 5f, 1).SetEase(Ease.Linear).SetLoops(-1, LoopType.Restart);
+        
         girl = transform.FindChild("Girl").gameObject;
         playBtn = actionSet.FindChild("Play").gameObject.GetComponent<Button>();
         EventTriggerListener.Get(playBtn.gameObject).onClick = OnPlayButtonClick;
@@ -36,6 +36,18 @@ public class GameView : MonoBehaviour
         EventTriggerListener.Get(buyBtn.gameObject).onClick = OnBuyButtonClick;
         tryBtn = actionSet.FindChild("Try").gameObject.GetComponent<Button>();
         EventTriggerListener.Get(tryBtn.gameObject).onClick = OnTryButtonClick;
+
+        zoom(actionSet.FindChild("Playbg"), true);
+        zoom(actionSet.FindChild("Buybg"), true);
+        zoom(actionSet.FindChild("Trybg"), true);
+    }
+    private void zoom(Transform tr, bool big)
+    {
+        float ratio = big ? 1.2f : 0.9f;
+        Vector3 vector = new Vector3(ratio, ratio, 1f);
+        tr.DOScale(vector, 1).SetEase(Ease.Linear).OnComplete(()=> {
+            zoom(tr, !big);
+        });
     }
     private void initPass()
     {
@@ -47,6 +59,8 @@ public class GameView : MonoBehaviour
             Image img = go.GetComponent<Image>();
 
             img.sprite = UIManager.GenSprite(UIManager.loadImage("Image/HeartPink", true));
+            GameObject l = passSet.GetChild(i).FindChild("lock").gameObject;
+            l.SetActive(false);
         }
     }
 
@@ -57,23 +71,31 @@ public class GameView : MonoBehaviour
         this.playCallback = playCallback;
     }
 
-    private void passLevel(int level)
+    private void passLevel(GameLevel level)
     {
         int passNum = passSet.childCount;
-        for (int i=0; i<level && i< passNum; i++)
+        for (int i=0; i<level.level && i< passNum; i++)
         {
             GameObject go = passSet.GetChild(i).gameObject as GameObject;
             Image img = go.GetComponent<Image>();
-
             img.sprite = UIManager.GenSprite(UIManager.loadImage("Image/HeartPink", true));
+
+            GameObject l = passSet.GetChild(i).FindChild("lock").gameObject;
+            l.SetActive(false);
         }
-        for (int i=level; i<passNum; i++)
+        for (int i=level.level; i<passNum; i++)
         {
             GameObject go = passSet.GetChild(i).gameObject as GameObject;
             Image img = go.GetComponent<Image>();
             img.sprite = UIManager.GenSprite(UIManager.loadImage("Image/HeartGrey", true));
-            //img.sprite = UIManager.GenSprite(UIManager.loadImage("Image/HeartPink", true));
-            // float width = go.GetComponent<RectTransform>().rect.width;
+
+            GameObject l = passSet.GetChild(i).FindChild("lock").gameObject;
+            l.SetActive(false);
+        }
+        for (int i = level.totalLevel; i < passNum; i++)
+        {
+            GameObject go = passSet.GetChild(i).FindChild("lock").gameObject;
+            go.SetActive(true);
         }
     }
     private void reset()
@@ -83,13 +105,13 @@ public class GameView : MonoBehaviour
         UIManager.CloseUI(prepareSet);
         initPass();
     }
-    private void gameLevel(int level)
+    private void gameLevel(GameLevel level)
     {
         actionSet.gameObject.SetActive(false);
         passLevel(level);
     }
 
-    public void startGame(int level, int lipsCount)
+    public void startGame(GameLevel level, int lipsCount)
     {
         passLevel(level);
         prepareLips.prepareLips(lipsCount);
@@ -119,35 +141,6 @@ public class GameView : MonoBehaviour
         Text txt = transform.FindChild("Countdown").GetChild(0).GetComponent<Text>();
         UI.Widget.CountDown.cancel(txt);
     }
-    #region registor event
-    private void OnEnable()
-    {
-        EventMgr.Instance.AddEvent(EventNameData.GameFacts, OnGameFacts);
-    }
-    private void OnDisable()
-    {
-        EventMgr.Instance.RemoveEvent(EventNameData.GameFacts, OnGameFacts);
-    }
-#endregion
-    #region game level event
-    private void OnGameFacts(object dispatcher, string eventName, object value)
-    {
-        Debug.Log("OnGameFacts-gameview");
-        if (value == null || !(value is GameFacts)) return;
-        GameFacts fact = value as GameFacts;
-        prepareLips.prepareLips(fact.Count);
-        int level = fact.Level;
-        switch (level)
-        {
-            case 0:
-                reset();
-                break;
-            default:
-                gameLevel(level);
-                break;
-        }
-    }
-    #endregion
 
     #region button click event
     private void OnTryButtonClick(GameObject go)
