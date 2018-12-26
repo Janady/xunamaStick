@@ -36,7 +36,10 @@ namespace UI.Widget
             EventTriggerListener.Get(btn_cancel.gameObject).onClick = OnCancelClick;
             //EventTriggerListener.Get(btn_close.gameObject).onClick = OnCloseClick;
         }
-
+        public static GameObject show(bool failed)
+        {
+            return null;
+        }
         public static GameObject OpenTips(TipsType type, string title, OnButtonCallBack okCallBack = null, OnButtonCallBack cancelCallBack = null, OnButtonCallBack closeCallBack = null, float delayTime = 0)
         {
             GameObject go = Libs.Resource.UIManager.OpenUI(Config.UI.UIPath.TipsPanel);

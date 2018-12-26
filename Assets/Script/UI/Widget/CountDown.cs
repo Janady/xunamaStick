@@ -8,23 +8,25 @@ namespace UI.Widget
     public delegate void OnTimeoutCallBack();
     public class CountDown
     {
-        public static void countDown(int seconds, Text text, OnTimeoutCallBack callback = null)
+        public static void countDown(int seconds, Text text = null, OnTimeoutCallBack callback = null)
         {
-            CoroutineHandler.Instance().DoCoroutine(run(seconds, text, callback), "CountDown", text.GetHashCode().ToString());
+            string tag = (text == null) ? null : text.GetHashCode().ToString();
+            CoroutineHandler.Instance().DoCoroutine(run(seconds, text, callback), "CountDown", tag);
         }
         private static IEnumerator run(int seconds, Text text, OnTimeoutCallBack callback)
         {
             for (int i=seconds-1; i>=0; i--)
             {
-                text.text = i%100/10 + "" + i%10;
+                if (text != null) text.text = i%100/10 + "" + i%10;
                 yield return new WaitForSeconds(1f);
             }
             if (null != callback) callback();
         }
-        public static void cancel(Text text)
+        public static void cancel(Text text = null)
         {
-            text.text = "00";
-            CoroutineHandler.Instance().CancelCoroutine("CountDown", text.GetHashCode().ToString());
+            if (text != null) text.text = "00";
+            string tag = (text == null) ? null : text.GetHashCode().ToString();
+            CoroutineHandler.Instance().CancelCoroutine("CountDown", tag);
         }
     }
 }

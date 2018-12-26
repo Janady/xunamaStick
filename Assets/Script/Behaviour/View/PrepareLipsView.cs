@@ -6,27 +6,49 @@ using Libs.Event;
 public class PrepareLipsView : MonoBehaviour
 {
     private int lips = 0;
-    private GameObject text;
     private void Start()
     {
+    }
+    private Text text
+    {
+        get
+        {
+            return transform.FindChild("number").GetComponent<Text>();
+        }
+    }
+    private Transform lipsTr
+    {
+        get
+        {
+            return transform.FindChild("lips");
+        }
     }
     public void prepareLips(int count)
     {
         lips = count;
-        UIManager.CloseUI(transform);
+        UIManager.CloseUI(lipsTr);
         if (count <= 0) return;
         float offset = 0f;
         for (int i = 0; i < count; i++)
         {
-            GameObject go = UIManager.OpenUI("Lip", null, transform);
+            GameObject go = UIManager.OpenUI("Lip", null, lipsTr);
             go.transform.localPosition = new Vector3(offset, 0, 0);
-            float width = 80; // go.GetComponent<RectTransform>().rect.width;
+            float width = go.GetComponent<RectTransform>().rect.width;
             offset += width;
         }
-
-        text = UIManager.OpenUI("PrepareText", null, transform);
-        text.transform.localPosition = new Vector3(offset, 0, 0);
-        text.GetComponent<Text>().text = "x" + count;
+        showNum(lips);
+    }
+    private void showNum(int count)
+    {
+        if (text == null) return;
+        if (count > 0)
+        {
+            text.text = "x" + count;
+        }
+        else
+        {
+            text.text = "";
+        }
     }
     void Update()
     {
@@ -42,16 +64,8 @@ public class PrepareLipsView : MonoBehaviour
     private void OnLipsEmission(object dispatcher, string eventName, object value)
     {
         lips--;
-        Debug.Log("Prepare OnLipsEmission: " + lips);
-        if (lips == 0)
-        {
-            Destroy(text);
-        }
-        else
-        {
-            text.transform.Translate(Vector3.left * 80, Space.World);
-            text.GetComponent<Text>().text = "x" + lips;
-        }
-        Destroy(transform.GetChild(lips).gameObject);
+        if (lips < 0) return;
+        Destroy(lipsTr.GetChild(lips).gameObject);
+        showNum(lips);
     }
 }

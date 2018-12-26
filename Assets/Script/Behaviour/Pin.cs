@@ -14,8 +14,7 @@ public class Pin : MonoBehaviour {
     void OnCollisionEnter2D(Collision2D collision)
     {
         if (!collision.gameObject.CompareTag("Pin")) return;
-
-        Debug.Log("OnCollisionEnter2D: " + transform.position + collision.transform.position);
+        
         Sequence seq = DOTween.Sequence();;
         if (collision.transform.position.y < transform.position.y) return;
         gameFailed();

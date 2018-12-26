@@ -7,5 +7,8 @@
         public const string ActionPanel = "ActionPanel";
         public const string PassPanel = "PassPanel";
         public const string RemainingPanel = "Remaining";
+        public const string WinPanel = "WinPanel";
+        public const string LosePanel = "LosePanel";
+        public const string HintPanel = "HintPanel";
     }
 }

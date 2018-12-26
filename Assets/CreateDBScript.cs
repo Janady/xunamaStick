@@ -16,11 +16,11 @@ public class CreateDBScript : MonoBehaviour {
 	}
     private void StartSync()
     {
-        Fixture fixture = new Fixture();
+        // Fixture fixture = new Fixture();
         // fixture.InitGoods();
         // fixture.InitCabinet();
-        ToConsole(Goods.AllGoods());
-        ToConsole(Cabinet.All());
+        //ToConsole(Goods.AllGoods());
+        //ToConsole(Cabinet.All());
     }
 
     private void ToConsole(System.Collections.IEnumerable objects)

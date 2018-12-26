@@ -12,14 +12,11 @@ public class Rotator : MonoBehaviour {
     private Vector3 spawn;
     private int lips = 0;
     private int receiveLips = 0;
-    private Sequence seq;
     private bool collided = false;
     private GameObject lip;
     private bool onAir = false;
     // Use this for initialization
     void Start () {
-        // DOTween.Init(autoKillMode, useSafeMode, logBehaviour);
-        seq = DOTween.Sequence();
         prepareLips();
     }
     private void OnEnable()

@@ -26,9 +26,9 @@ public class GameView : MonoBehaviour
         remaining.gameObject.SetActive(true);
         passSet = transform.FindChild("PassSet");
         actionSet = transform.FindChild("ActionSet");
-        prepareSet = transform.FindChild("PrepareSet");
-        prepareLips = prepareSet.gameObject.AddComponent<PrepareLipsView>();
-        actionSet.FindChild("Play").DOPunchScale(new Vector3(.9f,.9f,1f), 1f, 1).SetEase(Ease.Linear).SetLoops(-1, LoopType.Yoyo);
+        initPass();
+        prepareLips = prepareSet.gameObject.GetComponent<PrepareLipsView>();
+        actionSet.FindChild("Play").DOPunchScale(new Vector3(.9f, .9f, 1f), 5f, 1).SetEase(Ease.Linear).SetLoops(-1, LoopType.Restart);
         girl = transform.FindChild("Girl").gameObject;
         playBtn = actionSet.FindChild("Play").gameObject.GetComponent<Button>();
         EventTriggerListener.Get(playBtn.gameObject).onClick = OnPlayButtonClick;
@@ -36,6 +36,18 @@ public class GameView : MonoBehaviour
         EventTriggerListener.Get(buyBtn.gameObject).onClick = OnBuyButtonClick;
         tryBtn = actionSet.FindChild("Try").gameObject.GetComponent<Button>();
         EventTriggerListener.Get(tryBtn.gameObject).onClick = OnTryButtonClick;
+    }
+    private void initPass()
+    {
+        prepareSet = transform.FindChild("PrepareSet");
+        int passNum = passSet.childCount;
+        for (int i = 0; i < passNum; i++)
+        {
+            GameObject go = passSet.GetChild(i).gameObject as GameObject;
+            Image img = go.GetComponent<Image>();
+
+            img.sprite = UIManager.GenSprite(UIManager.loadImage("Image/HeartPink", true));
+        }
     }
 
     public void setupCallback(OnButtonCallBack tryCallback, OnButtonCallBack playCallback, OnButtonCallBack buyCallback)
@@ -50,16 +62,18 @@ public class GameView : MonoBehaviour
         int passNum = passSet.childCount;
         for (int i=0; i<level && i< passNum; i++)
         {
-            GameObject go = passSet.GetChild(i).GetChild(0).gameObject as GameObject;
-            Text text = go.GetComponent<Text>();
-            text.color = Color.red;
+            GameObject go = passSet.GetChild(i).gameObject as GameObject;
+            Image img = go.GetComponent<Image>();
+
+            img.sprite = UIManager.GenSprite(UIManager.loadImage("Image/HeartPink", true));
         }
         for (int i=level; i<passNum; i++)
         {
-            GameObject go = passSet.GetChild(i).GetChild(0).gameObject as GameObject;
+            GameObject go = passSet.GetChild(i).gameObject as GameObject;
+            Image img = go.GetComponent<Image>();
+            img.sprite = UIManager.GenSprite(UIManager.loadImage("Image/HeartGrey", true));
+            //img.sprite = UIManager.GenSprite(UIManager.loadImage("Image/HeartPink", true));
             // float width = go.GetComponent<RectTransform>().rect.width;
-            Text text = go.GetComponent<Text>();
-            text.color = Color.white;
         }
     }
     private void reset()
@@ -67,7 +81,7 @@ public class GameView : MonoBehaviour
         passSet.gameObject.SetActive(true);
         actionSet.gameObject.SetActive(true);
         UIManager.CloseUI(prepareSet);
-        passLevel(0);
+        initPass();
     }
     private void gameLevel(int level)
     {
@@ -85,7 +99,7 @@ public class GameView : MonoBehaviour
     }
     public void stopGame()
     {
-        passLevel(0);
+        initPass();
         prepareLips.prepareLips(0);
         actionSet.gameObject.SetActive(true);
         cancelCountdown();
