@@ -5,12 +5,10 @@ using Libs.Resource;
 using DG.Tweening;
 
 public class GameManager : MonoBehaviour {
-    private bool isGameOver = false;
     private GameLevel gameLevel;
     // Use this for initialization
     private GameView gameView;
     private GameObject bird;
-
     void Start () {
         GameObject go = UIManager.OpenUI(Config.UI.UIPath.GamePanel);
         gameView = go.AddComponent<GameView>();
@@ -132,6 +130,17 @@ public class GameManager : MonoBehaviour {
     private void playGame()
     {
         // startGame(false);
+        if (Coin.GetInstance().consume())
+        {
+
+            GameObject gl = UIManager.OpenUI(Config.UI.UIPath.ContanerSelectPanel);
+            ContanerSelectView list = gl.GetComponent<ContanerSelectView>();
+            list.setCallback((id) => {
+                Destroy(gl);
+                startGame(false);
+            });
+            return;
+        }
         GameObject go = UIManager.OpenUI(Config.UI.UIPath.PayPanel);
         PayView pv = go.GetComponent<PayView>();
         pv.amount = 4;
@@ -144,9 +153,17 @@ public class GameManager : MonoBehaviour {
 
     private void buy()
     {
-        AndroidJavaClass jc = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
-        AndroidJavaObject jo = jc.GetStatic<AndroidJavaObject>("currentActivity");
-        jo.Call("check");
+        Debug.Log("buy");
+        GameObject go = UIManager.OpenUI(Config.UI.UIPath.ContanerSelectPanel);
+        ContanerSelectView list = go.GetComponent<ContanerSelectView>();
+        list.setCallback((id)=> {
+            Destroy(go);
+            Mod.Cabinet cabinet = Mod.Cabinet.GetById(id);
+            GameObject pay = UIManager.OpenUI(Config.UI.UIPath.PayPanel);
+            PayView pv = pay.GetComponent<PayView>();
+            pv.amount = cabinet.Good().Price;
+            pv.qrcodeId = "60014000";
+        });
     }
 #endregion
 }

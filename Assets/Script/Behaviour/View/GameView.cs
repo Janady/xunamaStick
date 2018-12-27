@@ -11,7 +11,7 @@ public class GameView : MonoBehaviour
     private Button playBtn;
     private Button buyBtn;
     private Button tryBtn;
-    private Transform remaining;
+    private Text remainingText;
     private Transform passSet;
     private Transform prepareSet;
     private PrepareLipsView prepareLips;
@@ -22,8 +22,10 @@ public class GameView : MonoBehaviour
 
     private void Start()
     {
-        remaining = transform.FindChild("Remaining");
-        remaining.gameObject.SetActive(true);
+        remainingText = transform.FindChild("Remaining").FindChild("remain").GetComponent<Text>();
+        Coin.GetInstance().GameTimeCallback(x=> {
+            remainingText.text = x.ToString();
+        });
         passSet = transform.FindChild("PassSet");
         actionSet = transform.FindChild("ActionSet");
         initPass();

@@ -28,7 +28,7 @@ namespace Mod
 
         public override string ToString()
         {
-            return string.Format("[Person: Id={0}, Num={1}, Title={2}, Good={3}, Enabled={4}]", Id, Num, Title, Good(), Enabled);
+            return string.Format("[Cabinet: Id={0}, Num={1}, Title={2}, Good={3}, Enabled={4}]", Id, Num, Title, Good(), Enabled);
         }
     }
 }

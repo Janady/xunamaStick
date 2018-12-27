@@ -2742,7 +2742,7 @@ namespace SQLite4Unity3d
 				};
 			} else if (expr.NodeType == ExpressionType.Not) {
 				var u = (UnaryExpression)expr;
-				var ty = u.Type;
+				// var ty = u.Type;
 				var valr = CompileExpr (u.Operand, queryArgs);
 
 				return new CompileResult {

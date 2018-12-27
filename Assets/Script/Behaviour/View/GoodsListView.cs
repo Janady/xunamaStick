@@ -2,29 +2,39 @@
 using UnityEngine;
 using Mod;
 using Libs.Resource;
+using System.Collections;
 
 namespace View
 {
     public class GoodsListView : MonoBehaviour
     {
+        private Action<int> callBack;
         private Transform tr;
         private void Start()
         {
-            tr = transform.FindChild("GridPanel");
-            initGoods();
+            StartCoroutine(init());
         }
-        private void initGoods()
+        public void setCallback(Action<int> callBack)
         {
-            foreach (Cabinet cabinet in Cabinet.All())
+            this.callBack = callBack;
+            // StartCoroutine(init());
+        }
+        IEnumerator init()
+        {
+            tr = transform.FindChild("ScrollPanel");
+            //Libs.Resource.UIManager.CloseUI(tr);
+            foreach (Goods good in Goods.All())
             {
-                Debug.Log(cabinet.ToString());
-                GameObject go = UIManager.OpenUI("cell", null, tr);
-                CellView cv = go.GetComponent<CellView>();
-                cv.Num = cabinet.Num;
-                cv.Title = cabinet.ToString();
-                cv.ImagePath = "Image/usedLips";
-                cv.price = cabinet.Good().Price;
-                break;
+                GameObject go = UIManager.OpenUI("goodRow", null, tr);
+                GoodRowView cv = go.GetComponent<GoodRowView>();
+                cv.Id = good.Id;
+                cv.Title = good.Title;
+                cv.ImagePath = "Image/Gift";
+                cv.price = good.Price;
+                cv.SetCallBack(x => {
+                    if (callBack != null) callBack(x);
+                });
+                yield return new WaitForEndOfFrame();
             }
         }
     }

@@ -12,7 +12,7 @@ namespace Mod
         public string Type { get; set; }
 
 
-        public static IEnumerable<Goods> AllGoods()
+        public static IEnumerable<Goods> All()
         {
             return connection.Table<Goods>();
         }
@@ -25,7 +25,7 @@ namespace Mod
 
         public override string ToString()
         {
-            return string.Format("[Person: Id={0}, Sku={1}, Title={2}, ImagePath={3}, Price={4}], Type={5}", Id, Sku, Title, ImagePath, Price, Type);
+            return string.Format("[Goods: Id={0}, Sku={1}, Title={2}, ImagePath={3}, Price={4}], Type={5}", Id, Sku, Title, ImagePath, Price, Type);
         }
     }
 }

@@ -6,12 +6,25 @@ namespace View
 {
     public class CellView : MonoBehaviour
     {
+        private int id;
         private Text numText;
         private Text priceText;
         private Image image;
         private Text titleText;
+        private Action<int> callBack;
         private void Start()
         {
+            Button btn = gameObject.AddComponent<Button>();
+            btn.onClick.AddListener(OnClick);
+        }
+
+        private void OnClick()
+        {
+            if (callBack != null) callBack(id);
+        }
+        public void SetCallBack(Action<int> callBack)
+        {
+            this.callBack = callBack;
         }
         public string Title
         {
@@ -40,10 +53,10 @@ namespace View
         {
             set
             {
+                id = value;
                 if (numText == null)
                 {
-                    Transform textSet = transform.FindChild("textSet");
-                    numText = textSet.FindChild("Num").gameObject.GetComponent<Text>();
+                    numText = transform.FindChild("number").gameObject.GetComponent<Text>();
                 }
                 numText.text = value.ToString();
             }
@@ -54,8 +67,7 @@ namespace View
             {
                 if (priceText == null)
                 {
-                    Transform textSet = transform.FindChild("textSet");
-                    priceText = textSet.FindChild("price").gameObject.GetComponent<Text>();
+                    priceText = transform.FindChild("price").gameObject.GetComponent<Text>();
                 }
                 priceText.text = value.ToString();
             }

@@ -3,20 +3,14 @@ using System.Collections;
 
 public class ClickDestorySelf : MonoBehaviour
 {
-
+    public GameObject close;
     // Use this for initialization
     void Start()
     {
-
+        if (close != null) EventTriggerListener.Get(close).onClick = OnClick;
     }
-
-    // Update is called once per frame
-    void Update()
+    private void OnClick(GameObject go)
     {
-
-        if (Input.GetButtonDown("Fire1"))
-        {
-            Destroy(gameObject);
-        }
+        Destroy(gameObject);
     }
 }

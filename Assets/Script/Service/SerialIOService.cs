@@ -56,7 +56,8 @@ namespace Service
         }
         private void CoinInsertHandler(byte[] packet)
         {
-            int count = (int)(packet[cmdPos + 1] & 0xff);
+            uint count = (uint)(packet[cmdPos + 1] & 0xff);
+            Coin.GetInstance().insert(count);
             EventMgr.Instance.DispatchEvent(EventNameData.CoinInsert, count);
         }
         private void AdminOprHandler()

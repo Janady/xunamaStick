@@ -6,7 +6,6 @@ using UI;
 
 namespace UI.Widget
 {
-
     public delegate void OnButtonCallBack();
 
     public enum TipsType

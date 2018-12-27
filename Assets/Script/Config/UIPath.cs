@@ -11,5 +11,13 @@
         public const string LosePanel = "LosePanel";
         public const string HintPanel = "HintPanel";
         public const string PayPanel = "PayPanel";
+        public const string AdminPanel = "Admin/AdminPanel";
+        public const string FinancialPanel = "Admin/FinancialPanel";
+        public const string ContainerPanel = "Admin/ContainerPanel"; 
+        public const string ConnectPanel = "Admin/ConnectPanel";
+        public const string VersionPanel = "Admin/VersionPanel";
+        public const string AdPanel = "Admin/AdPanel";
+        public const string DevicePanel = "Admin/DevicePanel";
+        public const string ContanerSelectPanel = "ContanerSelectPanel"; 
     }
 }

@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using Libs.Event;
 using System.Collections;
 
 public class Root : MonoBehaviour {
@@ -25,8 +26,18 @@ public class Root : MonoBehaviour {
         gameObject.AddComponent<Libs.Coroutine.CoroutineHandler>();
         gameObject.AddComponent<GameManager>();
     }
-	
-	// Update is called once per frame
-	void Update () {
-	}
+
+    private void OnEnable()
+    {
+        EventMgr.Instance.AddEvent(EventNameData.AdminOpr, AdminOprHandler);
+    }
+    private void OnDisable()
+    {
+        EventMgr.Instance.RemoveEvent(EventNameData.AdminOpr, AdminOprHandler);
+    }
+    void AdminOprHandler(object dispatcher, string eventName, object value)
+    {
+        Libs.Resource.UIManager.CloseUI();
+        Libs.Resource.UIManager.OpenUI(Config.UI.UIPath.AdminPanel);
+    }
 }

@@ -20,9 +20,16 @@ namespace Libs.Resource
 
         private static void AddParent(GameObject go, Transform transform = null)
         {
-            if (transform == null) transform = root().transform;
-
-            go.transform.SetParent(transform);
+            if (transform == null)
+            {
+                go.transform.SetParent(root().transform);
+                go.GetComponent<RectTransform>().offsetMax = Vector2.zero;
+                go.GetComponent<RectTransform>().offsetMin = Vector2.zero;
+            }
+            else
+            {
+                go.transform.SetParent(transform);
+            }
             go.transform.localPosition = Vector3.zero;
             go.transform.localScale = Vector3.one;
         }
@@ -48,6 +55,19 @@ namespace Libs.Resource
                 {
                     // go.GetComponent<BaseView>(); // custom on close function
                     GameObject.Destroy(go);
+                }
+            }
+        }
+        public static void HideUI(Transform transform = null, string path = null)
+        {
+            if (transform == null) transform = root().transform;
+            int count = transform.childCount;
+            for (int i = 0; i < count; i++)
+            {
+                GameObject go = transform.GetChild(i).gameObject;
+                if (path == null || go.name.Equals(path))
+                {
+                    go.SetActive(false);
                 }
             }
         }

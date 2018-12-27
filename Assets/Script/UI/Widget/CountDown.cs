@@ -8,10 +8,17 @@ namespace UI.Widget
     public delegate void OnTimeoutCallBack();
     public class CountDown
     {
-        public static void countDown(int seconds, Text text = null, OnTimeoutCallBack callback = null)
+        public static void countDown(int seconds, Text text, OnTimeoutCallBack callback = null)
         {
-            string tag = (text == null) ? null : text.GetHashCode().ToString();
-            CoroutineHandler.Instance().DoCoroutine(run(seconds, text, callback), "CountDown", tag);
+            if (text == null)
+            {
+                CoroutineHandler.Instance().MultiDoCoroutine(run(seconds, text, callback));
+            }
+            else
+            {
+                string tag = text.GetHashCode().ToString();
+                CoroutineHandler.Instance().DoCoroutine(run(seconds, text, callback), "CountDown", tag);
+            }
         }
         private static IEnumerator run(int seconds, Text text, OnTimeoutCallBack callback)
         {
@@ -24,8 +31,9 @@ namespace UI.Widget
         }
         public static void cancel(Text text = null)
         {
-            if (text != null) text.text = "00";
-            string tag = (text == null) ? null : text.GetHashCode().ToString();
+            if (text == null) return;
+            text.text = "00";
+            string tag = text.GetHashCode().ToString();
             CoroutineHandler.Instance().CancelCoroutine("CountDown", tag);
         }
     }

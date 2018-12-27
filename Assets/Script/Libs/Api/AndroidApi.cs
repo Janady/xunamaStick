@@ -6,7 +6,8 @@ namespace Libs.Api
     {
         public static void CallAndroidFunc(string funcStr, params object[] args)
         {
-#if UNITY_ANDROID
+#if !UNITY_EDITOR
+#if !UNITY_ANDROID
             using (AndroidJavaClass jc = new AndroidJavaClass("com.unity3d.player.UnityPlayer"))
             {
                 using (AndroidJavaObject jo = jc.GetStatic<AndroidJavaObject>("currentActivity"))
@@ -14,6 +15,7 @@ namespace Libs.Api
                     jo.Call(funcStr, args);
                 }
             }
+#endif
 #endif
         }
         public static string CallAndroidFuncString(string funcStr, params object[] args)

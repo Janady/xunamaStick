@@ -6,15 +6,19 @@ using DG.Tweening;
 public class TimeoutDestroySelf : MonoBehaviour
 {
     public int timeout;
-    public Text text; 
+    public bool doFade = true;
+    public Text text;
     // Use this for initialization
     void Start()
     {
         UI.Widget.CountDown.countDown(timeout, text, () => {
             Destroy(gameObject);
         });
-        Image image = GetComponent<Image>();
-        image.DOColor(new Color(255,255,255,0), (float)timeout).SetEase(Ease.Linear);
+        if (doFade)
+        {
+            Image image = GetComponent<Image>();
+            image.DOColor(new Color(255, 255, 255, 0), (float)timeout).SetEase(Ease.Linear);
+        }
     }
     private void OnDestroy()
     {
