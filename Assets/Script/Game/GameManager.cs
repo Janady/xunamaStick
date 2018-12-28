@@ -121,6 +121,7 @@ public class GameManager : MonoBehaviour {
     private void passAll()
     {
         UIManager.OpenUI(Config.UI.UIPath.WinPanel);
+        Libs.Resource.EffectManager.LoadEffect("star", transform);
     }
     private void failed()
     {
@@ -132,7 +133,6 @@ public class GameManager : MonoBehaviour {
         // startGame(false);
         if (Coin.GetInstance().consume())
         {
-
             GameObject gl = UIManager.OpenUI(Config.UI.UIPath.ContanerSelectPanel);
             ContanerSelectView list = gl.GetComponent<ContanerSelectView>();
             list.setCallback((id) => {

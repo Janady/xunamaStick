@@ -67,22 +67,14 @@ public class Rotator : MonoBehaviour {
             if (lips < total) prepareLips();
         });
     }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (total <= 0) return;
-        // Handheld.Vibrate();
-        if (collision.tag == "Pin")
-        {
-            //Received(collision.gameObject);
-        }
-    }
+    
     private void Received(GameObject go)
     {
         if (go == null) return;
         go.transform.SetParent(transform);
         MyShake(transform);
         receiveLips++;
+        Libs.Resource.EffectManager.LoadEffect("boom", go.transform);
         if (receiveLips >= total)
         {
             StartCoroutine(GamePass());
@@ -94,9 +86,9 @@ public class Rotator : MonoBehaviour {
     }
     private IEnumerator GamePass()
     {
-            yield return new WaitForSeconds(0.5f);
-            EventMgr.Instance.DispatchEvent(EventNameData.GamePass, !collided);
-            Destroy(gameObject);
+        yield return new WaitForSeconds(0.5f);
+        EventMgr.Instance.DispatchEvent(EventNameData.GamePass, !collided);
+        Destroy(gameObject);
     }
     public int Total
     {

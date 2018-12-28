@@ -12,21 +12,22 @@ namespace View
         private Transform tr;
         private void Start()
         {
-            StartCoroutine(init());
+            tr = transform.FindChild("ScrollPanel");
+            StartCoroutine(init(tr));
         }
         public void setCallback(Action<int> callBack)
         {
             this.callBack = callBack;
             // StartCoroutine(init());
         }
-        IEnumerator init()
+        IEnumerator init(Transform tr)
         {
-            tr = transform.FindChild("ScrollPanel");
             //Libs.Resource.UIManager.CloseUI(tr);
             foreach (Cabinet cabinet in Cabinet.All())
             {
                 GameObject go = UIManager.OpenUI("cell", null, tr);
                 CellView cv = go.GetComponent<CellView>();
+                cv.Id = cabinet.Id;
                 cv.Num = cabinet.Num;
                 cv.Title = cabinet.Good().Title;
                 cv.ImagePath = "Image/Gift";
@@ -36,6 +37,11 @@ namespace View
                 });
                 yield return new WaitForEndOfFrame();
             }
+        }
+        public void Refresh()
+        {
+            UIManager.CloseUI(tr);
+            StartCoroutine(init(tr));
         }
     }
 }

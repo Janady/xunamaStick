@@ -18,6 +18,7 @@
         public const string VersionPanel = "Admin/VersionPanel";
         public const string AdPanel = "Admin/AdPanel";
         public const string DevicePanel = "Admin/DevicePanel";
-        public const string ContanerSelectPanel = "ContanerSelectPanel"; 
+        public const string ContanerSelectPanel = "ContanerSelectPanel";
+        public const string GoodsSelectPanel = "Admin/GoodsSelectPanel";
     }
 }

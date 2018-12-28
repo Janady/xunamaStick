@@ -9,19 +9,6 @@ namespace Libs.Resource
         public EffectManager()
         {
         }
-        public static GameObject LoadEffect(string name, Transform transform = null)
-        {
-            string fullPath = "Effect/" + name;
-            GameObject go = ResourceManager.InstantiateResource(fullPath) as GameObject;
-            if (null == go) throw new Exception("load resource null, path = " + fullPath);
-            go.name = name;
-            if (transform != null)
-            {
-                go.transform.position = transform.position;
-                go.transform.rotation = transform.rotation;
-            }
-            return go;
-        }
         public static void ReleaseEffect(string name)
         {
             GameObject go = GameObject.Find(name);
@@ -29,6 +16,34 @@ namespace Libs.Resource
             {
                 UnityEngine.Object.Destroy(go);
             }
+        }
+
+        public static GameObject LoadEffect(string name, Transform tr = null, bool autoDestroy = true)
+        {
+            if (null == name) throw new Exception("load resource null, name = " + name);
+            string fullPath = "Effect/" + name;
+            GameObject go = ResourceManager.InstantiateResource(fullPath) as GameObject;
+            if (null == go) throw new Exception("load resource null, path = " + fullPath);
+
+            if (tr)
+            {
+                go.transform.position = tr.position;
+                go.transform.rotation = tr.rotation;
+            }
+
+            ParticleSystem m_ExplosionParticles = go.GetComponent<ParticleSystem>();
+            if (m_ExplosionParticles == null)
+            {
+                for (int i = 0; i < go.transform.childCount; i++)
+                {
+                    m_ExplosionParticles = go.transform.GetChild(i).GetComponent<ParticleSystem>();
+                    if (m_ExplosionParticles != null) break;
+                }
+            }
+            m_ExplosionParticles.Play();
+            if (autoDestroy)
+                GameObject.Destroy(go, m_ExplosionParticles.duration);
+            return go;
         }
     }
 }

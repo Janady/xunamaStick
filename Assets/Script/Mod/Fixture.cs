@@ -15,20 +15,20 @@ namespace Mod
         {
             connection.DropTable<Goods>();
             connection.CreateTable<Goods>();
-            connection.InsertAll(new[] {
-                new Goods {
-                    Sku = "Dior/迪奥烈艳蓝金唇膏",
-                    Title = "Dior/迪奥烈艳蓝金唇膏",
-                    Price = 299,
+
+            List<Goods> allGoods = new List<Goods>();
+            for (int i = 0; i < 16; i++)
+            {
+                Goods g = new Goods
+                {
+                    Sku = "Dior" + i,
+                    Title = "Dior/迪奥烈艳蓝金唇膏-" + i,
+                    Price = UnityEngine.Random.Range(100,500),
                     Type = "999"
-                },
-                new Goods {
-                    Sku = "Dior/迪奥烈艳蓝金唇膏",
-                    Title = "Dior/迪奥烈艳蓝金唇膏",
-                    Price = 299,
-                    Type = "520"
-                }
-            });
+                };
+                allGoods.Add(g);
+            }
+            connection.InsertAll(allGoods);
         }
         public void InitCabinet()
         {
@@ -41,7 +41,7 @@ namespace Mod
                 {
                     Num = i,
                     Title = i + "号箱",
-                    GoodsId = new Random(Guid.NewGuid().GetHashCode()).Next(1,3),
+                    GoodsId = UnityEngine.Random.Range(1,16),
                     Enabled = true
                 };
                 allCabinet.Add(c);

@@ -26,6 +26,13 @@ namespace View
         {
             this.callBack = callBack;
         }
+        public int Id
+        {
+            set
+            {
+                id = value;
+            }
+        }
         public string Title
         {
             set
@@ -53,7 +60,6 @@ namespace View
         {
             set
             {
-                id = value;
                 if (numText == null)
                 {
                     numText = transform.FindChild("number").gameObject.GetComponent<Text>();
