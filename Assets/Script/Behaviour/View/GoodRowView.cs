@@ -72,6 +72,26 @@ namespace View
                 priceText.text = value.ToString();
             }
         }
+        public void setEditCallBack(Action<int> callback)
+        {
+            Transform tr = transform.FindChild("edit");
+            setBtn(tr, callback);
+        }
+        public void setDeleteCallBack(Action<int> callback)
+        {
+            Transform tr = transform.FindChild("delete");
+            setBtn(tr, callback);
+        }
+        private void setBtn(Transform tr, Action<int> callback)
+        {
+            if (callback == null || tr == null) return;
+            tr.gameObject.SetActive(true);
+            Button btn = tr.GetComponent<Button>();
+            btn.onClick.AddListener(() =>
+            {
+                callback(id);
+            });
+        }
     }
 }
 

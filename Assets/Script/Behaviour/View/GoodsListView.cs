@@ -9,10 +9,14 @@ namespace View
     public class GoodsListView : MonoBehaviour
     {
         private Action<int> callBack;
+        private Action<int> editCallBack;
+        private Action<int> deleteCallBack;
         private int _exceptId = 0;
+        private Transform tr;
         private void Start()
         {
-            StartCoroutine(init());
+            tr = transform.FindChild("ScrollPanel");
+            StartCoroutine(init(tr));
         }
         public int ExceptId
         {
@@ -21,15 +25,14 @@ namespace View
                 _exceptId = value;
             }
         }
-        public void setCallback(Action<int> callBack)
+        public void setCallback(Action<int> callBack, Action<int> editCallBack = null, Action<int> deleteCallBack = null)
         {
             this.callBack = callBack;
-            // StartCoroutine(init());
+            this.editCallBack = editCallBack;
+            this.deleteCallBack = deleteCallBack;
         }
-        IEnumerator init()
+        IEnumerator init(Transform tr)
         {
-            Transform tr = transform.FindChild("ScrollPanel");
-            //Libs.Resource.UIManager.CloseUI(tr);
             foreach (Goods good in Goods.All())
             {
                 if (good.Id != _exceptId)
@@ -40,13 +43,17 @@ namespace View
                     cv.Title = good.Title;
                     cv.ImagePath = "Image/Gift";
                     cv.price = good.Price;
-                    cv.SetCallBack(x =>
-                    {
-                        if (callBack != null) callBack(x);
-                    });
+                    if (callBack != null) cv.SetCallBack(callBack);
+                    if (editCallBack != null) cv.setEditCallBack(editCallBack);
+                    if (deleteCallBack != null) cv.setDeleteCallBack(deleteCallBack);
                     yield return new WaitForEndOfFrame();
                 }
             }
+        }
+        public void Refresh()
+        {
+            UIManager.CloseUI(tr);
+            StartCoroutine(init(tr));
         }
     }
 }

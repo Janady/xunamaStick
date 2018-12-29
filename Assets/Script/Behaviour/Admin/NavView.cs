@@ -11,8 +11,8 @@ public class NavView : MonoBehaviour
     private Button unlockingBtn;
     private Button replenishBtn;
     private Button backBtn;
-    private OnButtonCallBack _backCallback;
-    private OnButtonCallBack _restartCallback;
+    private OnButtonCallBack _btn1Callback;
+    private OnButtonCallBack _btn2Callback;
     // Use this for initialization
     void Start()
     {
@@ -34,30 +34,21 @@ public class NavView : MonoBehaviour
             titleText.text = value;
         }
     }
-    public OnButtonCallBack BackCallback
-    {
-        get {
-            return _backCallback;
-        }
-        set
-        {
-            _backCallback = value;
-        }
+    public void setBtn1(string name, OnButtonCallBack callBack) {
+        _btn1Callback = callBack;
+        Text text = unlockingBtn.transform.FindChild("Text").GetComponent<Text>();
+        text.text = name;
     }
-    public OnButtonCallBack RestartCallback
+    public void setBtn2(string name, OnButtonCallBack callBack)
     {
-        get
-        {
-            return _restartCallback;
-        }
-        set
-        {
-            _restartCallback = value;
-        }
+        _btn2Callback = callBack;
+        Text text = replenishBtn.transform.FindChild("Text").GetComponent<Text>();
+        text.text = name;
     }
     #region button click event
     private void OnUnlockingButtonClick(GameObject go)
     {
+        if (_btn1Callback != null) _btn1Callback();
     }
     private void OnRestartButtonClick(GameObject go)
     {
@@ -65,6 +56,7 @@ public class NavView : MonoBehaviour
     }
     private void OnReplenishButtonClick(GameObject go)
     {
+        if (_btn2Callback != null) _btn2Callback();
     }
     private void OnBackButtonClick(GameObject go)
     {

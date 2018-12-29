@@ -35,9 +35,16 @@ namespace UI.Widget
             EventTriggerListener.Get(btn_cancel.gameObject).onClick = OnCancelClick;
             //EventTriggerListener.Get(btn_close.gameObject).onClick = OnCloseClick;
         }
-        public static GameObject show(bool failed)
+        public static void showDelete(string title, UnityEngine.Events.UnityAction callback)
         {
-            return null;
+            GameObject go = Libs.Resource.UIManager.OpenUI(Config.UI.UIPath.DeletePanel);
+            go.transform.FindChild("bg").FindChild("content").GetComponent<Text>().text = title;
+            Button btn = go.transform.FindChild("bg").FindChild("confirm").GetComponent<Button>();
+            btn.onClick.AddListener(()=>
+            {
+                callback();
+                Destroy(go);
+            });
         }
         public static GameObject OpenTips(TipsType type, string title, OnButtonCallBack okCallBack = null, OnButtonCallBack cancelCallBack = null, OnButtonCallBack closeCallBack = null, float delayTime = 0)
         {
