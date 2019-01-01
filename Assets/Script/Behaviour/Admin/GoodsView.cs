@@ -12,7 +12,12 @@ public class GoodsView : MonoBehaviour
     void Start()
     {
         list = transform.FindChild("Content").FindChild("GoodsList").GetComponent<GoodsListView>();
-        list.setCallback(null, x=>Debug.Log(x), x => {
+        list.setCallback(null, x=> {
+            GameObject go = UIManager.OpenUI(Config.UI.UIPath.EditGoodsPanel);
+            EditGoodsView ev = go.AddComponent<EditGoodsView>();
+            ev.Good = Goods.GetGood(x);
+            ev.CallBack = (Refresh);
+        }, x => {
             Goods g = Goods.GetGood(x);
             string text = "确定删除\'" + g.Title + "\'吗?";
             UI.Widget.CommonTips.showDelete(text, ()=>

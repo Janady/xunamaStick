@@ -28,6 +28,10 @@ public class InternalMsgManager : MonoBehaviour {
         byte[] buf = Libs.HexString.Hex2bytes(msg);
         serial.Received(buf);
     }
+    void chooseFile(string path)
+    {
+        Debug.Log(path);
+    }
     private void OnApplicationQuit()
     {
         CancelInvoke("OnCheck");

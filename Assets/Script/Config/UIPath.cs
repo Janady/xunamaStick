@@ -20,6 +20,7 @@
         public const string DevicePanel = "Admin/DevicePanel";
         public const string ContanerSelectPanel = "ContanerSelectPanel";
         public const string GoodsSelectPanel = "Admin/GoodsSelectPanel";
+        public const string EditGoodsPanel = "EditGoodsPanel";
         public const string DeletePanel = "DeletePanel";
     }
 }
