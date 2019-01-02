@@ -131,12 +131,13 @@ public class GameManager : MonoBehaviour {
     private void playGame()
     {
         // startGame(false);
-        if (Coin.GetInstance().consume())
+        if (Coin.GetInstance().afford())
         {
             GameObject gl = UIManager.OpenUI(Config.UI.UIPath.ContanerSelectPanel);
             ContanerSelectView list = gl.GetComponent<ContanerSelectView>();
             list.setCallback((id) => {
                 Destroy(gl);
+                Coin.GetInstance().consume(id);
                 startGame(false);
             });
             return;
@@ -144,7 +145,6 @@ public class GameManager : MonoBehaviour {
         GameObject go = UIManager.OpenUI(Config.UI.UIPath.PayPanel);
         PayView pv = go.GetComponent<PayView>();
         pv.amount = 4;
-        pv.qrcodeId = "60014000";
     }
     private void tryGame()
     {
@@ -153,7 +153,6 @@ public class GameManager : MonoBehaviour {
 
     private void buy()
     {
-        Debug.Log("buy");
         GameObject go = UIManager.OpenUI(Config.UI.UIPath.ContanerSelectPanel);
         ContanerSelectView list = go.GetComponent<ContanerSelectView>();
         list.setCallback((id)=> {
@@ -162,7 +161,6 @@ public class GameManager : MonoBehaviour {
             GameObject pay = UIManager.OpenUI(Config.UI.UIPath.PayPanel);
             PayView pv = pay.GetComponent<PayView>();
             pv.amount = cabinet.Good().Price;
-            pv.qrcodeId = "60014000";
         });
     }
 #endregion

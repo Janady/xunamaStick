@@ -10,6 +10,8 @@ namespace Mod
         public Fixture()
         {
             connection = DataService.GetInstance().sQLiteConnection();
+            connection.CreateTable<Purchase>();
+            connection.CreateTable<Recharge>();
         }
         public void InitGoods()
         {

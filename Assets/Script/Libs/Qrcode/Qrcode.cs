@@ -29,9 +29,15 @@ namespace Libs.Qrcode
             t.Apply();
             return t;
         }
-        public static Texture2D GenQRCodeLeYaoYao(string id = "60014000")
+        public static Texture2D GenQRCodeLeYaoYao(byte[] buf)
         {
-            return GenQRCode(prefixLeYaoYao + id, 256, 256); // 6001400
+            if (null == buf || buf.Length != 8) return null;
+            int ret = 0;
+            foreach (byte b in buf)
+            {
+                ret = ret * 10 + (0xff & b);
+            }
+            return GenQRCode(prefixLeYaoYao + ret, 256, 256); // 6001400
         }
     }
 }

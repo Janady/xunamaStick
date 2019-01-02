@@ -15,7 +15,7 @@ namespace Service
     public class SerialIOService
     {
         private const int cmdPos = 3;
-        private byte[] _payIdentity = null;
+        private byte[] _payIdentity = null;//6001400
         public byte[] PayIdentity
         {
             get

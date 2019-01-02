@@ -3,18 +3,10 @@ using UnityEngine.UI;
 using System.Collections;
 using Libs.Qrcode;
 using Libs.Resource;
+using Service;
 
 public class PayView : MonoBehaviour
 {
-    public string qrcodeId
-    {
-        set
-        {
-            Texture2D texture = Qrcode.GenQRCodeLeYaoYao(value);
-            Image image = transform.FindChild("qrcode").gameObject.GetComponent<Image>();
-            image.sprite = UIManager.GenSprite(texture);
-        }
-    }
     public int amount
     {
         set
@@ -26,6 +18,11 @@ public class PayView : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        byte[] identity = SerialIOService.GetInstance().PayIdentity;
+        Image image = transform.FindChild("qrcode").gameObject.GetComponent<Image>();
+        if (null == identity) return;
+        Texture2D texture = Qrcode.GenQRCodeLeYaoYao(identity);
+        image.sprite = UIManager.GenSprite(texture);
     }
 
     // Update is called once per frame

@@ -6,7 +6,6 @@ namespace Libs.Api
     {
         public static void CallAndroidFunc(string funcStr, params object[] args)
         {
-            Debug.Log("CallAndroidFunc - "+funcStr);
 #if UNITY_ANDROID && !UNITY_EDITOR
             using (AndroidJavaClass jc = new AndroidJavaClass("com.unity3d.player.UnityPlayer"))
             {
@@ -19,7 +18,6 @@ namespace Libs.Api
         }
         public static string CallAndroidFuncString(string funcStr, params object[] args)
         {
-            Debug.Log("CallAndroidFuncString");
 #if UNITY_ANDROID && !UNITY_EDITOR
             using (AndroidJavaClass jc = new AndroidJavaClass("com.unity3d.player.UnityPlayer"))
             {
