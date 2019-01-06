@@ -22,6 +22,9 @@ namespace Libs.Event
 
         #region 音效
         #endregion
+        #region chooseFile
+        public static string ChooseFile = "ChooseFile";
+        #endregion
 
     }
 }

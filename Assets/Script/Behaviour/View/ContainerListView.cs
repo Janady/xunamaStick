@@ -29,9 +29,19 @@ namespace View
                 CellView cv = go.GetComponent<CellView>();
                 cv.Id = cabinet.Id;
                 cv.Num = cabinet.Num;
-                cv.Title = cabinet.Good().Title;
-                cv.ImagePath = "Image/Gift";
-                cv.price = cabinet.Good().Price;
+                Goods good = cabinet.Good();
+                if (good == null)
+                {
+                    cv.Title = "请添加商品";
+                    cv.price = 0;
+                    cv.ImagePath = "Image/HeartGrey";
+                }
+                else
+                {
+                    cv.Title = good.Title;
+                    cv.price = good.Price;
+                    cv.ImagePath = "Image/Gift";
+                }
                 cv.SetCallBack(x => {
                     if (callBack != null) callBack(x);
                 });

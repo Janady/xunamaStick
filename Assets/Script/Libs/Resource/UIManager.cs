@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using System.IO;
+using System.Collections;
 using System;
 
 namespace Libs.Resource
@@ -88,8 +88,17 @@ namespace Libs.Resource
             */
             //return texture;
             //string filePath = "file://" + Application.dataPath + @"/_Image/grid.png";
-            WWW www = new WWW(filePath);
-            return www.texture;
+            Texture2D texture = null;
+            WWW www = new WWW("file://" + filePath);
+            if (www != null && string.IsNullOrEmpty(www.error))
+            {
+                texture = www.texture;
+            }
+            if (www.isDone)
+            {
+                www.Dispose();
+            }
+            return texture;
         }
     }
 }

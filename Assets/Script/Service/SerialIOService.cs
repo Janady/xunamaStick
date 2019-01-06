@@ -8,9 +8,7 @@ namespace Service
     {
         PayInit = 0x01,
         CoinInsert = 0x02,
-        AdminOpr = 0x06,
-
-
+        AdminOpr = 0x08
     }
     public class SerialIOService
     {

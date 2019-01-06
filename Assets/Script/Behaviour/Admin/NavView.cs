@@ -36,12 +36,14 @@ public class NavView : MonoBehaviour
     }
     public void setBtn1(string name, OnButtonCallBack callBack) {
         _btn1Callback = callBack;
+        unlockingBtn = transform.FindChild("unlocking").gameObject.GetComponent<Button>();
         Text text = unlockingBtn.transform.FindChild("Text").GetComponent<Text>();
         text.text = name;
     }
     public void setBtn2(string name, OnButtonCallBack callBack)
     {
         _btn2Callback = callBack;
+        replenishBtn = transform.FindChild("replenish").gameObject.GetComponent<Button>();
         Text text = replenishBtn.transform.FindChild("Text").GetComponent<Text>();
         text.text = name;
     }

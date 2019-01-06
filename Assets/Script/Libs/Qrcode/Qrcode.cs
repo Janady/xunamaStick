@@ -37,7 +37,8 @@ namespace Libs.Qrcode
             {
                 ret = ret * 10 + (0xff & b);
             }
-            return GenQRCode(prefixLeYaoYao + ret, 256, 256); // 6001400
+            Debug.Log(prefixLeYaoYao + ret);
+            return GenQRCode(prefixLeYaoYao + ret, 256, 256); // 60014000
         }
     }
 }

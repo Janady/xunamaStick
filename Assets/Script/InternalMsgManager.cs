@@ -1,5 +1,5 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
+using Libs.Event;
 using UnityEngine;
 using System;
 
@@ -8,13 +8,13 @@ public class InternalMsgManager : MonoBehaviour {
     // Use this for initialization
     void Start () {
         serial = Service.SerialIOService.GetInstance();
-        //InvokeRepeating("OnCheck", 0, Config.Constant.HEART_BEAT);
+        InvokeRepeating("OnCheck", 0, Config.Constant.HEART_BEAT);
         //Invoke("test", 1f);
     }
     private void test()
     {
-        //byte[] buf = { (byte)0xAE, (byte)0x06, (byte)0x00, (byte)0x06, (byte)0x00, (byte)0xAF };
-        byte[] buf = { (byte)0xAE, (byte)0x06, (byte)0x00, (byte)0x02, (byte)0x02, (byte)0xAF };
+        byte[] buf = { (byte)0xAE, (byte)0x06, (byte)0x00, (byte)0x08, (byte)0x00, (byte)0xAF };
+        //byte[] buf = { (byte)0xAE, (byte)0x06, (byte)0x00, (byte)0x02, (byte)0x02, (byte)0xAF };
         serial.Received(buf);
     }
     private void OnCheck()
@@ -31,6 +31,7 @@ public class InternalMsgManager : MonoBehaviour {
     void chooseFile(string path)
     {
         Debug.Log(path);
+        EventMgr.Instance.DispatchEvent(EventNameData.ChooseFile, path);
     }
     private void OnApplicationQuit()
     {

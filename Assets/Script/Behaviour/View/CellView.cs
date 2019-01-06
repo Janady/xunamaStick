@@ -75,7 +75,7 @@ namespace View
                 {
                     priceText = transform.FindChild("price").gameObject.GetComponent<Text>();
                 }
-                priceText.text = value.ToString();
+                priceText.text = "￥"+value.ToString();
             }
         }
     }

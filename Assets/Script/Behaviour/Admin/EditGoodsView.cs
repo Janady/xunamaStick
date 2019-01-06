@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System;
+using Libs.Event;
 using Libs.Resource;
 using Mod;
 public class EditGoodsView : MonoBehaviour
@@ -11,6 +12,7 @@ public class EditGoodsView : MonoBehaviour
     private InputField priceField;
     private Image image;
     private Action callBack;
+    private string imgStr;
     // Use this for initialization
     void Start()
     {
@@ -25,7 +27,16 @@ public class EditGoodsView : MonoBehaviour
         if (_good == null) return;
         nameField.text = _good.Title;
         priceField.text = _good.Price.ToString();
-        // image.sprite = UIManager.GenSprite(UIManager.loadImage(_good.ImagePath, false));
+        imgStr = _good.ImagePath;
+        if (imgStr != null) image.sprite = UIManager.GenSprite(UIManager.loadImage(imgStr, false));
+    }
+    private void OnDisable()
+    {
+        EventMgr.Instance.RemoveEvent(EventNameData.ChooseFile, OnChooseFile);
+    }
+    private void OnEnable()
+    {
+        EventMgr.Instance.AddEvent(EventNameData.ChooseFile, OnChooseFile);
     }
     void ChangeImage()
     {
@@ -33,10 +44,26 @@ public class EditGoodsView : MonoBehaviour
     }
     void OnClick()
     {
+        int defaultPrice = 2;
+        int.TryParse(priceField.text, out defaultPrice);
+        if (_good == null)
+        {
+            _good = new Goods
+            {
+                Title = nameField.text,
+                Price = defaultPrice,
+                ImagePath = imgStr
+            };
+            _good.insert();
+        }
+        else
+        {
+            _good.Title = nameField.text;
+            _good.Price = defaultPrice;
+            _good.ImagePath = imgStr;
+            _good.update();
+        }
         Destroy(gameObject);
-        _good.Title = nameField.text;
-        _good.Price = int.Parse(priceField.text);
-        _good.update();
         if (callBack != null) callBack();
     }
     public Action CallBack
@@ -52,5 +79,13 @@ public class EditGoodsView : MonoBehaviour
         {
             _good = value;
         }
+    }
+    /*
+     * event handler
+     */
+    private void OnChooseFile(object dispatcher, string eventName, object value)
+    {
+        imgStr = value as string;
+        image.sprite = UIManager.GenSprite(UIManager.loadImage(imgStr, false));
     }
 }

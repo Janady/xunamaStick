@@ -8,9 +8,16 @@ using Mod;
 public class GoodsView : MonoBehaviour
 {
     private GoodsListView list;
+    private NavView nav;
     // Use this for initialization
     void Start()
     {
+        nav = transform.FindChild("nav").GetComponent<NavView>();
+        nav.setBtn1("新增礼品", () => {
+            GameObject go = UIManager.OpenUI(Config.UI.UIPath.EditGoodsPanel);
+            EditGoodsView ev = go.AddComponent<EditGoodsView>();
+            ev.CallBack = (Refresh);
+        });
         list = transform.FindChild("Content").FindChild("GoodsList").GetComponent<GoodsListView>();
         list.setCallback(null, x=> {
             GameObject go = UIManager.OpenUI(Config.UI.UIPath.EditGoodsPanel);

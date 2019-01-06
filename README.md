@@ -1,7 +1,7 @@
 ### TODO
 
 # video
-# financial
+  # financial
 # image
-# Add goods
+  # Add goods
 # game facts
