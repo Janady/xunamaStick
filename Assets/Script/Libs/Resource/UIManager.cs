@@ -79,7 +79,7 @@ namespace Libs.Resource
         }
         public static Texture2D loadImage(string filePath, bool local)
         {
-            if (local) return Resources.Load(filePath) as Texture2D;
+            if (local) return ResourceManager.LoadResource(filePath) as Texture2D;
             /*
             byte[] bytes = File.ReadAllBytes(filePath);
             Texture2D texture = new Texture2D((int)size.x, (int)size.y, TextureFormat.RGB24, false);

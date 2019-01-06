@@ -1,12 +1,19 @@
 ﻿using UnityEngine;
+using System.Collections.Generic;
 
 namespace Libs.Resource
 {
     public class ResourceManager : MonoBehaviour
     {
+        private static Dictionary<string, Object> resourceMap = new Dictionary<string, Object>();
         public static Object LoadResource(string resPath, System.Type systemTypeInstance = null)
         {
             Object resObject = null;
+            if (resourceMap.ContainsKey(resPath))
+            {
+                // Debug.Log(">>>>>>>>>>>>>>> resouce get: " + resPath);
+                return resourceMap[resPath];
+            }
             if (null == systemTypeInstance)
             {
                 resObject = Resources.Load(resPath);
@@ -15,21 +22,14 @@ namespace Libs.Resource
             {
                 resObject = Resources.Load(resPath, systemTypeInstance);
             }
-
+            // Debug.Log("=================== resouce load: " + resPath);
+            resourceMap.Add(resPath, resObject);
             return resObject;
         }
 
         public static Object InstantiateResource(string resPath, string szKey = "", System.Type systemTypeInstance = null)
         {
-            Object resObject = null;
-            if (null == systemTypeInstance)
-            {
-                resObject = Resources.Load(resPath);
-            }
-            else
-            {
-                resObject = Resources.Load(resPath, systemTypeInstance);
-            }
+            Object resObject = LoadResource(resPath, systemTypeInstance);
 
             if (null != resObject)
             {
