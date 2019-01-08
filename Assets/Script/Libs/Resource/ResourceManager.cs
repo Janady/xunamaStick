@@ -33,7 +33,7 @@ namespace Libs.Resource
 
             if (null != resObject)
             {
-                Object modelObject = (GameObject)GameObject.Instantiate(resObject);
+                Object modelObject = GameObject.Instantiate(resObject);
                 if (null != modelObject && szKey.Length > 0)
                 {
                     modelObject.name = szKey;

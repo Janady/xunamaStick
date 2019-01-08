@@ -9,14 +9,30 @@ public class GameManager : MonoBehaviour {
     // Use this for initialization
     private GameView gameView;
     private GameObject bird;
+    private GameObject vedioObject;
+    private const int MaxWaiting = 1000;
+    private int waitingCount = 0;
+    private enum STATUS
+    {
+        Running,
+        Idle,
+        Show,
+        Prepare,
+        Waiting
+    }
+    private STATUS status = STATUS.Idle;
     void Start () {
         GameObject go = UIManager.OpenUI(Config.UI.UIPath.GamePanel);
         gameView = go.AddComponent<GameView>();
         gameView.setupCallback(tryGame, playGame, buy);
+
+        vedioObject = UIManager.OpenUI(Config.UI.UIPath.MoviePanel);
+        vedioObject.SetActive(false);
+        bird = ResourceManager.InstantiatePrefab("Bird");
     }
-    private void birdMovement()
+    private void birdMovement(System.Action action)
     {
-        if (bird == null) return;
+        bird.SetActive(true);
         List<Vector3> list = new List<Vector3>();
         bool normal = bird.transform.position.x > 0;
         for (int i = 8; i > -8; i -= 2)
@@ -29,23 +45,54 @@ public class GameManager : MonoBehaviour {
         }
         bird.transform.DOLocalPath(list.ToArray(), 15).SetEase(Ease.Linear).OnComplete(()=> {
             bird.transform.DOLocalRotate(new Vector3(0, normal ? 180 : 0, 0), 1f).OnComplete(()=> {
-                birdMovement();
+                bird.SetActive(false);
+                action();
             });
         });
     }
     // Update is called once per frame
     private void OnEnable()
     {
-        bird = ResourceManager.InstantiatePrefab("Bird");
-        birdMovement();
         EventMgr.Instance.AddEvent(EventNameData.GamePass, OnGamePass);
     }
     private void OnDisable()
     {
-        Destroy(bird);
         EventMgr.Instance.RemoveEvent(EventNameData.GamePass, OnGamePass);
     }
-    
+    private void Update()
+    {
+        switch (status)
+        {
+            case STATUS.Running:
+                break;
+            case STATUS.Idle:
+                status = STATUS.Show;
+                birdMovement(() => {
+                    if (status == STATUS.Show) vedioObject.SetActive(true);
+                });
+                break;
+            case STATUS.Show:
+                if (Input.GetButtonDown("Fire1"))
+                {
+                    status = STATUS.Waiting;
+                    waitingCount = 0;
+                    bird.SetActive(false);
+                    vedioObject.SetActive(false);
+                }
+                break;
+            case STATUS.Prepare:
+                status = STATUS.Running;
+                bird.SetActive(false);
+                vedioObject.SetActive(false);
+                break;
+            case STATUS.Waiting:
+                if (waitingCount++ > MaxWaiting)
+                {
+                    status = STATUS.Idle;
+                }
+                break;
+        }
+    }
     /*
      * event handler
      */
@@ -78,6 +125,7 @@ public class GameManager : MonoBehaviour {
 
     private void startGame(bool trial)
     {
+        status = STATUS.Prepare;
         gameLevel = new GameLevel(trial);
         nextLevel();
     }
@@ -93,13 +141,13 @@ public class GameManager : MonoBehaviour {
         switch (Random.Range(0, 3))
         {
             case 0:
-                targetStr = "target";
+                targetStr = "targetDiamondPink";
                 break;
             case 1:
-                targetStr = "targetStar";
+                targetStr = "targetDiamondGreen";
                 break;
             case 2:
-                targetStr = "targetDiamond";
+                targetStr = "targetDiamondBlue";
                 break;
         }
         GameObject go = ResourceManager.InstantiatePrefab(targetStr);
@@ -122,10 +170,15 @@ public class GameManager : MonoBehaviour {
     {
         UIManager.OpenUI(Config.UI.UIPath.WinPanel);
         Libs.Resource.EffectManager.LoadEffect("star", transform);
+
+        status = STATUS.Idle;
+
     }
     private void failed()
     {
         UIManager.OpenUI(Config.UI.UIPath.LosePanel);
+
+        status = STATUS.Idle;
     }
     #region view callback
     private void playGame()

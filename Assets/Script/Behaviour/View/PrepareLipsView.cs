@@ -34,7 +34,7 @@ public class PrepareLipsView : MonoBehaviour
             GameObject go = UIManager.OpenUI("Lip", null, lipsTr);
             go.transform.localPosition = new Vector3(offset, 0, 0);
             float width = go.GetComponent<RectTransform>().rect.width;
-            offset += width;
+            offset += width + 4;
         }
         showNum(lips);
     }
