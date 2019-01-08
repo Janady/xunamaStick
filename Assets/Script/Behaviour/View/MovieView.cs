@@ -56,5 +56,6 @@ public class MovieView : MonoBehaviour
         string path = fileQueue.Dequeue().ToString();
         fileQueue.Enqueue(path);
         sciMedia.Load(path);
+        //sciMedia.Play();
     }
 }

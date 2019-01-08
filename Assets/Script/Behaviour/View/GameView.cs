@@ -39,9 +39,9 @@ public class GameView : MonoBehaviour
         tryBtn = actionSet.FindChild("Try").gameObject.GetComponent<Button>();
         EventTriggerListener.Get(tryBtn.gameObject).onClick = OnTryButtonClick;
 
-        zoom(transform.FindChild("ActionSetBg").FindChild("Playbg"), true);
-        zoom(transform.FindChild("ActionSetBg").FindChild("Buybg"), true);
-        zoom(transform.FindChild("ActionSetBg").FindChild("Trybg"), true);
+        zoom(playBtn.transform, true);
+        zoom(buyBtn.transform, true);
+        zoom(tryBtn.transform, true);
     }
     private void zoom(Transform tr, bool big)
     {

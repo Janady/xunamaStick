@@ -3,7 +3,7 @@
     public class UIPath
     {
         public const string GamePanel = "GamePanel";
-        public const string MoviePanel = "MoviePanel";
+        public const string MoviePanel = "Admin/MoviePanel";
         public const string TipsPanel = "TipsPanel";
         public const string ActionPanel = "ActionPanel";
         public const string PassPanel = "PassPanel";
