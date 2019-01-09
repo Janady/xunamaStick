@@ -24,7 +24,7 @@ public class VedioRowView : MonoBehaviour
         switch (type)
         {
             case ActionType.Add:
-                tr.GetComponent<Image>().sprite = UIManager.GenSprite(UIManager.loadImage("Image/HeartPink", true));
+                tr.GetComponent<Image>().sprite = UIManager.GenSprite(UIManager.loadImage("Image/Add", true));
                 break;
         }
         _type = type;
@@ -43,7 +43,7 @@ public class VedioRowView : MonoBehaviour
             case ActionType.Add:
                 callback = null;
                 Transform tr = transform.FindChild("delete");
-                tr.GetComponent<Image>().sprite = UIManager.GenSprite(UIManager.loadImage("Image/HeartGrey", true));
+                tr.GetComponent<Image>().sprite = UIManager.GenSprite(UIManager.loadImage("Image/ButtonDelete", true));
                 break;
         }
     }

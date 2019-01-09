@@ -45,7 +45,6 @@ public class MovieView : MonoBehaviour
                 fileQueue.Enqueue("file://" + file.FullName);
             }
         }
-        if (fileQueue.Count == 0) fileQueue.Enqueue("Lips.flv");
     }
     private void OnEnd()
     {
@@ -53,9 +52,11 @@ public class MovieView : MonoBehaviour
     }
     private void loadVideo()
     {
+        if (fileQueue.Count <= 0) gameObject.SetActive(false);
         string path = fileQueue.Dequeue().ToString();
         fileQueue.Enqueue(path);
         sciMedia.Load(path);
         //sciMedia.Play();
+        Debug.Log(path);
     }
 }
