@@ -34,6 +34,7 @@ public class Rotator : MonoBehaviour {
         if (Input.GetButtonDown("Fire1") && !onAir)
         {
             SpawnPin();
+            AppAudioModel.Instance().RunAudio(AppAudioName.Shot);
         }
     }
     private void prepareLips()

@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour {
     // Use this for initialization
     private GameView gameView;
     private GameObject bird;
-    private GameObject vedioObject;
+    private MovieView movie;
     private const int MaxWaiting = 1000;
     private int waitingCount = 0;
     private enum STATUS
@@ -26,8 +26,8 @@ public class GameManager : MonoBehaviour {
         gameView = go.AddComponent<GameView>();
         gameView.setupCallback(tryGame, playGame, buy);
 
-        vedioObject = UIManager.OpenUI(Config.UI.UIPath.MoviePanel);
-        vedioObject.SetActive(false);
+        GameObject vedioObject = UIManager.OpenUI(Config.UI.UIPath.MoviePanel);
+        movie = vedioObject.GetComponent<MovieView>();
         bird = ResourceManager.InstantiatePrefab("Bird");
     }
     private void birdMovement(System.Action action)
@@ -68,7 +68,7 @@ public class GameManager : MonoBehaviour {
             case STATUS.Idle:
                 status = STATUS.Show;
                 birdMovement(() => {
-                    if (status == STATUS.Show) vedioObject.SetActive(true);
+                    if (status == STATUS.Show) movie.play();
                 });
                 break;
             case STATUS.Show:
@@ -77,13 +77,13 @@ public class GameManager : MonoBehaviour {
                     status = STATUS.Waiting;
                     waitingCount = 0;
                     bird.SetActive(false);
-                    vedioObject.SetActive(false);
+                    movie.stop();
                 }
                 break;
             case STATUS.Prepare:
                 status = STATUS.Running;
                 bird.SetActive(false);
-                vedioObject.SetActive(false);
+                movie.stop();
                 break;
             case STATUS.Waiting:
                 if (waitingCount++ > MaxWaiting)
@@ -136,6 +136,7 @@ public class GameManager : MonoBehaviour {
             passAll();
             return;
         }
+        AppAudioModel.Instance().RunAudio(AppAudioName.Pass);
         GameFacts fact = new GameFacts(gameLevel.level, 3 + gameLevel.level*2);
         string targetStr = null;
         switch (Random.Range(0, 3))
@@ -170,14 +171,15 @@ public class GameManager : MonoBehaviour {
     {
         UIManager.OpenUI(Config.UI.UIPath.WinPanel);
         Libs.Resource.EffectManager.LoadEffect("star", transform);
-
+        AppAudioModel.Instance().RunAudio(AppAudioName.Success);
         status = STATUS.Idle;
 
     }
     private void failed()
     {
         UIManager.OpenUI(Config.UI.UIPath.LosePanel);
-
+        string audio = Random.Range(0, 1f) > 0.5f ? AppAudioName.Fail1 : AppAudioName.Fail2;
+        AppAudioModel.Instance().RunAudio(audio);
         status = STATUS.Idle;
     }
     #region view callback

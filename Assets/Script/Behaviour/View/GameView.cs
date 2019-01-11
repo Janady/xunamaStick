@@ -148,16 +148,20 @@ public class GameView : MonoBehaviour
     private void OnTryButtonClick(GameObject go)
     {
         if (tryCallback != null) tryCallback();
+
+        AppAudioModel.Instance().RunAudio(AppAudioName.Button1);
         // EventMgr.Instance.DispatchEvent(EventNameData.ButtonStart, true);
     }
     private void OnPlayButtonClick(GameObject go)
     {
         if (playCallback != null) playCallback();
+        AppAudioModel.Instance().RunAudio(AppAudioName.Button1);
         // EventMgr.Instance.DispatchEvent(EventNameData.ButtonStart, false);
     }
     private void OnBuyButtonClick(GameObject go)
     {
         if (buyCallback != null) buyCallback();
+        AppAudioModel.Instance().RunAudio(AppAudioName.Button2);
         // EventMgr.Instance.DispatchEvent(EventNameData.ButtonStart, false);
     }
     #endregion

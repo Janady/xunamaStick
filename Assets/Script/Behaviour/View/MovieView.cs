@@ -20,30 +20,25 @@ public class MovieView : MonoBehaviour
             loadVideo();
         }
     }
-    private void OnEnable()
-    {
-        if (sciMedia != null) sciMedia.Play();
-    }
+
     private void OnDisable()
     {
-        if (sciMedia != null) sciMedia.Pause();
+        AppAudioModel.Instance().setAudioActive(true);
     }
-
+    private void OnEnable()
+    {
+        AppAudioModel.Instance().setAudioActive(false);
+    }
     private void initFiles()
     {
         if (!Directory.Exists(Config.Constant.VedioPath))
         {
-            Directory.CreateDirectory(Config.Constant.VedioPath);
+            Debug.Log(Directory.CreateDirectory(Config.Constant.VedioPath));
         }
         fileQueue = new Queue();
-        DirectoryInfo direction = new DirectoryInfo(Config.Constant.VedioPath);
-        FileInfo[] files = direction.GetFiles("*", SearchOption.AllDirectories);
-        foreach (FileInfo file in files)
+        foreach (FileInfo fi in FileUtil.getVedios(Config.Constant.VedioPath))
         {
-            if (file.Name.EndsWith(".mp4"))
-            {
-                fileQueue.Enqueue("file://" + file.FullName);
-            }
+            fileQueue.Enqueue("file://" + fi.FullName);
         }
     }
     private void OnEnd()
@@ -52,11 +47,31 @@ public class MovieView : MonoBehaviour
     }
     private void loadVideo()
     {
-        if (fileQueue.Count <= 0) gameObject.SetActive(false);
+        if (fileQueue.Count <= 0)
+        {
+            sciMedia = null;
+            gameObject.SetActive(false);
+            return;
+        }
         string path = fileQueue.Dequeue().ToString();
+        Debug.Log("play vedio: " + path);
         fileQueue.Enqueue(path);
         sciMedia.Load(path);
-        //sciMedia.Play();
-        Debug.Log(path);
+    }
+    public void play()
+    {
+        if (sciMedia != null)
+        {
+            sciMedia.Play();
+            gameObject.SetActive(true);
+        }
+    }
+    public void stop()
+    {
+        if (sciMedia != null)
+        {
+            sciMedia.Pause();
+            gameObject.SetActive(false);
+        }
     }
 }

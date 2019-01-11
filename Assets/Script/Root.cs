@@ -25,6 +25,7 @@ public class Root : MonoBehaviour {
     {
         gameObject.AddComponent<Libs.Coroutine.CoroutineHandler>();
         gameObject.AddComponent<GameManager>();
+        AppAudioModel.Instance().RunMusic(AppAudioName.BGM);
     }
 
     private void OnEnable()
