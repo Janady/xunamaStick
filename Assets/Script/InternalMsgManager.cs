@@ -10,11 +10,12 @@ public class InternalMsgManager : MonoBehaviour {
         serial = Service.SerialIOService.GetInstance();
         InvokeRepeating("OnCheck", 0, Config.Constant.HEART_BEAT);
         //Invoke("test", 1f);
+        //InvokeRepeating("test", 0, Config.Constant.HEART_BEAT);
     }
     private void test()
     {
-        byte[] buf = { (byte)0xAE, (byte)0x06, (byte)0x00, (byte)0x08, (byte)0x00, (byte)0xAF };
-        //byte[] buf = { (byte)0xAE, (byte)0x06, (byte)0x00, (byte)0x02, (byte)0x02, (byte)0xAF };
+        //byte[] buf = { (byte)0xAE, (byte)0x06, (byte)0x00, (byte)0x08, (byte)0x00, (byte)0xAF };
+        byte[] buf = { (byte)0xAE, (byte)0x06, (byte)0x00, (byte)0x02, (byte)0x02, (byte)0xAF };
         serial.Received(buf);
     }
     private void OnCheck()

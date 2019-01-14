@@ -5,14 +5,21 @@ public class FileUtil
 {
     public static FileInfo[] getVedios(string directory)
     {
+        return getFiles(directory, "*.flv", "*.mp4", "*.mov", "*.qt", "*.avi");
+    }
+    public static FileInfo[] getExcel(string directory)
+    {
+        return getFiles(directory, "*.json");
+    }
+    private static FileInfo[] getFiles(string directory, params string[] pattern)
+    {
         List<FileInfo> list = new List<FileInfo>();
         if (Directory.Exists(directory))
         {
-            string[] vedioPattern = { "*.flv", "*.mp4", "*.mov", "*.qt", "*.avi" };
             DirectoryInfo direction = new DirectoryInfo(directory);
-            foreach (string pattern in vedioPattern)
+            foreach (string ptn in pattern)
             {
-                FileInfo[] files = direction.GetFiles(pattern, SearchOption.AllDirectories);
+                FileInfo[] files = direction.GetFiles(ptn, SearchOption.AllDirectories);
                 foreach (FileInfo fi in files)
                 {
                     list.Add(fi);

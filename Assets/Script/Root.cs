@@ -27,6 +27,13 @@ public class Root : MonoBehaviour {
         gameObject.AddComponent<GameManager>();
         AppAudioModel.Instance().RunMusic(AppAudioName.BGM);
     }
+    private void Update()
+    {
+        if (Input.GetKey(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
+    }
 
     private void OnEnable()
     {

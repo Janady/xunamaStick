@@ -23,10 +23,10 @@ public class AppAudioModel : MonoBehaviour
     private AudioSource effect;
     private AudioSource music;
 
-    public float effectVolume;
-    public float musicVolume;
-    private string musicName;
-    private string effectName;
+    private float effectVolume;
+    private float musicVolume;
+    private string musicName = "music";
+    private string effectName = "effect";
     private const string APP_AUDIO_PATH = "Audio/";
 
     private List<string> localAudioNameList = new List<string>();
@@ -142,7 +142,6 @@ public class AppAudioModel : MonoBehaviour
     }
     public void setAudioActive(bool active, string inputMusicName = null)
     {
-        Debug.Log("setAudioActive >> " + active);
         if (music == null)
         {
             return;
@@ -157,12 +156,12 @@ public class AppAudioModel : MonoBehaviour
         {
             if (!active)
             {
-                effect.Stop();
+                // effect.Stop();
                 music.Stop();
             }
             else
             {
-                effect.Play();
+                // effect.Play();
                 music.Play();
             }
         }
