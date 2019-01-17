@@ -4,6 +4,12 @@ public class GameLevel
 {
     private int total;
     private int current;
+    private readonly string[] desc = {
+        "比赛开始",
+        "通三关, 赢口红", // 第一关
+        "干得漂亮, 再接再厉",
+        "最后一关, 冲鸭！！"
+    };
     public GameLevel(bool trial)
     {
         total = trial ? 2 : 3;
@@ -46,5 +52,9 @@ public class GameLevel
             ret = "顺利通关";
         }
         return ret;
+    }
+    public string description()
+    {
+        return desc[current];
     }
 }

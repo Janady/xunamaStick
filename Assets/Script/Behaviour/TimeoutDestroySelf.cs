@@ -17,7 +17,8 @@ public class TimeoutDestroySelf : MonoBehaviour
         if (doFade)
         {
             Image image = GetComponent<Image>();
-            image.DOColor(new Color(255, 255, 255, 0), (float)timeout).SetEase(Ease.Linear);
+            image.CrossFadeAlpha(0.3f, timeout, true);
+            //image.DOColor(new Color(255, 255, 255, 0.5f), (float)timeout).SetEase(Ease.Linear);
         }
     }
     private void OnDestroy()

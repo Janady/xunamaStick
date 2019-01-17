@@ -166,11 +166,11 @@ public class GameManager : MonoBehaviour {
         GameObject go = UIManager.OpenUI(Config.UI.UIPath.HintPanel);
         Title title = go.GetComponent<Title>();
         title.title = gameLevel.ToString();
+        title.description = gameLevel.description();
     }
     private void passAll()
     {
         UIManager.OpenUI(Config.UI.UIPath.WinPanel);
-        Libs.Resource.EffectManager.LoadEffect("star", transform);
         AppAudioModel.Instance().RunAudio(AppAudioName.Success);
         status = STATUS.Idle;
 
@@ -191,6 +191,9 @@ public class GameManager : MonoBehaviour {
             GameObject gl = UIManager.OpenUI(Config.UI.UIPath.ContanerSelectPanel);
             ContanerSelectView list = gl.GetComponent<ContanerSelectView>();
             list.setCallback((id) => {
+                Mod.Cabinet cabinet = Mod.Cabinet.GetById(id);
+                if (cabinet == null || cabinet.Good() == null) return;
+                if (!cabinet.Enabled || cabinet.Count <= 0) return;
                 Destroy(gl);
                 Coin.GetInstance().consume(id);
                 startGame(false);
@@ -211,8 +214,10 @@ public class GameManager : MonoBehaviour {
         GameObject go = UIManager.OpenUI(Config.UI.UIPath.ContanerSelectPanel);
         ContanerSelectView list = go.GetComponent<ContanerSelectView>();
         list.setCallback((id)=> {
-            Destroy(go);
             Mod.Cabinet cabinet = Mod.Cabinet.GetById(id);
+            if (cabinet == null || cabinet.Good() == null) return;
+            if (!cabinet.Enabled || cabinet.Count <= 0) return;
+            Destroy(go);
             GameObject pay = UIManager.OpenUI(Config.UI.UIPath.PayPanel);
             PayView pv = pay.GetComponent<PayView>();
             pv.amount = cabinet.Good().Price;

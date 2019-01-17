@@ -41,8 +41,9 @@ namespace Mod
                 {
                     Num = i,
                     Title = i + "号箱",
-                    GoodsId = UnityEngine.Random.Range(1,16),
-                    Enabled = true
+                    GoodsId = UnityEngine.Random.Range(1, 16),
+                    Count = UnityEngine.Random.Range(0, 2),
+                    Enabled = UnityEngine.Random.Range(0, 1.0f) > 0.5f ? true : false
                 };
                 allCabinet.Add(c);
             }

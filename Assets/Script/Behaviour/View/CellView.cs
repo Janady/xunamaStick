@@ -6,6 +6,12 @@ namespace View
 {
     public class CellView : MonoBehaviour
     {
+        public enum CellTag
+        {
+            None,
+            Sold,
+            Disable
+        }
         private int id;
         private Text numText;
         private Text priceText;
@@ -76,6 +82,28 @@ namespace View
                     priceText = transform.FindChild("price").gameObject.GetComponent<Text>();
                 }
                 priceText.text = "￥"+value.ToString();
+            }
+        }
+        public void setCellTag(CellTag tag)
+        {
+            Transform tr = transform.FindChild("tag");
+            Image img = tr.GetComponent<Image>();
+            Texture2D texture2D;
+            switch (tag)
+            {
+                case CellTag.None:
+                    tr.gameObject.SetActive(false);
+                    break;
+                case CellTag.Sold:
+                    tr.gameObject.SetActive(true);
+                    texture2D = Libs.Resource.UIManager.loadImage("Image/sold", true);
+                    img.sprite = Libs.Resource.UIManager.GenSprite(texture2D);
+                    break;
+                case CellTag.Disable :
+                    tr.gameObject.SetActive(true);
+                    texture2D = Libs.Resource.UIManager.loadImage("Image/disable", true);
+                    img.sprite = Libs.Resource.UIManager.GenSprite(texture2D);
+                    break;
             }
         }
     }

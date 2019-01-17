@@ -14,8 +14,8 @@ public class InternalMsgManager : MonoBehaviour {
     }
     private void test()
     {
-        //byte[] buf = { (byte)0xAE, (byte)0x06, (byte)0x00, (byte)0x08, (byte)0x00, (byte)0xAF };
-        byte[] buf = { (byte)0xAE, (byte)0x06, (byte)0x00, (byte)0x02, (byte)0x02, (byte)0xAF };
+        byte[] buf = { (byte)0xAE, (byte)0x06, (byte)0x00, (byte)0x08, (byte)0x00, (byte)0xAF };
+        //byte[] buf = { (byte)0xAE, (byte)0x06, (byte)0x00, (byte)0x02, (byte)0x02, (byte)0xAF };
         serial.Received(buf);
     }
     private void OnCheck()

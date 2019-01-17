@@ -12,7 +12,7 @@ namespace UI.Widget
         {
             if (text == null)
             {
-                CoroutineHandler.Instance().MultiDoCoroutine(run(seconds, text, callback));
+                CoroutineHandler.Instance().MultiDoCoroutine(run(seconds, null, callback));
             }
             else
             {

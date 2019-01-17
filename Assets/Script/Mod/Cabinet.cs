@@ -9,6 +9,7 @@ namespace Mod
         public string Title { get; set; }
         [Indexed]
         public int GoodsId { get; set; }
+        public int Count { get; set; }
         public bool Enabled { get; set; }
 
         public static IEnumerable<Cabinet> All()
@@ -24,6 +25,12 @@ namespace Mod
         public Goods Good()
         {
             return connection.Find<Goods>(GoodsId);
+        }
+        public void clear()
+        {
+            GoodsId = 0;
+            Count = 0;
+            update();
         }
 
         public override string ToString()

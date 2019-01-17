@@ -15,10 +15,15 @@ public class ContainerView : MonoBehaviour
             GameObject go = UIManager.OpenUI(Config.UI.UIPath.GoodsSelectPanel);
             GoodsSelectView gsv = go.GetComponent<GoodsSelectView>();
             gsv.SetId(Cabinet.GetById(x).GoodsId);
+            gsv.SetCabinet(Cabinet.GetById(x));
             gsv.setCallback((retid)=>{
                 Cabinet cabinet = Cabinet.GetById(x);
                 cabinet.GoodsId = retid;
                 cabinet.update();
+                Destroy(go);
+                Refresh();
+            });
+            gsv.setActionCallback(() => {
                 Destroy(go);
                 Refresh();
             });
