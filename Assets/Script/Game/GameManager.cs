@@ -186,7 +186,7 @@ public class GameManager : MonoBehaviour {
     private void playGame()
     {
         // startGame(false);
-        if (Coin.GetInstance().afford())
+        if (Coin.GetInstance().afford() > 0)
         {
             GameObject gl = UIManager.OpenUI(Config.UI.UIPath.ContanerSelectPanel);
             ContanerSelectView list = gl.GetComponent<ContanerSelectView>();

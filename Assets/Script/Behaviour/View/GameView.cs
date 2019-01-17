@@ -26,6 +26,7 @@ public class GameView : MonoBehaviour
         Coin.GetInstance().GameTimeCallback(x=> {
             remainingText.text = x.ToString();
         });
+        remainingText.text = Coin.GetInstance().afford().ToString();
         passSet = transform.FindChild("PassSet");
         actionSet = transform.FindChild("ActionSet");
         initPass();

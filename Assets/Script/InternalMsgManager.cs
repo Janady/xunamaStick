@@ -10,7 +10,7 @@ public class InternalMsgManager : MonoBehaviour {
         serial = Service.SerialIOService.GetInstance();
         InvokeRepeating("OnCheck", 0, Config.Constant.HEART_BEAT);
         //Invoke("test", 1f);
-        //InvokeRepeating("test", 0, Config.Constant.HEART_BEAT);
+        //InvokeRepeating("test", 0, 20);
     }
     private void test()
     {

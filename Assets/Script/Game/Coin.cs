@@ -5,7 +5,7 @@ using Mod;
 public delegate int CoinCallback();
 public class Coin
 {
-    private  uint _amount;
+    private  uint _amount = 0;
     private uint _game = 2;
     private Action<uint> _gameTimeCallback;
     public static Coin GetInstance()
@@ -27,12 +27,12 @@ public class Coin
             payment = type
         };
         charege.insert();
-        if (_gameTimeCallback != null) _gameTimeCallback(_amount);
+        if (_gameTimeCallback != null) _gameTimeCallback(_amount/_game);
     }
-    public bool afford(uint amount = 0)
+    public uint afford(uint amount = 0)
     {
         if (amount == 0) amount = _game;
-        return (_amount >= amount);
+        return (_amount / amount);
     }
     public bool consume(int cabinetId, bool doGame = true, uint amount = 0)
     {
@@ -50,7 +50,7 @@ public class Coin
             goodsId = goodId
         };
         purchase.insert();
-        if (_gameTimeCallback != null) _gameTimeCallback(_amount);
+        if (_gameTimeCallback != null) _gameTimeCallback(_amount/_game);
         return true;
     }
 }
