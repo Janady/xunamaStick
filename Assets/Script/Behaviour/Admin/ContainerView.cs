@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using System;
+using System.Collections;
 using Libs.Resource;
 using View;
 using Mod;
@@ -10,6 +10,7 @@ public class ContainerView : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        StartCoroutine(initNav());
         list = transform.FindChild("GoodsList").GetComponent<ContainerListView>();
         if (list != null) list.setCallback(x=> {
             GameObject go = UIManager.OpenUI(Config.UI.UIPath.GoodsSelectPanel);
@@ -28,6 +29,21 @@ public class ContainerView : MonoBehaviour
                 Refresh();
             });
         });
+    }
+    IEnumerator initNav()
+    {
+        NavView nv = transform.FindChild("nav").GetComponent<NavView>();
+        nv.Title = "货柜管理";
+        nv.setBtn1("yi、、一键开锁", ()=> {
+            Service.LockingPlateService.Instance().OpenAll();
+        });
+        nv.setBtn2("一键补货", ()=> {
+            //GameObject go = UIManager.OpenUI(Config.UI.UIPath.LoadingPanel);
+            Service.GoodsService.Instance().Replenishment();
+            Refresh();
+            //Destroy(go);
+        });
+        yield return new WaitForEndOfFrame();
     }
 
     // Update is called once per frame

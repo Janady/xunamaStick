@@ -11,6 +11,7 @@
         public const string WinPanel = "WinPanel";
         public const string LosePanel = "LosePanel";
         public const string HintPanel = "HintPanel";
+        public const string LoadingPanel = "LoadingPanel";
         public const string PayPanel = "PayPanel";
         public const string AdminPanel = "Admin/AdminPanel";
         public const string FinancialPanel = "Admin/FinancialPanel";

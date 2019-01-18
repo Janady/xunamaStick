@@ -11,6 +11,7 @@ public class AdminView : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        StartCoroutine(initNav());
         contentTr = transform.FindChild("Content");
         if (contentTr == null) throw new Exception("No content");
         
@@ -32,7 +33,20 @@ public class AdminView : MonoBehaviour
         GameObject ad = contentTr.FindChild("HomeContent").FindChild("ad").gameObject;
         EventTriggerListener.Get(ad).onClick = OnAdClick;
     }
-    
+
+    IEnumerator initNav()
+    {
+        NavView nv = transform.FindChild("nav").GetComponent<NavView>();
+        nv.Title = "货柜管理";
+        nv.setBtn1("yi、、一键开锁", () => {
+            Service.LockingPlateService.Instance().OpenAll();
+        });
+        nv.setBtn2("一键补货", () => {
+            Service.GoodsService.Instance().Replenishment();
+        });
+        yield return new WaitForEndOfFrame();
+    }
+
     #region button click event
     private void OnFiancialClick(GameObject go)
     {
