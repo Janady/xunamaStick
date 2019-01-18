@@ -35,6 +35,7 @@ namespace View
                     cv.Title = "请添加商品";
                     cv.price = 0;
                     cv.ImagePath = "Image/HeartGrey";
+                    cv.setCellTag(CellView.CellTag.None);
                 }
                 else
                 {

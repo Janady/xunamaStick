@@ -28,7 +28,7 @@ namespace Libs.Resource
             if (tr)
             {
                 go.transform.position = tr.position;
-                go.transform.rotation = tr.rotation;
+                //go.transform.rotation = tr.rotation;
             }
 
             ParticleSystem m_ExplosionParticles = go.GetComponent<ParticleSystem>();

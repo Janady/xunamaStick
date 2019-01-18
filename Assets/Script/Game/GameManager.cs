@@ -217,7 +217,6 @@ public class GameManager : MonoBehaviour {
             Mod.Cabinet cabinet = Mod.Cabinet.GetById(id);
             if (cabinet == null || cabinet.Good() == null) return;
             if (!cabinet.Enabled || cabinet.Count <= 0) return;
-            Destroy(go);
             GameObject pay = UIManager.OpenUI(Config.UI.UIPath.PayPanel);
             PayView pv = pay.GetComponent<PayView>();
             pv.amount = cabinet.Good().Price;

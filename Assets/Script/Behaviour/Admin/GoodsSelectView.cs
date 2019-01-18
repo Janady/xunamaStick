@@ -42,14 +42,24 @@ public class GoodsSelectView : MonoBehaviour
             actionText.text = "补货";
         }
 
-        // Set title
-        Text title = tr.FindChild("title").GetComponent<Text>();
-        title.text = good.Title;
+        // set enabke
+        Button use = tr.FindChild("use").GetComponent<Button>();
+        use.gameObject.SetActive(true);
+        Text usetitle = tr.FindChild("use").FindChild("Text").GetComponent<Text>();
+        bool useless = !_cabinet.Enabled;
+        usetitle.text = useless ? "修复启用" : "损坏禁用";
+        use.onClick.AddListener(() => {
+            _cabinet.Enabled = useless;
+            _cabinet.update();
+            if (actionCallBack != null) actionCallBack();
+        });
 
         // set count
+        /*
         Text count = tr.FindChild("count").GetComponent<Text>();
         count.gameObject.SetActive(true);
         count.text = _cabinet.Count.ToString();
+        */
     }
 
     private void initGoodsList()
