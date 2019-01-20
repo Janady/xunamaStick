@@ -5,6 +5,7 @@
         public const string GamePanel = "GamePanel";
         public const string MoviePanel = "Admin/MoviePanel";
         public const string TipsPanel = "TipsPanel";
+        public const string FileManager = "FileManager";
         public const string ActionPanel = "ActionPanel";
         public const string PassPanel = "PassPanel";
         public const string RemainingPanel = "Remaining";
@@ -23,6 +24,6 @@
         public const string ContanerSelectPanel = "ContanerSelectPanel";
         public const string GoodsSelectPanel = "Admin/GoodsSelectPanel";
         public const string EditGoodsPanel = "EditGoodsPanel";
-        public const string DeletePanel = "DeletePanel";
+        public const string DeletePanel = "DeletePanel"; 
     }
 }

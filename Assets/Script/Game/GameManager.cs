@@ -9,7 +9,9 @@ public class GameManager : MonoBehaviour {
     // Use this for initialization
     private GameView gameView;
     private GameObject bird;
+#if !UNITY_EDITOR
     private MovieView movie;
+#endif
     private const int MaxWaiting = 1000;
     private int waitingCount = 0;
     private enum STATUS
@@ -25,9 +27,10 @@ public class GameManager : MonoBehaviour {
         GameObject go = UIManager.OpenUI(Config.UI.UIPath.GamePanel);
         gameView = go.AddComponent<GameView>();
         gameView.setupCallback(tryGame, playGame, buy);
-
+#if !UNITY_EDITOR
         GameObject vedioObject = UIManager.OpenUI(Config.UI.UIPath.MoviePanel);
         movie = vedioObject.GetComponent<MovieView>();
+#endif
         bird = ResourceManager.InstantiatePrefab("Bird");
     }
     private void birdMovement(System.Action action)
@@ -68,7 +71,9 @@ public class GameManager : MonoBehaviour {
             case STATUS.Idle:
                 status = STATUS.Show;
                 birdMovement(() => {
+#if !UNITY_EDITOR
                     if (status == STATUS.Show) movie.play();
+#endif
                 });
                 break;
             case STATUS.Show:
@@ -77,13 +82,17 @@ public class GameManager : MonoBehaviour {
                     status = STATUS.Waiting;
                     waitingCount = 0;
                     bird.SetActive(false);
+#if !UNITY_EDITOR
                     movie.stop();
+#endif
                 }
                 break;
             case STATUS.Prepare:
                 status = STATUS.Running;
                 bird.SetActive(false);
+#if !UNITY_EDITOR
                 movie.stop();
+#endif
                 break;
             case STATUS.Waiting:
                 if (waitingCount++ > MaxWaiting)
@@ -182,7 +191,7 @@ public class GameManager : MonoBehaviour {
         AppAudioModel.Instance().RunAudio(audio);
         status = STATUS.Idle;
     }
-    #region view callback
+#region view callback
     private void playGame()
     {
         // startGame(false);
