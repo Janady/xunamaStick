@@ -24,9 +24,8 @@ public class Root : MonoBehaviour {
     void Start ()
     {
         gameObject.AddComponent<Libs.Coroutine.CoroutineHandler>();
-        gameObject.AddComponent<GameManager>();
-        AppAudioModel.Instance().RunMusic(AppAudioName.BGM);
-        //UI.Widget.FileManager.openf("/Users/janady/", doit, "*.jpg");
+        //gameObject.AddComponent<GameManager>();
+        //AppAudioModel.Instance().RunMusic(AppAudioName.BGM);
     }
     private void doit(string s)
     {

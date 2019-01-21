@@ -41,7 +41,7 @@ namespace View
                     GoodRowView cv = go.GetComponent<GoodRowView>();
                     cv.Id = good.Id;
                     cv.Title = good.Title;
-                    cv.ImagePath = "Image/Gift";
+                    cv.ImagePath = good.ImagePath;
                     cv.price = good.Price;
                     if (callBack != null) cv.SetCallBack(callBack);
                     if (editCallBack != null) cv.setEditCallBack(editCallBack);

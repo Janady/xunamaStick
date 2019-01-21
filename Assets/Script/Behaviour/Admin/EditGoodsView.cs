@@ -1,8 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System;
-using Libs.Event;
-using Libs.Resource;
 using Mod;
 public class EditGoodsView : MonoBehaviour
 {
@@ -28,19 +26,14 @@ public class EditGoodsView : MonoBehaviour
         nameField.text = _good.Title;
         priceField.text = _good.Price.ToString();
         imgStr = _good.ImagePath;
-        if (imgStr != null) image.sprite = UIManager.GenSprite(UIManager.loadImage(imgStr, false));
-    }
-    private void OnDisable()
-    {
-        EventMgr.Instance.RemoveEvent(EventNameData.ChooseFile, OnChooseFile);
-    }
-    private void OnEnable()
-    {
-        EventMgr.Instance.AddEvent(EventNameData.ChooseFile, OnChooseFile);
+        image.sprite = UI.Widget.ImageHelper.GoodsImage(imgStr);
     }
     void ChangeImage()
     {
-        Libs.Api.ChooseFileApi.chooseImageFile();
+        UI.Widget.FileManager.openf("/Users/janady/test", (string s)=> {
+            imgStr = s;
+            image.sprite = UI.Widget.ImageHelper.GoodsImage(imgStr);
+        }, "*.png", "*.jpg", "*.jpeg", "*.bmp");
     }
     void OnClick()
     {
@@ -79,13 +72,5 @@ public class EditGoodsView : MonoBehaviour
         {
             _good = value;
         }
-    }
-    /*
-     * event handler
-     */
-    private void OnChooseFile(object dispatcher, string eventName, object value)
-    {
-        imgStr = value as string;
-        image.sprite = UIManager.GenSprite(UIManager.loadImage(imgStr, false));
     }
 }

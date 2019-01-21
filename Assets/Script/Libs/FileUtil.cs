@@ -3,6 +3,8 @@ using System.IO;
 
 public class FileUtil
 {
+    public readonly string[] vedioPattern = { "*.flv", "*.mp4", "*.mov", "*.qt", "*.avi" };
+    public readonly string[] imagePattern = { "*.png", "*.jpg", "*.jpeg", "*.bmp" };
     public static FileInfo[] getVedios(string directory)
     {
         return getFiles(directory, "*.flv", "*.mp4", "*.mov", "*.qt", "*.avi");

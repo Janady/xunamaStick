@@ -58,8 +58,7 @@ namespace View
                 {
                     image = transform.FindChild("Image").gameObject.GetComponent<Image>();
                 }
-                Texture2D texture2D = Libs.Resource.UIManager.loadImage(value, true);
-                image.sprite = Libs.Resource.UIManager.GenSprite(texture2D);
+                image.sprite = UI.Widget.ImageHelper.GoodsImage(value);
             }
         }
         public int Num

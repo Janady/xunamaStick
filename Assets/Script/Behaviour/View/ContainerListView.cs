@@ -41,7 +41,7 @@ namespace View
                 {
                     cv.Title = good.Title;
                     cv.price = good.Price;
-                    cv.ImagePath = "Image/Gift";
+                    cv.ImagePath = good.ImagePath;
                     // set tag
                     CellView.CellTag tag = CellView.CellTag.None;
                     if (!cabinet.Enabled) tag = CellView.CellTag.Disable;

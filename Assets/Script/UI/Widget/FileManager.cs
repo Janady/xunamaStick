@@ -13,7 +13,7 @@ namespace UI.Widget
         public string path="/";
         private DirectoryInfo _directory;
         public Action<string> callBack;
-        public string reg;
+        public string[] reg;
         private Text title;
         private Transform _listTr;
         private Transform listTr
@@ -25,7 +25,7 @@ namespace UI.Widget
             }
         }
 
-        public static void openf(string path, Action<string> action, string reg = "*")
+        public static void openf(string path, Action<string> action, params string[] reg)
         {
             GameObject go = Libs.Resource.UIManager.OpenUI(Config.UI.UIPath.FileManager);
             FileManager fm = go.GetComponent<FileManager>();
@@ -61,31 +61,31 @@ namespace UI.Widget
             {
                 return;
             }
-            StartCoroutine(foldRow(directory));
-            StartCoroutine(filesRow(directory));
+            StartCoroutine(listRow(directory));
         }
-        private IEnumerator foldRow(DirectoryInfo directory)
+        private IEnumerator listRow(DirectoryInfo directory)
         {
 
+            foreach (string ptn in reg)
+            {
+                foreach (FileInfo fi in directory.GetFiles(ptn))
+                {
+                    setRow(fi, null);
+                    yield return new WaitForEndOfFrame();
+                }
+            }
             foreach (DirectoryInfo di in directory.GetDirectories())
             {
-                GameObject go = UIManager.OpenUI("FileRow", null, listTr);
-                FileRowView cv = go.GetComponent<FileRowView>();
-                cv.setValueAndCallback(null, di, rowCallback);
+                setRow(null, di);
                 yield return new WaitForEndOfFrame();
             }
         }
 
-        private IEnumerator filesRow(DirectoryInfo directory)
+        private void setRow(FileInfo fi, DirectoryInfo di)
         {
-
-            foreach (FileInfo fi in directory.GetFiles(reg))
-            {
-                GameObject go = UIManager.OpenUI("FileRow", null, listTr);
-                FileRowView cv = go.GetComponent<FileRowView>();
-                cv.setValueAndCallback(fi,null, rowCallback);
-                yield return new WaitForEndOfFrame();
-            }
+            GameObject go = UIManager.OpenUI("FileRow", null, listTr);
+            FileRowView cv = go.GetComponent<FileRowView>();
+            cv.setValueAndCallback(fi, di, rowCallback);
         }
         private void rowCallback(FileInfo fi, DirectoryInfo di)
         {
