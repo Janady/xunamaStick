@@ -5,12 +5,16 @@ using Mod;
 public delegate int CoinCallback();
 public class Coin
 {
-    private  uint _amount = 0;
+    private  uint _amount = 200;
     private uint _game = 2;
     private Action<uint> _gameTimeCallback;
     public static Coin GetInstance()
     {
         return SingletonProvider<Coin>.Instance;
+    }
+    public Coin()
+    {
+        _game = (uint)Mod.Game.get().price;
     }
     public void GameTimeCallback(Action<uint> value)
     {

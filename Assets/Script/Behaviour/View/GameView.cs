@@ -77,7 +77,7 @@ public class GameView : MonoBehaviour
     private void passLevel(GameLevel level)
     {
         int passNum = passSet.childCount;
-        for (int i=0; i<level.level && i< passNum; i++)
+        for (int i=0; i<=level.level && i< passNum; i++)
         {
             GameObject go = passSet.GetChild(i).gameObject as GameObject;
             Image img = go.GetComponent<Image>();
@@ -86,7 +86,7 @@ public class GameView : MonoBehaviour
             GameObject l = passSet.GetChild(i).FindChild("lock").gameObject;
             l.SetActive(false);
         }
-        for (int i=level.level; i<passNum; i++)
+        for (int i=level.level+1; i<passNum; i++)
         {
             GameObject go = passSet.GetChild(i).gameObject as GameObject;
             Image img = go.GetComponent<Image>();

@@ -5,7 +5,6 @@ public class GameLevel
     private int total;
     private int current;
     private readonly string[] desc = {
-        "比赛开始",
         "通三关, 赢口红", // 第一关
         "干得漂亮, 再接再厉",
         "最后一关, 冲鸭！！"
@@ -16,14 +15,17 @@ public class GameLevel
         current = 0;
     }
 
-    public bool next()
+    public bool pass()
+    {
+        if (current >= total)
+        {
+            return true;
+        }
+        return false;
+    }
+    public void next()
     {
         current++;
-        if (current > total)
-        {
-            return false;
-        }
-        return true;
     }
     public int level
     {
@@ -43,9 +45,9 @@ public class GameLevel
     public override string ToString()
     {
         string ret = "";
-        if (current <= total)
+        if (!pass())
         {
-            ret = "第" + current + "关";
+            ret = "第" + (current + 1) + "关";
         }
         else
         {

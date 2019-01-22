@@ -131,7 +131,7 @@ public class GameManager : MonoBehaviour {
             Destroy(go);
         }
     }
-
+    private int cabinetId;
     private void startGame(bool trial)
     {
         status = STATUS.Prepare;
@@ -140,13 +140,13 @@ public class GameManager : MonoBehaviour {
     }
     private void nextLevel()
     {
-        if (!gameLevel.next())
+        if (gameLevel.pass())
         {
             passAll();
             return;
         }
         AppAudioModel.Instance().RunAudio(AppAudioName.Pass);
-        GameFacts fact = new GameFacts(gameLevel.level, 3 + gameLevel.level*2);
+        GameFacts fact = new GameFacts(gameLevel.level, cabinetId);
         string targetStr = null;
         switch (Random.Range(0, 3))
         {
@@ -162,13 +162,14 @@ public class GameManager : MonoBehaviour {
         }
         GameObject go = ResourceManager.InstantiatePrefab(targetStr);
         Rotator target = go.AddComponent<Rotator>();
-        target.Total = fact.Count;
+        target.Fact = fact;
         gameView.startGame(gameLevel, fact.Count);
         showHint();
         // EventMgr.Instance.DispatchEvent(EventNameData.GameFacts, fact);
         // UI.Widget.CommonTips.OpenTips(UI.Widget.TipsType.AUTO_CLOSE, gameLevel.ToString(), null, null, () => {
-            //ResourceManager.InstantiatePrefab("pinSpawn");
+        //ResourceManager.InstantiatePrefab("pinSpawn");
         // }, 1);
+        gameLevel.next();
     }
     private void showHint()
     {
@@ -205,6 +206,7 @@ public class GameManager : MonoBehaviour {
                 if (!cabinet.Enabled || cabinet.Count <= 0) return;
                 Destroy(gl);
                 Coin.GetInstance().consume(id);
+                cabinetId = id;
                 startGame(false);
             });
             return;

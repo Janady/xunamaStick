@@ -9,6 +9,7 @@ public class Rotator : MonoBehaviour {
     private const float destYPos = 0f;
     private int total = 0;
     private float speed = 120f;
+    private GameFacts _fact;
     private Vector3 spawn;
     private int lips = 0;
     private int receiveLips = 0;
@@ -16,7 +17,7 @@ public class Rotator : MonoBehaviour {
     private GameObject lip;
     private bool onAir = false;
     // Use this for initialization
-    void Start () {
+    void Start() {
         prepareLips();
     }
     private void OnEnable()
@@ -28,7 +29,8 @@ public class Rotator : MonoBehaviour {
         EventMgr.Instance.RemoveEvent(EventNameData.LipsCollision, OnLipsCollission);
     }
     // Update is called once per frame
-    void Update () {
+    void Update() {
+        changeSpeed(false);
         transform.Rotate(0f, 0f, speed * Time.deltaTime);
         if (lips >= total) return;
         if (Input.GetButtonDown("Fire1") && !onAir)
@@ -68,7 +70,7 @@ public class Rotator : MonoBehaviour {
             if (lips < total) prepareLips();
         });
     }
-    
+
     private void Received(GameObject go)
     {
         if (go == null) return;
@@ -80,10 +82,7 @@ public class Rotator : MonoBehaviour {
         {
             StartCoroutine(GamePass());
         }
-        if (Random.Range(0, 1f) > 0.6)
-        {
-            GetComponent<Rotator>().speed *= -1;
-        }
+        changeSpeed(true);
     }
     private IEnumerator GamePass()
     {
@@ -91,20 +90,23 @@ public class Rotator : MonoBehaviour {
         EventMgr.Instance.DispatchEvent(EventNameData.GamePass, !collided);
         Destroy(gameObject);
     }
-    public int Total
+    int changeCount = 0;
+    private void changeSpeed(bool force)
     {
-        set
+        if (changeCount++ > 50 || force)
         {
-            total = value;
-            receiveLips = 0;
-            lips = 0;
+            changeCount = 0;
+            speed = (_fact == null) ? 0 : _fact.Speed;
         }
     }
-    public float Speed
+    public GameFacts Fact
     {
         set
         {
-            speed = value;
+            _fact = value;
+            total = value.Count;
+            receiveLips = 0;
+            lips = 0;
         }
     }
 
