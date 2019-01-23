@@ -10,6 +10,7 @@ public class GameFacts
     private int speed;
     private float _speed;
     private int calibrate; // 0-100,
+    private int luckyRate = 60;
     public GameFacts(int level, int cabinetId)
     {
         Cabinet c = Cabinet.GetById(cabinetId);
@@ -21,7 +22,7 @@ public class GameFacts
         }
         Game g = Game.get();
         Debug.Log("lucky:"+ g.lucky + " offset:" + g.offset + " ratio:" + g.ratio + " once:" + g.price + " price:" + price);// price
-        calibrate = price / g.price * g.ratio / 100 - g.lucky + g.offset;
+        calibrate = price / g.price * g.ratio / 100 - g.lucky * luckyRate / 100 + g.offset;
         if (calibrate > 100) calibrate = 100;
         if (calibrate < 0) calibrate = 0;
         this.level = level;
