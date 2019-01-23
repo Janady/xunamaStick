@@ -38,7 +38,7 @@ public class AdminView : MonoBehaviour
     {
         NavView nv = transform.FindChild("nav").GetComponent<NavView>();
         nv.Title = "货柜管理";
-        nv.setBtn1("yi、、一键开锁", () => {
+        nv.setBtn1("一键开锁", () => {
             Service.LockingPlateService.Instance().OpenAll();
         });
         nv.setBtn2("一键补货", () => {
