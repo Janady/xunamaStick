@@ -7,7 +7,6 @@ namespace UI.Widget
     {
         public static Sprite GoodsImage(string path)
         {
-            Debug.Log(path);
             Texture2D texture2D;
             if (path != null) texture2D = Libs.Resource.UIManager.loadImage(path, false);
             else texture2D = Libs.Resource.UIManager.loadImage("Image/Gift", true);

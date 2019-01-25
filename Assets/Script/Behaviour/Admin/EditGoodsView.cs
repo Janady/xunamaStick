@@ -30,7 +30,7 @@ public class EditGoodsView : MonoBehaviour
     }
     void ChangeImage()
     {
-        UI.Widget.FileManager.openf("/Users/janady/test", (string s)=> {
+        UI.Widget.FileManager.openf(Config.Constant.UsbPath, (string s)=> {
             imgStr = s;
             image.sprite = UI.Widget.ImageHelper.GoodsImage(imgStr);
         }, "*.png", "*.jpg", "*.jpeg", "*.bmp");

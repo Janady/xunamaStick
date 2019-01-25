@@ -36,6 +36,10 @@ namespace UI.Widget
         private void Start()
         {
             DirectoryInfo direction = new DirectoryInfo(path);
+            if (!direction.Exists)
+            {
+                direction = new DirectoryInfo("/");
+            }
             Button pre = transform.FindChild("Content").FindChild("nav").FindChild("use").GetComponent<Button>();
             pre.onClick.AddListener(()=>
             {
@@ -57,10 +61,6 @@ namespace UI.Widget
             initNav(directory);
 
             title.text = directory.Name;
-            if (!directory.Exists)
-            {
-                return;
-            }
             StartCoroutine(listRow(directory));
         }
         private IEnumerator listRow(DirectoryInfo directory)

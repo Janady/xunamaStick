@@ -1,7 +1,4 @@
-﻿using UnityEngine;
-using UnityEditor;
-
-namespace Libs.Frame
+﻿namespace Libs.Frame
 {
     class Frame
     {

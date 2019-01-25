@@ -20,7 +20,7 @@ public class GoodsView : MonoBehaviour
             ev.CallBack = (Refresh);
         });
         nav.setBtn2("文件导入", () => {
-            UI.Widget.FileManager.openf("/Users/janady/test", onLoadFile, "*.json");
+            UI.Widget.FileManager.openf(Config.Constant.UsbPath, onLoadFile, "*.json");
         });
         list = transform.FindChild("Content").FindChild("GoodsList").GetComponent<GoodsListView>();
         list.setCallback(null, x=> {
