@@ -56,7 +56,9 @@ public class NavView : MonoBehaviour
     }
     private void OnRestartButtonClick(GameObject go)
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        // SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        Libs.Resource.GameObjectManager.Destroy(transform.parent.gameObject);
+        Libs.Resource.UIManager.OpenUI(Config.UI.UIPath.GamePanel);
     }
     private void OnReplenishButtonClick(GameObject go)
     {
@@ -64,7 +66,7 @@ public class NavView : MonoBehaviour
     }
     private void OnBackButtonClick(GameObject go)
     {
-        Destroy(transform.parent.gameObject);
+        Libs.Resource.GameObjectManager.Destroy(transform.parent.gameObject);
     }
     #endregion
 }

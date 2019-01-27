@@ -31,7 +31,7 @@ public class PrepareLipsView : MonoBehaviour
         float offset = 0f;
         for (int i = 0; i < count; i++)
         {
-            GameObject go = UIManager.OpenUI("Lip", null, lipsTr);
+            GameObject go = UIManager.OpenUI("Lip", null, lipsTr, i);
             go.transform.localPosition = new Vector3(offset, 0, 0);
             float width = go.GetComponent<RectTransform>().rect.width;
             offset += width + 4;
@@ -65,7 +65,7 @@ public class PrepareLipsView : MonoBehaviour
     {
         lips--;
         if (lips < 0) return;
-        Destroy(lipsTr.GetChild(lips).gameObject);
+        Libs.Resource.GameObjectManager.Destroy(lipsTr.GetChild(lips).gameObject);
         showNum(lips);
     }
 }

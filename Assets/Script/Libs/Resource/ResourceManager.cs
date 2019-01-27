@@ -26,7 +26,7 @@ namespace Libs.Resource
             resourceMap.Add(resPath, resObject);
             return resObject;
         }
-
+        /*
         public static Object InstantiateResource(string resPath, string szKey = "", System.Type systemTypeInstance = null)
         {
             Object resObject = LoadResource(resPath, systemTypeInstance);
@@ -43,7 +43,7 @@ namespace Libs.Resource
 
             return null;
         }
-
+        */
         // 销毁一个实例对象GameObject，引用记数-1，对象不会自动置空。
         public static void DestroyResource(GameObject obj, bool bImmediate = false)
         {
@@ -75,12 +75,6 @@ namespace Libs.Resource
                 }
                 obj = null;
             }
-        }
-
-        public static GameObject InstantiatePrefab(string name)
-        {
-            string fullPath = "Prefabs/" + name;
-            return InstantiateResource(fullPath) as GameObject;
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using System.Collections;
+using Libs.Resource;
 
 public class ButtonClose : MonoBehaviour
 {
@@ -19,6 +19,6 @@ public class ButtonClose : MonoBehaviour
 
     private void OnClose(GameObject go)
     {
-        Destroy(gameObject);
+        GameObjectManager.Destroy(gameObject);
     }
 }

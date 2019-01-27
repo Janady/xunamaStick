@@ -56,7 +56,7 @@ public class EditGoodsView : MonoBehaviour
             _good.ImagePath = imgStr;
             _good.update();
         }
-        Destroy(gameObject);
+        Libs.Resource.GameObjectManager.Destroy(gameObject);
         if (callBack != null) callBack();
     }
     public Action CallBack

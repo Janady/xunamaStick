@@ -11,6 +11,6 @@ public class ClickDestorySelf : MonoBehaviour
     }
     private void OnClick(GameObject go)
     {
-        Destroy(gameObject);
+        Libs.Resource.GameObjectManager.Destroy(gameObject);
     }
 }

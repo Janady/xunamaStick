@@ -33,11 +33,12 @@ namespace View
         }
         IEnumerator init(Transform tr)
         {
+            int i = 0;
             foreach (Goods good in Goods.All())
             {
                 if (good.Id != _exceptId)
                 {
-                    GameObject go = UIManager.OpenUI("goodRow", null, tr);
+                    GameObject go = UIManager.OpenUI("goodRow", null, tr, i++);
                     GoodRowView cv = go.GetComponent<GoodRowView>();
                     cv.Id = good.Id;
                     cv.Title = good.Title;

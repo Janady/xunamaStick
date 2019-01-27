@@ -31,7 +31,7 @@ public class GameManager : MonoBehaviour {
         GameObject vedioObject = UIManager.OpenUI(Config.UI.UIPath.MoviePanel);
         movie = vedioObject.GetComponent<MovieView>();
 #endif
-        bird = ResourceManager.InstantiatePrefab("Bird");
+        bird = GameObjectManager.InstantiatePrefabs("Bird");
     }
     private void birdMovement(System.Action action)
     {
@@ -124,11 +124,11 @@ public class GameManager : MonoBehaviour {
     {
         foreach (GameObject go in GameObject.FindGameObjectsWithTag("Pin"))
         {
-            Destroy(go);
+            GameObjectManager.Destroy(go);
         }
         foreach (GameObject go in GameObject.FindGameObjectsWithTag("Rotator"))
         {
-            Destroy(go);
+            GameObjectManager.Destroy(go);
         }
     }
     private int cabinetId;
@@ -148,7 +148,7 @@ public class GameManager : MonoBehaviour {
         AppAudioModel.Instance().RunAudio(AppAudioName.Pass);
         GameFacts fact = new GameFacts(gameLevel.level, cabinetId);
         string targetStr = null;
-        switch (Random.Range(0, 3))
+        switch (Random.Range(0, 1))
         {
             case 0:
                 targetStr = "targetDiamondPink";
@@ -160,8 +160,10 @@ public class GameManager : MonoBehaviour {
                 targetStr = "targetDiamondBlue";
                 break;
         }
-        GameObject go = ResourceManager.InstantiatePrefab(targetStr);
-        Rotator target = go.AddComponent<Rotator>();
+        GameObject go = GameObjectManager.InstantiatePrefabs(targetStr);
+        Rotator target = go.GetComponent<Rotator>();
+        if (target == null)
+            target = go.AddComponent<Rotator>();
         target.Fact = fact;
         gameView.startGame(gameLevel, fact.Count);
         showHint();
@@ -188,8 +190,7 @@ public class GameManager : MonoBehaviour {
     private void failed()
     {
         UIManager.OpenUI(Config.UI.UIPath.LosePanel);
-        string audio = Random.Range(0, 1f) > 0.5f ? AppAudioName.Fail1 : AppAudioName.Fail2;
-        AppAudioModel.Instance().RunAudio(audio);
+        AppAudioModel.Instance().RunAudio(Random.Range(0, 1f) > 0.5f ? AppAudioName.Fail1 : AppAudioName.Fail2);
         status = STATUS.Idle;
     }
 #region view callback
@@ -204,7 +205,7 @@ public class GameManager : MonoBehaviour {
                 Mod.Cabinet cabinet = Mod.Cabinet.GetById(id);
                 if (cabinet == null || cabinet.Good() == null) return;
                 if (!cabinet.Enabled || cabinet.Count <= 0) return;
-                Destroy(gl);
+                GameObjectManager.Destroy(gl);
                 Coin.GetInstance().consume(id);
                 cabinetId = id;
                 startGame(false);

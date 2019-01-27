@@ -14,7 +14,7 @@ namespace Libs.Resource
             GameObject go = GameObject.Find(name);
             if (go != null)
             {
-                UnityEngine.Object.Destroy(go);
+                Libs.Resource.GameObjectManager.Destroy(go);
             }
         }
 
@@ -22,7 +22,7 @@ namespace Libs.Resource
         {
             if (null == name) throw new Exception("load resource null, name = " + name);
             string fullPath = "Effect/" + name;
-            GameObject go = ResourceManager.InstantiateResource(fullPath) as GameObject;
+            GameObject go = GameObjectManager.Instantiate(fullPath);
             if (null == go) throw new Exception("load resource null, path = " + fullPath);
 
             if (tr)
@@ -42,7 +42,7 @@ namespace Libs.Resource
             }
             m_ExplosionParticles.Play();
             if (autoDestroy)
-                GameObject.Destroy(go, m_ExplosionParticles.duration);
+                GameObjectManager.Destroy(go, m_ExplosionParticles.duration);
             return go;
         }
     }

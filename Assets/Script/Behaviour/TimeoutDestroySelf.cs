@@ -11,8 +11,11 @@ public class TimeoutDestroySelf : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+    }
+    private void OnEnable()
+    {
         UI.Widget.CountDown.countDown(timeout, text, () => {
-            Destroy(gameObject);
+            Libs.Resource.GameObjectManager.Destroy(gameObject);
         });
         if (doFade)
         {
@@ -20,6 +23,10 @@ public class TimeoutDestroySelf : MonoBehaviour
             image.CrossFadeAlpha(0.3f, timeout, true);
             //image.DOColor(new Color(255, 255, 255, 0.5f), (float)timeout).SetEase(Ease.Linear);
         }
+    }
+    private void OnDisable()
+    {
+        UI.Widget.CountDown.cancel(text);
     }
     private void OnDestroy()
     {

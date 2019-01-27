@@ -8,10 +8,10 @@ namespace Libs.Resource
     {
         private static GameObject _root;
         
-        public static GameObject OpenUI(string name, string dir = null, Transform transform = null)
+        public static GameObject OpenUI(string name, string dir = null, Transform transform = null, int index = 0)
         {
             string fullPath = "UI/" + (dir == null ? "" : dir + "/") + name;
-            GameObject go = ResourceManager.InstantiateResource(fullPath) as GameObject;
+            GameObject go = GameObjectManager.Instantiate(fullPath, index);
             if (null == go) throw new Exception("load resource null, path = " + fullPath);
             go.name = name;
             AddParent(go, transform);
@@ -54,7 +54,7 @@ namespace Libs.Resource
                 if (path == null || go.name.Equals(path))
                 {
                     // go.GetComponent<BaseView>(); // custom on close function
-                    GameObject.Destroy(go);
+                    GameObjectManager.Destroy(go);
                 }
             }
         }

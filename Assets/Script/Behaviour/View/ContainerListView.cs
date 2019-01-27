@@ -22,10 +22,11 @@ namespace View
         }
         IEnumerator init(Transform tr)
         {
+            int i = 0;
             //Libs.Resource.UIManager.CloseUI(tr);
             foreach (Cabinet cabinet in Cabinet.All())
             {
-                GameObject go = UIManager.OpenUI("cell", null, tr);
+                GameObject go = UIManager.OpenUI("cell", null, tr, i++);
                 CellView cv = go.GetComponent<CellView>();
                 cv.Id = cabinet.Id;
                 cv.Num = cabinet.Num;

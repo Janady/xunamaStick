@@ -65,25 +65,25 @@ namespace UI.Widget
         }
         private IEnumerator listRow(DirectoryInfo directory)
         {
-
+            int i = 0;
             foreach (string ptn in reg)
             {
                 foreach (FileInfo fi in directory.GetFiles(ptn))
                 {
-                    setRow(fi, null);
+                    setRow(fi, null, i++);
                     yield return new WaitForEndOfFrame();
                 }
             }
             foreach (DirectoryInfo di in directory.GetDirectories())
             {
-                setRow(null, di);
+                setRow(null, di, i++);
                 yield return new WaitForEndOfFrame();
             }
         }
 
-        private void setRow(FileInfo fi, DirectoryInfo di)
+        private void setRow(FileInfo fi, DirectoryInfo di, int index)
         {
-            GameObject go = UIManager.OpenUI("FileRow", null, listTr);
+            GameObject go = UIManager.OpenUI("FileRow", null, listTr, index);
             FileRowView cv = go.GetComponent<FileRowView>();
             cv.setValueAndCallback(fi, di, rowCallback);
         }
@@ -92,7 +92,7 @@ namespace UI.Widget
             if (fi != null)
             {
                 if (callBack != null) callBack(fi.FullName);
-                Destroy(gameObject);
+                GameObjectManager.Destroy(gameObject);
             }
             else if (di != null)
             {

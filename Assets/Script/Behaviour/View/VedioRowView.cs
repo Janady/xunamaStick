@@ -38,7 +38,7 @@ public class VedioRowView : MonoBehaviour
         switch (_type)
         {
             case ActionType.Delete:
-                Destroy(gameObject);
+                Libs.Resource.GameObjectManager.Destroy(gameObject);
                 break;
             case ActionType.Add:
                 callback = null;

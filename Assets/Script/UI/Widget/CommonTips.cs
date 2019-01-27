@@ -43,7 +43,7 @@ namespace UI.Widget
             btn.onClick.AddListener(()=>
             {
                 callback();
-                Destroy(go);
+                Libs.Resource.GameObjectManager.Destroy(go);
             });
         }
         public static GameObject OpenTips(TipsType type, string title, OnButtonCallBack okCallBack = null, OnButtonCallBack cancelCallBack = null, OnButtonCallBack closeCallBack = null, float delayTime = 0)

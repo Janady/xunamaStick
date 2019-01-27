@@ -18,7 +18,6 @@ public class Rotator : MonoBehaviour {
     private bool onAir = false;
     // Use this for initialization
     void Start() {
-        prepareLips();
     }
     private void OnEnable()
     {
@@ -39,11 +38,15 @@ public class Rotator : MonoBehaviour {
             AppAudioModel.Instance().RunAudio(AppAudioName.Shot);
         }
     }
-    private void prepareLips()
+    private IEnumerator prepareLips()
     {
-        GameObject go = Libs.Resource.ResourceManager.InstantiatePrefab("pin");
+        yield return new WaitForEndOfFrame();
+        GameObject go = Libs.Resource.GameObjectManager.InstantiatePrefabs("pin", lips);
+        go.transform.parent = transform.parent;
+        go.transform.localRotation = Quaternion.identity;
         go.transform.position = new Vector3(0, initYPos, 0);
         lip = go;
+        yield return new WaitForEndOfFrame();
         float interval = 0.1f;
         Tweener tweener = go.transform.DOLocalMoveY(prepareYPos, interval);
         //seq.Append(tweener).AppendCallback(() => {
@@ -67,7 +70,8 @@ public class Rotator : MonoBehaviour {
         tweener.OnComplete(() => {
             onAir = false;
             Received(lip);
-            if (lips < total) prepareLips();
+            if (lips < total)
+                StartCoroutine(prepareLips());
         });
     }
 
@@ -87,8 +91,18 @@ public class Rotator : MonoBehaviour {
     private IEnumerator GamePass()
     {
         yield return new WaitForSeconds(0.5f);
+        // clear();
+        // yield return new WaitForEndOfFrame();
         EventMgr.Instance.DispatchEvent(EventNameData.GamePass, !collided);
-        Destroy(gameObject);
+    }
+    private void clear()
+    {
+        Libs.Resource.GameObjectManager.Destroy(gameObject);
+        foreach (GameObject go in GameObject.FindGameObjectsWithTag("Pin"))
+        {
+            Debug.Log("destroy: " + go.name);
+            Libs.Resource.GameObjectManager.Destroy(go);
+        }
     }
     int changeCount = 0;
     private void changeSpeed(bool force)
@@ -107,6 +121,8 @@ public class Rotator : MonoBehaviour {
             total = value.Count;
             receiveLips = 0;
             lips = 0;
+            collided = false;
+            StartCoroutine(prepareLips());
         }
     }
 

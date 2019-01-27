@@ -29,9 +29,10 @@ public class VedioListView : MonoBehaviour
     }
     IEnumerator init(Transform tr)
     {
+        int i = 0;
         foreach (var item in dict)
         {
-            GameObject go = UIManager.OpenUI("vedioRow", null, tr);
+            GameObject go = UIManager.OpenUI("vedioRow", null, tr, i++);
             VedioRowView vrv = go.GetComponent<VedioRowView>();
             vrv.file = item.Key;
             if (item.Value)

@@ -12,6 +12,6 @@ public class Effect : MonoBehaviour
     }
     private void OnDisable()
     {
-        if (effect != null) Destroy(effect);
+        if (effect != null) Libs.Resource.GameObjectManager.Destroy(effect);
     }
 }

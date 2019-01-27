@@ -8,12 +8,12 @@ public class PinSpawn : MonoBehaviour
     {
         if (Input.GetButtonDown("Fire1"))
         {
-            SpawnPin();
+            //SpawnPin();
         }
     }
     private void SpawnPin()
     {
-        GameObject go = Libs.Resource.ResourceManager.InstantiatePrefab("pin");
+        GameObject go = Libs.Resource.GameObjectManager.InstantiatePrefabs("pin");
         go.transform.position = transform.position;
     }
 }
