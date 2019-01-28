@@ -15,19 +15,12 @@ public class PayView : MonoBehaviour
             text.text = value.ToString();
         }
     }
-    // Use this for initialization
-    void Start()
+    private void OnEnable()
     {
         byte[] identity = SerialIOService.GetInstance().PayIdentity;
         Image image = transform.FindChild("qrcode").gameObject.GetComponent<Image>();
         if (null == identity) return;
         Texture2D texture = Qrcode.GenQRCodeLeYaoYao(identity);
         image.sprite = UIManager.GenSprite(texture);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 }

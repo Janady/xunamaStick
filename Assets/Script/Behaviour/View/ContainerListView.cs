@@ -9,21 +9,18 @@ namespace View
     public class ContainerListView : MonoBehaviour
     {
         private Action<int> callBack;
-        private Transform tr;
-        private void Start()
-        {
-            tr = transform.FindChild("ScrollPanel");
-            StartCoroutine(init(tr));
-        }
+
         public void setCallback(Action<int> callBack)
         {
             this.callBack = callBack;
-            // StartCoroutine(init());
+            StartCoroutine(init());
         }
-        IEnumerator init(Transform tr)
+        IEnumerator init()
         {
             int i = 0;
-            //Libs.Resource.UIManager.CloseUI(tr);
+            Transform tr = transform.FindChild("ScrollPanel");
+            UIManager.CloseUI(tr);
+            yield return new WaitForEndOfFrame();
             foreach (Cabinet cabinet in Cabinet.All())
             {
                 GameObject go = UIManager.OpenUI("cell", null, tr, i++);
@@ -57,8 +54,7 @@ namespace View
         }
         public void Refresh()
         {
-            UIManager.CloseUI(tr);
-            StartCoroutine(init(tr));
+            StartCoroutine(init());
         }
     }
 }

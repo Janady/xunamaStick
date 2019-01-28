@@ -38,11 +38,14 @@ public class GoodsView : MonoBehaviour
             });
         });
     }
-
+    private void OnEnable()
+    {
+        Refresh();
+    }
     // Update is called once per frame
     private void Refresh()
     {
-        list.Refresh();
+        if (list != null) list.Refresh();
     }
     private void onLoadFile(string filename)
     {
@@ -58,7 +61,7 @@ public class GoodsView : MonoBehaviour
                 Sku = goodsJson["SKU"].ToString(),
                 Title = goodsJson["name"].ToString(),
                 Price = (int)goodsJson["price"],
-                ImagePath = fi.Directory.FullName + "/" + goodsJson["Image"].Value.ToString(),
+                ImagePath = FileUtil.storeFile(fi.Directory.FullName + "/" + goodsJson["Image"].Value.ToString(), Config.Constant.ImagePath),
                 Type = "999"
             };
             //Debug.Log(g);

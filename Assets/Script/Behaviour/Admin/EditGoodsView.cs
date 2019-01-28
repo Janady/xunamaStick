@@ -12,7 +12,7 @@ public class EditGoodsView : MonoBehaviour
     private Action callBack;
     private string imgStr;
     // Use this for initialization
-    void Start()
+    private void init()
     {
         tr = transform.FindChild("bg");
         nameField = tr.FindChild("nameField").GetComponent<InputField>();
@@ -71,6 +71,7 @@ public class EditGoodsView : MonoBehaviour
         set
         {
             _good = value;
+            init();
         }
     }
 }

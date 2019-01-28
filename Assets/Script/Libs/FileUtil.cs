@@ -30,4 +30,15 @@ public class FileUtil
         }
         return list.ToArray();
     }
+    public static string storeFile(string fullpath, string rootPath)
+    {
+        if (!Directory.Exists(rootPath))
+        {
+            Directory.CreateDirectory(rootPath);
+        }
+
+        FileInfo fi = new FileInfo(fullpath);
+        fi.CopyTo(rootPath + "/" + fi.Name);
+        return rootPath + "/" + fi.Name;
+    }
 }

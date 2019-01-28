@@ -18,6 +18,10 @@ namespace View
             tr = transform.FindChild("ScrollPanel");
             StartCoroutine(init(tr));
         }
+        private void OnEnable()
+        {
+            StartCoroutine(init(tr));
+        }
         public int ExceptId
         {
             set
@@ -33,6 +37,7 @@ namespace View
         }
         IEnumerator init(Transform tr)
         {
+            if (tr == null) yield break;
             int i = 0;
             foreach (Goods good in Goods.All())
             {

@@ -11,38 +11,26 @@ public class VedioListView : MonoBehaviour
     private Action callBack;
     private Transform tr;
     // Use this for initialization
+    private void OnEnable()
+    {
+        Refresh();
+    }
     void Start()
     {
-        dict = new Dictionary<FileInfo, bool>();
-        loadVedio(Config.Constant.UsbPath, false);
-        loadVedio(Config.Constant.VedioPath, true);
-
         tr = transform.FindChild("ScrollPanel");
-        StartCoroutine(init(tr));
+        StartCoroutine(init());
     }
-    private void loadVedio(string path, bool local)
+    
+    IEnumerator init()
     {
-        foreach(FileInfo fi in FileUtil.getVedios(path))
-        {
-            dict.Add(fi, local);
-        }
-    }
-    IEnumerator init(Transform tr)
-    {
+        if (tr == null) yield break;
         int i = 0;
-        foreach (var item in dict)
+        foreach (FileInfo fi in FileUtil.getVedios(Config.Constant.UsbPath))
         {
             GameObject go = UIManager.OpenUI("vedioRow", null, tr, i++);
             VedioRowView vrv = go.GetComponent<VedioRowView>();
-            vrv.file = item.Key;
-            if (item.Value)
-            {
-                vrv.SetCallBack(delete, VedioRowView.ActionType.Delete);
-            }
-            else
-            {
-                vrv.SetCallBack(move, VedioRowView.ActionType.Add);
-            }
+            vrv.SetCallBack(delete, VedioRowView.ActionType.Delete);
+            vrv.file = fi;
             yield return new WaitForEndOfFrame();
         }
     }
@@ -55,5 +43,10 @@ public class VedioListView : MonoBehaviour
     {
         string name = Config.Constant.VedioPath + "/" + fileInfo.Name;
         fileInfo.CopyTo(name);
+    }
+    public void Refresh()
+    {
+        UIManager.CloseUI(tr);
+        StartCoroutine(init());
     }
 }

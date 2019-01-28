@@ -14,11 +14,16 @@ public class DeviceView : MonoBehaviour
     private Button btn;
     private Button btn3;
     private Button btn4;
+    private bool inited = false;
     // Use this for initialization
     void Start()
     {
         StartCoroutine(initNav());
         initContent();
+    }
+    private void OnEnable()
+    {
+        loadView();
     }
     private void initContent()
     {
@@ -60,10 +65,13 @@ public class DeviceView : MonoBehaviour
             Game.clear();
             loadView();
         });
+        inited = true;
         loadView();
     }
     private void loadView()
     {
+        if (!inited) return;
+        Debug.Log("111");
         Game game = Game.get();
         text1.text = game.price + "";
         slider1.value = game.price;

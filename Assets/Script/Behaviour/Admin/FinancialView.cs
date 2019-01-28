@@ -5,9 +5,7 @@ using Mod;
 
 public class FinancialView : MonoBehaviour
 {
-
-    // Use this for initialization
-    void Start()
+    private void OnEnable()
     {
         Text fromText = transform.FindChild("Content").FindChild("dateFrom").GetComponent<Text>();
         Text toText = transform.FindChild("Content").FindChild("dateTo").GetComponent<Text>();
@@ -43,11 +41,5 @@ public class FinancialView : MonoBehaviour
         }
         Text gameText = transform.FindChild("Content").FindChild("game").GetComponent<Text>();
         gameText.text = "￥" + gameSum.ToString();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 }
