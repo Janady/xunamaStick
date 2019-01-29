@@ -24,9 +24,8 @@ public class GameView : MonoBehaviour
     {
         remainingText = transform.FindChild("Remaining").FindChild("remain").GetComponent<Text>();
         Coin.GetInstance().GameTimeCallback(x=> {
-            remainingText.text = x.ToString();
+            remainingText.text = "已投" + x + "币";
         });
-        remainingText.text = Coin.GetInstance().afford().ToString();
         passSet = transform.FindChild("PassSet");
         actionSet = transform.FindChild("ActionSet");
         initPass();
@@ -55,6 +54,14 @@ public class GameView : MonoBehaviour
             byte[] buf = { (byte)0xAE, (byte)0x06, (byte)0x00, (byte)0x02, (byte)0x02, (byte)0xAF };
             serial.Received(buf);
         });
+    }
+    private void OnEnable()
+    {
+        remainingText = transform.FindChild("Remaining").FindChild("remain").GetComponent<Text>();
+        remainingText.text = "已投" + Coin.GetInstance().coin().ToString() + "币";
+        actionSet = transform.FindChild("ActionSet");
+        Text coinHint = actionSet.FindChild("Play").FindChild("coin").GetComponent<Text>();
+        coinHint.text = (uint)Mod.Game.get().price + "币/局";
     }
     private void zoom(Transform tr, bool big)
     {

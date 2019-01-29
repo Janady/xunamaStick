@@ -125,6 +125,7 @@ public class GameManager : MonoBehaviour {
     {
         foreach (GameObject go in GameObject.FindGameObjectsWithTag("Pin"))
         {
+            go.transform.position = new Vector3(10,10,10);
             GameObjectManager.Destroy(go);
         }
         foreach (GameObject go in GameObject.FindGameObjectsWithTag("Rotator"))

@@ -33,7 +33,7 @@ namespace UI.Widget
             fm.reg = reg;
             fm.callBack = action;
         }
-        private void Start()
+        private void OnEnable()
         {
             DirectoryInfo direction = new DirectoryInfo(path);
             if (!direction.Exists)
@@ -41,7 +41,7 @@ namespace UI.Widget
                 direction = new DirectoryInfo("/");
             }
             Button pre = transform.FindChild("Content").FindChild("nav").FindChild("use").GetComponent<Button>();
-            pre.onClick.AddListener(()=>
+            pre.onClick.AddListener(() =>
             {
                 initFileList(_directory.Parent);
             });

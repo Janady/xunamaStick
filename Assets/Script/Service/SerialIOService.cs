@@ -8,7 +8,8 @@ namespace Service
     {
         PayInit = 0x01,
         CoinInsert = 0x02,
-        AdminOpr = 0x08
+        CoinRemote = 0x04,
+        AdminOpr = 0x08,
     }
     public class SerialIOService
     {
@@ -40,6 +41,9 @@ namespace Service
                 case SerialCommand.CoinInsert:
                     CoinInsertHandler(packet);
                     break;
+                case SerialCommand.CoinRemote:
+                    CoinRemoteHandler(packet);
+                    break;
                 case SerialCommand.AdminOpr:
                     AdminOprHandler();
                     break;
@@ -56,7 +60,13 @@ namespace Service
         {
             uint count = (uint)(packet[cmdPos + 1] & 0xff);
             Coin.GetInstance().insert(count);
-            EventMgr.Instance.DispatchEvent(EventNameData.CoinInsert, count);
+            // EventMgr.Instance.DispatchEvent(EventNameData.CoinInsert, count);
+        }
+        private void CoinRemoteHandler(byte[] packet)
+        {
+            uint count = (uint)(packet[cmdPos + 1] & 0xff);
+            Coin.GetInstance().insert(count, Mod.PaymentType.Network);
+            // EventMgr.Instance.DispatchEvent(EventNameData.CoinInsert, count);
         }
         private void AdminOprHandler()
         {

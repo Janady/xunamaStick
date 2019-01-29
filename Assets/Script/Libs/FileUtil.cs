@@ -21,7 +21,7 @@ public class FileUtil
             DirectoryInfo direction = new DirectoryInfo(directory);
             foreach (string ptn in pattern)
             {
-                FileInfo[] files = direction.GetFiles(ptn, SearchOption.AllDirectories);
+                FileInfo[] files = direction.GetFiles(ptn);
                 foreach (FileInfo fi in files)
                 {
                     list.Add(fi);

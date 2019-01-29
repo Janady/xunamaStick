@@ -25,7 +25,7 @@ public class VedioListView : MonoBehaviour
     {
         if (tr == null) yield break;
         int i = 0;
-        foreach (FileInfo fi in FileUtil.getVedios(Config.Constant.UsbPath))
+        foreach (FileInfo fi in FileUtil.getVedios(Config.Constant.VedioPath))
         {
             GameObject go = UIManager.OpenUI("vedioRow", null, tr, i++);
             VedioRowView vrv = go.GetComponent<VedioRowView>();
@@ -46,6 +46,7 @@ public class VedioListView : MonoBehaviour
     }
     public void Refresh()
     {
+        if (tr == null) return;
         UIManager.CloseUI(tr);
         StartCoroutine(init());
     }

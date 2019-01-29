@@ -21,8 +21,8 @@ public class AdminView : MonoBehaviour
         GameObject device = contentTr.FindChild("HomeContent").FindChild("device").gameObject;
         EventTriggerListener.Get(device).onClick = OnDeviceClick;
 
-        GameObject connect = contentTr.FindChild("HomeContent").FindChild("goods").gameObject;
-        EventTriggerListener.Get(connect).onClick = OnConnectClick;
+        GameObject goods = contentTr.FindChild("HomeContent").FindChild("goods").gameObject;
+        EventTriggerListener.Get(goods).onClick = OnGoodsClick;
 
         GameObject container = contentTr.FindChild("HomeContent").FindChild("container").gameObject;
         EventTriggerListener.Get(container).onClick = OnContainerClick;
@@ -56,7 +56,7 @@ public class AdminView : MonoBehaviour
     {
         UIManager.OpenUI(Config.UI.UIPath.DevicePanel);
     }
-    private void OnConnectClick(GameObject go)
+    private void OnGoodsClick(GameObject go)
     {
         UIManager.OpenUI(Config.UI.UIPath.GoodsPanel);
     }

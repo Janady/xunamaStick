@@ -33,6 +33,10 @@ public class Coin
         charege.insert();
         if (_gameTimeCallback != null) _gameTimeCallback(_amount/_game);
     }
+    public uint coin()
+    {
+        return _amount;
+    }
     public uint afford(uint amount = 0)
     {
         if (amount == 0) amount = _game;

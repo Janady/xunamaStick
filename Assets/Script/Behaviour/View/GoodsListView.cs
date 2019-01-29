@@ -20,8 +20,7 @@ namespace View
         }
         private void OnEnable()
         {
-            UIManager.CloseUI(tr);
-            StartCoroutine(init(tr));
+            Refresh();
         }
         public int ExceptId
         {
@@ -59,6 +58,7 @@ namespace View
         }
         public void Refresh()
         {
+            if (tr == null) return;
             UIManager.CloseUI(tr);
             StartCoroutine(init(tr));
         }

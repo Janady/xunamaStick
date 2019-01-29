@@ -84,7 +84,7 @@ public class DeviceView : MonoBehaviour
     IEnumerator initNav()
     {
         NavView nv = transform.FindChild("nav").GetComponent<NavView>();
-        nv.Title = "货柜管理";
+        nv.Title = "设备管理";
         nv.setBtn1("一键开锁", () => {
             Service.LockingPlateService.Instance().OpenAll();
         });
