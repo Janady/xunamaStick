@@ -15,8 +15,7 @@ public class ContainerView : MonoBehaviour
         if (list != null) list.setCallback(x=> {
             GameObject go = UIManager.OpenUI(Config.UI.UIPath.GoodsSelectPanel);
             GoodsSelectView gsv = go.GetComponent<GoodsSelectView>();
-            gsv.SetCabinet(Cabinet.GetById(x));
-            gsv.setCallback((retid)=>{
+            gsv.SetCabinet(Cabinet.GetById(x), (retid)=>{
                 Cabinet cabinet = Cabinet.GetById(x);
                 cabinet.GoodsId = retid;
                 cabinet.update();

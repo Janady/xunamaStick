@@ -20,6 +20,7 @@ namespace View
         }
         private void OnEnable()
         {
+            UIManager.CloseUI(tr);
             StartCoroutine(init(tr));
         }
         public int ExceptId

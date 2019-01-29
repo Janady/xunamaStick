@@ -149,7 +149,7 @@ public class GameManager : MonoBehaviour {
         AppAudioModel.Instance().RunAudio(AppAudioName.Pass);
         GameFacts fact = new GameFacts(gameLevel.level, cabinetId);
         string targetStr = null;
-        switch (Random.Range(0, 1))
+        switch (Random.Range(0, 3))
         {
             case 0:
                 targetStr = "targetDiamondPink";

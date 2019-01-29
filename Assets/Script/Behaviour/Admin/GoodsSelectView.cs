@@ -79,18 +79,15 @@ public class GoodsSelectView : MonoBehaviour
         if (list != null) list.setCallback(callBack);
         list.ExceptId = _cabinet.GoodsId;
     }
-    public void setCallback(Action<int> callBack)
-    {
-        this.callBack = callBack;
-        initGoodsList();
-    }
     public void setActionCallback(Action callBack)
     {
         this.actionCallBack = callBack;
     }
-    public void SetCabinet(Cabinet cabinet)
+    public void SetCabinet(Cabinet cabinet, Action<int> action)
     {
+        this.callBack = action;
         _cabinet = cabinet;
         initNav(Goods.GetGood(cabinet.GoodsId));
+        initGoodsList();
     }
 }
