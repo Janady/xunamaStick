@@ -32,11 +32,12 @@ namespace Libs.Qrcode
         public static Texture2D GenQRCodeLeYaoYao(byte[] buf)
         {
             if (null == buf || buf.Length != 8) return null;
-            int ret = 0;
+            string ret = "";
             foreach (byte b in buf)
             {
-                ret = ret * 10 + (0xff & b);
+                ret += (char)b;
             }
+            Debug.Log(ret + " >>> " + HexString.Bytes2hex(buf));
             Debug.Log(prefixLeYaoYao + ret);
             return GenQRCode(prefixLeYaoYao + ret, 256, 256); // 60014000
         }

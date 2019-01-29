@@ -7,13 +7,13 @@ namespace Libs.Resource
     public class GameObjectManager
     {
         private static Dictionary<string, GameObject> resourceMap = new Dictionary<string, GameObject>();
-        public static GameObject Instantiate(string resPath, int index = 0, System.Type systemTypeInstance = null)
+        public static GameObject Instantiate(string resPath, int index = 0, bool hide = false, System.Type systemTypeInstance = null)
         {
             string key = resPath + index;
             if (resourceMap.ContainsKey(key))
             {
                 GameObject go = resourceMap[key];
-                go.SetActive(true);
+                go.SetActive(!hide);
                 return go;
             }
             Object resObject = ResourceManager.LoadResource(resPath, systemTypeInstance);
@@ -25,6 +25,7 @@ namespace Libs.Resource
                 {
                     modelObject.name = key;
                 }
+                modelObject.SetActive(!hide);
                 resourceMap.Add(key, modelObject);
                 return modelObject;
             }
@@ -32,10 +33,10 @@ namespace Libs.Resource
             return null;
         }
 
-        public static GameObject InstantiatePrefabs(string name, int index = 0)
+        public static GameObject InstantiatePrefabs(string name, int index = 0, bool hide = false)
         {
             string fullPath = "Prefabs/" + name;
-            return Instantiate(fullPath, index) as GameObject;
+            return Instantiate(fullPath, index, hide) as GameObject;
         }
         public static void Destroy(GameObject go, float time = 0)
         {

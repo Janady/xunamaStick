@@ -32,6 +32,7 @@ namespace Libs.Resource
             }
             go.transform.localPosition = Vector3.zero;
             go.transform.localScale = Vector3.one;
+            go.transform.SetAsLastSibling();
         }
 
         private static GameObject root()

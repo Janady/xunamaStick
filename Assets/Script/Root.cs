@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using Libs.Event;
 using System.Collections;
+using Libs.Resource;
 
 public class Root : MonoBehaviour {
     private static Root Instance = null;
@@ -26,10 +27,21 @@ public class Root : MonoBehaviour {
         gameObject.AddComponent<Libs.Coroutine.CoroutineHandler>();
         gameObject.AddComponent<GameManager>();
         AppAudioModel.Instance().RunMusic(AppAudioName.BGM);
+        StartCoroutine(loading());
     }
-    private void doit(string s)
+    private IEnumerator loading()
     {
-        Debug.Log(s);
+        GameObjectManager.InstantiatePrefabs("Bird", 0, true);
+        yield return new WaitForEndOfFrame();
+        for (int i=0; i<15; i++)
+        {
+            Libs.Resource.GameObjectManager.InstantiatePrefabs("pin", i, true);
+        }
+        yield return new WaitForEndOfFrame();
+        GameObjectManager.InstantiatePrefabs("targetDiamondPink", 0, true);
+        GameObjectManager.InstantiatePrefabs("targetDiamondGreen", 0, true);
+        GameObjectManager.InstantiatePrefabs("targetDiamondBlue", 0, true);
+        yield return new WaitForEndOfFrame();
     }
     private void Update()
     {

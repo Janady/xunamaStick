@@ -11,7 +11,6 @@ namespace Libs.Resource
             Object resObject = null;
             if (resourceMap.ContainsKey(resPath))
             {
-                // Debug.Log(">>>>>>>>>>>>>>> resouce get: " + resPath);
                 return resourceMap[resPath];
             }
             if (null == systemTypeInstance)
@@ -22,7 +21,6 @@ namespace Libs.Resource
             {
                 resObject = Resources.Load(resPath, systemTypeInstance);
             }
-            // Debug.Log("=================== resouce load: " + resPath);
             resourceMap.Add(resPath, resObject);
             return resObject;
         }
