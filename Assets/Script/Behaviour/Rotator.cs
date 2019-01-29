@@ -28,7 +28,8 @@ public class Rotator : MonoBehaviour {
         EventMgr.Instance.RemoveEvent(EventNameData.LipsCollision, OnLipsCollission);
     }
     // Update is called once per frame
-    void Update() {
+    void Update()
+    {
         changeSpeed(false);
         transform.Rotate(0f, 0f, speed * Time.deltaTime);
         if (lips >= total) return;
@@ -47,13 +48,14 @@ public class Rotator : MonoBehaviour {
         go.transform.position = new Vector3(0, initYPos, 0);
         lip = go;
         yield return new WaitForEndOfFrame();
-        float interval = 0.1f;
+        float interval = 0.02f;
         Tweener tweener = go.transform.DOLocalMoveY(prepareYPos, interval);
         //seq.Append(tweener).AppendCallback(() => {
         //    Received(go);
         //});
         tweener.SetEase(Ease.Linear);
         tweener.OnComplete(() => {
+            onAir = false;
             EventMgr.Instance.DispatchEvent(EventNameData.LipsEmission);
         });
     }
@@ -61,14 +63,13 @@ public class Rotator : MonoBehaviour {
     {
         onAir = true;
         lips++;
-        float interval = 0.1f;
+        float interval = 0.05f;
         Tweener tweener = lip.transform.DOLocalMoveY(destYPos, interval);
         //seq.Append(tweener).AppendCallback(() => {
         //    Received(go);
         //});
-        tweener.SetEase(Ease.OutElastic);
+        tweener.SetEase(Ease.Linear);
         tweener.OnComplete(() => {
-            onAir = false;
             Received(lip);
             if (lips < total)
                 StartCoroutine(prepareLips());
