@@ -6,7 +6,6 @@ public delegate int CoinCallback();
 public class Coin
 {
     private  uint _amount = 0;
-    private uint _game = 2;
     private Action<uint> _gameTimeCallback;
     public static Coin GetInstance()
     {
@@ -14,7 +13,6 @@ public class Coin
     }
     public Coin()
     {
-        _game = (uint)Mod.Game.get().price;
     }
     public void GameTimeCallback(Action<uint> value)
     {
@@ -22,7 +20,7 @@ public class Coin
     }
     public void insert(uint amount = 0, PaymentType type = PaymentType.Coin)
     {
-        if (amount == 0) amount = _game;
+        if (amount == 0) amount = (uint)Mod.Game.get().price;
         _amount += amount;
         Recharge charege = new Recharge
         {
@@ -31,7 +29,7 @@ public class Coin
             payment = type
         };
         charege.insert();
-        if (_gameTimeCallback != null) _gameTimeCallback(_amount/_game);
+        if (_gameTimeCallback != null) _gameTimeCallback(_amount);
     }
     public uint coin()
     {
@@ -39,12 +37,12 @@ public class Coin
     }
     public uint afford(uint amount = 0)
     {
-        if (amount == 0) amount = _game;
+        if (amount == 0) amount = (uint)Mod.Game.get().price;
         return (_amount / amount);
     }
     public bool consume(int cabinetId, bool doGame = true, uint amount = 0)
     {
-        if (amount == 0) amount = _game;
+        if (amount == 0) amount = (uint)Mod.Game.get().price;
         if (_amount < amount) return false;
         _amount -= amount;
         Cabinet cabinet = Cabinet.GetById(cabinetId);
@@ -58,7 +56,7 @@ public class Coin
             goodsId = goodId
         };
         purchase.insert();
-        if (_gameTimeCallback != null) _gameTimeCallback(_amount/_game);
+        if (_gameTimeCallback != null) _gameTimeCallback(_amount);
         return true;
     }
 }

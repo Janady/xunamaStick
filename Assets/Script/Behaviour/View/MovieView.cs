@@ -63,6 +63,7 @@ public class MovieView : MonoBehaviour
         {
             sciMedia.Play();
             gameObject.SetActive(true);
+            transform.SetAsLastSibling();
         }
     }
     public void stop()

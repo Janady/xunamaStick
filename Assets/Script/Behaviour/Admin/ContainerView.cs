@@ -7,6 +7,7 @@ using Mod;
 public class ContainerView : MonoBehaviour
 {
     private ContainerListView list;
+    bool inited = false;
     // Use this for initialization
     void Start()
     {
@@ -27,6 +28,7 @@ public class ContainerView : MonoBehaviour
                 Refresh();
             });
         });
+        inited = true;
     }
     IEnumerator initNav()
     {
@@ -43,7 +45,10 @@ public class ContainerView : MonoBehaviour
         });
         yield return new WaitForEndOfFrame();
     }
-
+    private void OnEnable()
+    {
+        if (inited) Refresh();
+    }
     // Update is called once per frame
     private void Refresh()
     {

@@ -62,6 +62,7 @@ public class GameManager : MonoBehaviour {
     private void OnDisable()
     {
         EventMgr.Instance.RemoveEvent(EventNameData.GamePass, OnGamePass);
+        status = STATUS.Idle;
     }
     private void Update()
     {
