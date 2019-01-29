@@ -5,7 +5,7 @@ using Mod;
 public delegate int CoinCallback();
 public class Coin
 {
-    private  uint _amount = 200;
+    private  uint _amount = 0;
     private uint _game = 2;
     private Action<uint> _gameTimeCallback;
     public static Coin GetInstance()

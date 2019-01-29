@@ -43,6 +43,18 @@ public class GameView : MonoBehaviour
         zoom(playBtn.transform, true);
         zoom(buyBtn.transform, true);
         zoom(tryBtn.transform, true);
+        Button admin = transform.FindChild("adminBtn").GetComponent<Button>();
+        if (admin != null) admin.onClick.AddListener(()=> {
+            Service.SerialIOService serial = Service.SerialIOService.GetInstance();
+            byte[] buf = { (byte)0xAE, (byte)0x06, (byte)0x00, (byte)0x08, (byte)0x00, (byte)0xAF };
+            serial.Received(buf);
+        });
+        Button coin = transform.FindChild("coinBtn").GetComponent<Button>();
+        if (coin != null) coin.onClick.AddListener(() => {
+            Service.SerialIOService serial = Service.SerialIOService.GetInstance();
+            byte[] buf = { (byte)0xAE, (byte)0x06, (byte)0x00, (byte)0x02, (byte)0x02, (byte)0xAF };
+            serial.Received(buf);
+        });
     }
     private void zoom(Transform tr, bool big)
     {

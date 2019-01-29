@@ -3,6 +3,7 @@ using System.Collections;
 
 public class RotatorSelf : MonoBehaviour
 {
+    public Transform tr;
     public float speed = 120f;
     // Use this for initialization
     void Start()
@@ -13,6 +14,6 @@ public class RotatorSelf : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.Rotate(0f, 0f, -speed * Time.deltaTime);
+        if (tr != null) tr.Rotate(0f, 0f, -speed * Time.deltaTime);
     }
 }

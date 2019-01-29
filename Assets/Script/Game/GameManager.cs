@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Libs.Event;
 using Libs.Resource;
 using DG.Tweening;
+using Mod;
 
 public class GameManager : MonoBehaviour {
     private GameLevel gameLevel;
@@ -185,7 +186,17 @@ public class GameManager : MonoBehaviour {
         UIManager.OpenUI(Config.UI.UIPath.WinPanel);
         AppAudioModel.Instance().RunAudio(AppAudioName.Success);
         status = STATUS.Idle;
-
+        Cabinet cabinet = Cabinet.GetById(cabinetId);
+        if (cabinet != null)
+        {
+            Service.LockingPlateService.Instance().openLock(cabinet, Service.LockingPlateService.OpenType.Sold);
+            Goods good = cabinet.Good();
+            if (good == null) return;
+            Game g = Game.get();
+            g.offset = good.Price / g.price - g.lucky;
+            g.lucky = 0;
+            g.update();
+        } 
     }
     private void failed()
     {
@@ -209,6 +220,9 @@ public class GameManager : MonoBehaviour {
                 Coin.GetInstance().consume(id);
                 cabinetId = id;
                 startGame(false);
+                Game g = Game.get();
+                g.lucky = g.lucky + 1;
+                g.update();
             });
             return;
         }
@@ -232,6 +246,7 @@ public class GameManager : MonoBehaviour {
             GameObject pay = UIManager.OpenUI(Config.UI.UIPath.PayPanel);
             PayView pv = pay.GetComponent<PayView>();
             pv.amount = cabinet.Good().Price;
+            // pay callback
         });
     }
 #endregion
