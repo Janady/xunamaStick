@@ -31,6 +31,7 @@ public class GameManager : MonoBehaviour {
 #if !UNITY_EDITOR
         GameObject vedioObject = UIManager.OpenUI(Config.UI.UIPath.MoviePanel);
         movie = vedioObject.GetComponent<MovieView>();
+        movie.stop();
 #endif
         bird = GameObjectManager.InstantiatePrefabs("Bird");
     }
@@ -64,8 +65,27 @@ public class GameManager : MonoBehaviour {
         EventMgr.Instance.RemoveEvent(EventNameData.GamePass, OnGamePass);
         status = STATUS.Idle;
     }
+    private int vedioCount = 0;
+    private const int vedioPlay = 3000;
     private void Update()
     {
+        if (vedioCount >= 0) vedioCount++;
+        if (Input.GetButtonDown("Fire1")) {
+            vedioCount = 0;
+            Debug.Log("vedio stop" + System.DateTime.Now.ToString() + " " + System.DateTime.Now.Millisecond);
+#if !UNITY_EDITOR
+            movie.stop();
+#endif
+        }
+        if (vedioCount > vedioPlay)
+        {
+            Debug.Log("vedio on" + System.DateTime.Now.ToString() + " " + System.DateTime.Now.Millisecond);
+            vedioCount = -1;
+#if !UNITY_EDITOR
+            movie.play();
+#endif
+        }
+        /*
         switch (status)
         {
             case STATUS.Running:
@@ -103,6 +123,7 @@ public class GameManager : MonoBehaviour {
                 }
                 break;
         }
+        */
     }
     /*
      * event handler
@@ -115,6 +136,7 @@ public class GameManager : MonoBehaviour {
         clear();
         if (pass)
         {
+            AppAudioModel.Instance().RunAudio(AppAudioName.Pass);
             nextLevel();
         }
         else
@@ -146,9 +168,10 @@ public class GameManager : MonoBehaviour {
         if (gameLevel.pass())
         {
             passAll();
+            AppAudioModel.Instance().RunMusic(AppAudioName.BGM);
             return;
         }
-        AppAudioModel.Instance().RunAudio(AppAudioName.Pass);
+        AppAudioModel.Instance().RunMusic(AppAudioName.BGMRAND + gameLevel.level);
         GameFacts fact = new GameFacts(gameLevel.level, cabinetId);
         string targetStr = null;
         switch (Random.Range(0, 3))
@@ -185,26 +208,36 @@ public class GameManager : MonoBehaviour {
     }
     private void passAll()
     {
-        UIManager.OpenUI(Config.UI.UIPath.WinPanel);
+        //status = STATUS.Idle;
         AppAudioModel.Instance().RunAudio(AppAudioName.Success);
-        status = STATUS.Idle;
+        showSuccess();
+        settle(true);
+    }
+    private void settle(bool doGame)
+    {
         Cabinet cabinet = Cabinet.GetById(cabinetId);
         if (cabinet != null)
         {
             Service.LockingPlateService.Instance().openLock(cabinet, Service.LockingPlateService.OpenType.Sold);
+            if (!doGame) return;
             Goods good = cabinet.Good();
             if (good == null) return;
             Game g = Game.get();
             g.offset = good.Price / g.price - g.lucky;
             g.lucky = 0;
             g.update();
-        } 
+        }
+    }
+    private void showSuccess()
+    {
+        UIManager.OpenUI(Config.UI.UIPath.WinPanel);
     }
     private void failed()
     {
         UIManager.OpenUI(Config.UI.UIPath.LosePanel);
         AppAudioModel.Instance().RunAudio(Random.Range(0, 1f) > 0.5f ? AppAudioName.Fail1 : AppAudioName.Fail2);
         status = STATUS.Idle;
+        AppAudioModel.Instance().RunMusic(AppAudioName.BGM);
     }
 #region view callback
     private void playGame()
@@ -215,6 +248,7 @@ public class GameManager : MonoBehaviour {
             GameObject gl = UIManager.OpenUI(Config.UI.UIPath.ContanerSelectPanel);
             ContanerSelectView list = gl.GetComponent<ContanerSelectView>();
             list.setCallback((id) => {
+                AppAudioModel.Instance().RunAudio(AppAudioName.Gift);
                 Mod.Cabinet cabinet = Mod.Cabinet.GetById(id);
                 if (cabinet == null || cabinet.Good() == null) return;
                 if (!cabinet.Enabled || cabinet.Count <= 0) return;
@@ -242,13 +276,21 @@ public class GameManager : MonoBehaviour {
         GameObject go = UIManager.OpenUI(Config.UI.UIPath.ContanerSelectPanel);
         ContanerSelectView list = go.GetComponent<ContanerSelectView>();
         list.setCallback((id)=> {
+            AppAudioModel.Instance().RunAudio(AppAudioName.Gift);
             Mod.Cabinet cabinet = Mod.Cabinet.GetById(id);
             if (cabinet == null || cabinet.Good() == null) return;
             if (!cabinet.Enabled || cabinet.Count <= 0) return;
-            GameObject pay = UIManager.OpenUI(Config.UI.UIPath.PayPanel);
-            PayView pv = pay.GetComponent<PayView>();
-            pv.amount = cabinet.Good().Price;
-            // pay callback
+            if (Coin.GetInstance().afford((uint)cabinet.Good().Price) > 0) {
+                Coin.GetInstance().consume(id, false, (uint)cabinet.Good().Price);
+                showSuccess();
+                settle(false);
+            }
+            else
+            {
+                GameObject pay = UIManager.OpenUI(Config.UI.UIPath.PayPanel);
+                PayView pv = pay.GetComponent<PayView>();
+                pv.amount = cabinet.Good().Price;
+            }
         });
     }
 #endregion

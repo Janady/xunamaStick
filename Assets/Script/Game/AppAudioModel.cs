@@ -7,8 +7,11 @@ using Libs.Resource;
 public class AppAudioName
 {
     public static string BGM = "backgroundMusic";
+    public static string BGMRAND = "bgm";
     public static string Button1 = "button1";
     public static string Button2 = "button2";
+    public static string Coin = "coin";
+    public static string Gift = "gift";
 
     public static string Fail1 = "fail1";
     public static string Fail2 = "fail2";

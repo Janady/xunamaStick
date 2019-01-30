@@ -42,15 +42,18 @@ public class Coin
     }
     public bool consume(int cabinetId, bool doGame = true, uint amount = 0)
     {
-        if (amount == 0) amount = (uint)Mod.Game.get().price;
+        Cabinet cabinet = Cabinet.GetById(cabinetId);
+        if (amount == 0)
+        {
+            amount = doGame ? (uint)Mod.Game.get().price : (uint)cabinet.Good().Price;
+        }
         if (_amount < amount) return false;
         _amount -= amount;
-        Cabinet cabinet = Cabinet.GetById(cabinetId);
         int goodId = cabinet.GoodsId;
         Mod.Purchase purchase = new Mod.Purchase
         {
             dateTime = System.DateTime.Now,
-            doGame = true,
+            doGame = doGame,
             amount = amount,
             cabinetId = cabinetId,
             goodsId = goodId

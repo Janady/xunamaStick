@@ -60,12 +60,14 @@ namespace Service
         {
             uint count = (uint)(packet[cmdPos + 1] & 0xff);
             Coin.GetInstance().insert(count);
+            AppAudioModel.Instance().RunAudio(AppAudioName.Coin);
             // EventMgr.Instance.DispatchEvent(EventNameData.CoinInsert, count);
         }
         private void CoinRemoteHandler(byte[] packet)
         {
             uint count = (uint)(packet[cmdPos + 1] & 0xff);
             Coin.GetInstance().insert(count, Mod.PaymentType.Network);
+            AppAudioModel.Instance().RunAudio(AppAudioName.Coin);
             // EventMgr.Instance.DispatchEvent(EventNameData.CoinInsert, count);
         }
         private void AdminOprHandler()

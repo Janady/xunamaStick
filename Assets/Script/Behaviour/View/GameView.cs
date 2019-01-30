@@ -51,7 +51,7 @@ public class GameView : MonoBehaviour
         Button coin = transform.FindChild("coinBtn").GetComponent<Button>();
         if (coin != null) coin.onClick.AddListener(() => {
             Service.SerialIOService serial = Service.SerialIOService.GetInstance();
-            byte[] buf = { (byte)0xAE, (byte)0x06, (byte)0x00, (byte)0x02, (byte)0x02, (byte)0xAF };
+            byte[] buf = { (byte)0xAE, (byte)0x06, (byte)0x00, (byte)0x02, (byte)0x20, (byte)0xAF };
             serial.Received(buf);
         });
     }

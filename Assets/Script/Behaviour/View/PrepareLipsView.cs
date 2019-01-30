@@ -43,7 +43,7 @@ public class PrepareLipsView : MonoBehaviour
         if (text == null) return;
         if (count > 0)
         {
-            text.text = "x" + count;
+            text.text = "x" + (count + 1);
         }
         else
         {
