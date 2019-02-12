@@ -21,7 +21,7 @@ public class GameFacts
             if (good != null) price = good.Price;
         }
         Game g = Game.get();
-        Debug.Log("lucky:"+ g.lucky + " offset:" + g.offset + " ratio:" + g.ratio + " once:" + g.price + " price:" + price);// price
+        // Debug.Log("lucky:"+ g.lucky + " offset:" + g.offset + " ratio:" + g.ratio + " once:" + g.price + " price:" + price);// price
         calibrate = price / g.price * g.ratio / 100 - g.lucky * luckyRate / 100 + g.offset;
         if (calibrate > 100) calibrate = 100;
         if (calibrate < 0) calibrate = 0;

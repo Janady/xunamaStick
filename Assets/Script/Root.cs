@@ -89,7 +89,7 @@ public class Root : MonoBehaviour {
         UIManager.loadImage("Image/HeartPink", true);
         UIManager.loadImage("Image/HeartPink", true);
         UIManager.loadImage("Image/Gift", true);
-        Debug.Log(">>>>>>>>>>>>>> loading " + System.DateTime.Now.ToShortTimeString() + System.DateTime.Now.Millisecond + " done!!! <<<<<<<<<<<<<<<<<<");
+        Debug.Log(">>>>>>>>>>>>>> loading " + System.DateTime.Now.ToString() + "-" + System.DateTime.Now.Millisecond + " done!!! <<<<<<<<<<<<<<<<<<");
     }
     private void Update()
     {

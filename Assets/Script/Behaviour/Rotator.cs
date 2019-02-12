@@ -22,6 +22,7 @@ public class Rotator : MonoBehaviour {
     private void OnEnable()
     {
         EventMgr.Instance.AddEvent(EventNameData.LipsCollision, OnLipsCollission);
+        onAir = true;
     }
     private void OnDisable()
     {

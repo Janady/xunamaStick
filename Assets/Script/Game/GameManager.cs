@@ -147,7 +147,7 @@ public class GameManager : MonoBehaviour {
     {
         foreach (GameObject go in GameObject.FindGameObjectsWithTag("Pin"))
         {
-            go.transform.position = new Vector3(10,10,10);
+            go.transform.position = new Vector3(-20,-20,-20);
             GameObjectManager.Destroy(go);
         }
         foreach (GameObject go in GameObject.FindGameObjectsWithTag("Rotator"))
@@ -186,6 +186,7 @@ public class GameManager : MonoBehaviour {
                 break;
         }
         GameObject go = GameObjectManager.InstantiatePrefabs(targetStr);
+        go.transform.position = new Vector3(0, 4, 0);
         Rotator target = go.GetComponent<Rotator>();
         if (target == null)
             target = go.AddComponent<Rotator>();
