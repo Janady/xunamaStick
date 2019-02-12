@@ -101,7 +101,7 @@ public class Rotator : MonoBehaviour {
         Libs.Resource.GameObjectManager.Destroy(gameObject);
         foreach (GameObject go in GameObject.FindGameObjectsWithTag("Pin"))
         {
-            Debug.Log("destroy: " + go.name);
+            // Debug.Log("destroy: " + go.name);
             Libs.Resource.GameObjectManager.Destroy(go);
         }
     }

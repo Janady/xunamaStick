@@ -71,7 +71,6 @@ public class DeviceView : MonoBehaviour
     private void loadView()
     {
         if (!inited) return;
-        Debug.Log("111");
         Game game = Game.get();
         text1.text = game.price + "";
         slider1.value = game.price;

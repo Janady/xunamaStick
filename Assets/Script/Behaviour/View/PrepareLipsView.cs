@@ -2,12 +2,26 @@
 using Libs.Resource;
 using UnityEngine.UI;
 using Libs.Event;
+using System.Collections;
 
 public class PrepareLipsView : MonoBehaviour
 {
+    private GameObject[] lipsArr;
     private int lips = 0;
     private void Start()
     {
+        StartCoroutine(loading());
+    }
+    private IEnumerator loading()
+    {
+        lipsArr = new GameObject[15];
+        for (int i = 0; i<15; i++)
+        {
+            GameObject lip = UIManager.OpenUI("Lip", null, lipsTr, i);
+            lip.SetActive(false);
+            lipsArr[i] = lip;
+            yield return new WaitForEndOfFrame();
+        }
     }
     private Text text
     {
@@ -65,7 +79,8 @@ public class PrepareLipsView : MonoBehaviour
     {
         lips--;
         if (lips < 0) return;
-        Libs.Resource.GameObjectManager.Destroy(lipsTr.GetChild(lips).gameObject);
+        // GameObject go = lipsTr.GetChild(lips).gameObject;
+        Libs.Resource.GameObjectManager.Destroy(lipsArr[lips]);
         showNum(lips);
     }
 }

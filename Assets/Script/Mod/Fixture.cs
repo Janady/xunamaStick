@@ -22,7 +22,7 @@ namespace Mod
             connection.CreateTable<Goods>();
 
             List<Goods> allGoods = new List<Goods>();
-            for (int i = 0; i < 16; i++)
+            for (int i = 1; i < 16; i++)
             {
                 Goods g = new Goods
                 {
@@ -41,7 +41,7 @@ namespace Mod
             connection.CreateTable<Cabinet>();
 
             List<Cabinet> allCabinet = new List<Cabinet>();
-            for (int i=0; i<64; i++) {
+            for (int i=1; i<64; i++) {
                 Cabinet c = new Cabinet
                 {
                     Num = i,

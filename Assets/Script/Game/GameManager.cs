@@ -31,7 +31,6 @@ public class GameManager : MonoBehaviour {
 #if !UNITY_EDITOR
         GameObject vedioObject = UIManager.OpenUI(Config.UI.UIPath.MoviePanel);
         movie = vedioObject.GetComponent<MovieView>();
-        movie.stop();
 #endif
         bird = GameObjectManager.InstantiatePrefabs("Bird");
     }
@@ -72,14 +71,14 @@ public class GameManager : MonoBehaviour {
         if (vedioCount >= 0) vedioCount++;
         if (Input.GetButtonDown("Fire1")) {
             vedioCount = 0;
-            Debug.Log("vedio stop" + System.DateTime.Now.ToString() + " " + System.DateTime.Now.Millisecond);
+            // Debug.Log("vedio stop" + System.DateTime.Now.ToString() + " " + System.DateTime.Now.Millisecond);
 #if !UNITY_EDITOR
             movie.stop();
 #endif
         }
         if (vedioCount > vedioPlay)
         {
-            Debug.Log("vedio on" + System.DateTime.Now.ToString() + " " + System.DateTime.Now.Millisecond);
+            // Debug.Log("vedio on" + System.DateTime.Now.ToString() + " " + System.DateTime.Now.Millisecond);
             vedioCount = -1;
 #if !UNITY_EDITOR
             movie.play();
@@ -226,6 +225,7 @@ public class GameManager : MonoBehaviour {
             g.offset = good.Price / g.price - g.lucky;
             g.lucky = 0;
             g.update();
+            Debug.Log(g);
         }
     }
     private void showSuccess()

@@ -130,7 +130,7 @@ public class AppAudioModel : MonoBehaviour
     {
         string curAudioPath = APP_AUDIO_PATH + audioName;
         musicName = audioName;
-        music.clip = Resources.Load(curAudioPath) as AudioClip;
+        music.clip = ResourceManager.LoadResource(curAudioPath) as AudioClip;
     }
 
     public void RunMusic(string audioName)

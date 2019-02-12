@@ -59,5 +59,10 @@ namespace Mod
             g.price = defaultPrice;
             g.update();
         }
+
+        public string ToString()
+        {
+            return string.Format("[Game: Id={0}, ratio={1}, lucky={2}, offset={3}, price={4}]", Id, ratio, lucky, offset, price);
+        }
     }
 }
