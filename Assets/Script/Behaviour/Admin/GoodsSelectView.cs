@@ -44,7 +44,6 @@ public class GoodsSelectView : MonoBehaviour
     }
     private void initNav(Goods good)
     {
-        if (good == null || _cabinet == null) return;
         Transform tr = transform.FindChild("Content").FindChild("nav");
 
         // set button
@@ -58,6 +57,7 @@ public class GoodsSelectView : MonoBehaviour
         {
             actionText.text = "补货";
         }
+        action.gameObject.SetActive(good != null);
 
         // set enabke
         Button use = tr.FindChild("use").GetComponent<Button>();
@@ -65,6 +65,8 @@ public class GoodsSelectView : MonoBehaviour
         bool useless = !_cabinet.Enabled;
         usetitle.text = useless ? "修复启用" : "损坏禁用";
 
+        Text title = tr.FindChild("title").GetComponent<Text>();
+        title.text = good == null ? "选择商品" : good.Title;
         // set count
         /*
         Text count = tr.FindChild("count").GetComponent<Text>();

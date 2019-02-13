@@ -33,6 +33,14 @@ namespace UI.Widget
             fm.reg = reg;
             fm.callBack = action;
         }
+        private void Start()
+        {
+            Button pre = transform.FindChild("Content").FindChild("nav").FindChild("use").GetComponent<Button>();
+            pre.onClick.AddListener(() =>
+            {
+                initFileList(_directory.Parent);
+            });
+        }
         private void OnEnable()
         {
             DirectoryInfo direction = new DirectoryInfo(path);
@@ -40,11 +48,6 @@ namespace UI.Widget
             {
                 direction = new DirectoryInfo("/");
             }
-            Button pre = transform.FindChild("Content").FindChild("nav").FindChild("use").GetComponent<Button>();
-            pre.onClick.AddListener(() =>
-            {
-                initFileList(_directory.Parent);
-            });
             initFileList(direction);
         }
         private void initNav(DirectoryInfo directory)
