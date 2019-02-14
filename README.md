@@ -1,7 +1,8 @@
 ### TODO
 
-# video
-  # financial
-# image
-  # Add goods
-# game facts
+# add button click
+- edit goods
+
+# price coin
+
+# financal

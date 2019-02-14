@@ -8,7 +8,7 @@ namespace View
     public class FileRowView : MonoBehaviour
     {
         private Text titleText;
-        private GameObject hintImage;
+        private Image hintImage;
         private Action<FileInfo, DirectoryInfo> callBack;
         private FileInfo fileInfo;
         private DirectoryInfo directoryInfo;
@@ -34,13 +34,15 @@ namespace View
                 return titleText;
             }
         }
-        private GameObject HintImage
+        private Image HintImage
         {
             get
             {
                 if (hintImage == null)
                 {
-                    hintImage = transform.FindChild("Image").gameObject;
+                    Transform tr = transform.FindChild("Image");
+                    tr.gameObject.SetActive(true);
+                    hintImage = tr.GetComponent<Image>();
                 }
                 return hintImage;
             }
@@ -51,12 +53,30 @@ namespace View
             if (fi != null)
             {
                 TitleText.text = fi.Name;
-                HintImage.SetActive(true);
+                switch (fi.Extension)
+                {
+                    case ".mp4":
+                    case ".flv":
+                    case ".mov":
+                    case ".qt":
+                    case ".avi":
+                        HintImage.sprite = UI.Widget.ImageHelper.DefaultImage(UI.Widget.ImageHelper.ImageTag.Vedio);
+                        break;
+                    case ".png":
+                    case ".jpg":
+                    case ".jpeg":
+                    case ".bmp":
+                        HintImage.sprite = UI.Widget.ImageHelper.GoodsImage(fi.FullName);
+                        break;
+                    default:
+                        HintImage.sprite = UI.Widget.ImageHelper.DefaultImage(UI.Widget.ImageHelper.ImageTag.File);
+                        break;
+                }
             }
             else if (di != null)
             {
                 TitleText.text = di.Name;
-                HintImage.SetActive(false);
+                HintImage.sprite = UI.Widget.ImageHelper.DefaultImage(UI.Widget.ImageHelper.ImageTag.Folder);
             }
             fileInfo = fi;
             directoryInfo = di;

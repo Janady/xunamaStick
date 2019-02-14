@@ -16,8 +16,9 @@ public class GoodsView : MonoBehaviour
         nav = transform.FindChild("nav").GetComponent<NavView>();
         nav.setBtn1("新增礼品", () => {
             GameObject go = UIManager.OpenUI(Config.UI.UIPath.EditGoodsPanel);
-            EditGoodsView ev = go.AddComponent<EditGoodsView>();
-            ev.CallBack = (Refresh);
+            EditGoodsView ev = go.GetComponent<EditGoodsView>();
+            if (ev == null) ev = go.AddComponent<EditGoodsView>();
+            ev.setGoodAndCallback(null, Refresh);
         });
         nav.setBtn2("文件导入", () => {
             UI.Widget.FileManager.openf(Config.Constant.UsbPath, onLoadFile, "*.json");
@@ -25,9 +26,9 @@ public class GoodsView : MonoBehaviour
         list = transform.FindChild("Content").FindChild("GoodsList").GetComponent<GoodsListView>();
         list.setCallback(null, x=> {
             GameObject go = UIManager.OpenUI(Config.UI.UIPath.EditGoodsPanel);
-            EditGoodsView ev = go.AddComponent<EditGoodsView>();
-            ev.Good = Goods.GetGood(x);
-            ev.CallBack = (Refresh);
+            EditGoodsView ev = go.GetComponent<EditGoodsView>();
+            if (ev == null) ev = go.AddComponent<EditGoodsView>();
+            ev.setGoodAndCallback(Goods.GetGood(x), Refresh);
         }, x => {
             Goods g = Goods.GetGood(x);
             string text = "确定删除\'" + g.Title + "\'吗?";
@@ -37,6 +38,7 @@ public class GoodsView : MonoBehaviour
                 Refresh();
             });
         });
+        Debug.Log("on Awake");
     }
     private void OnEnable()
     {

@@ -73,13 +73,17 @@ namespace UI.Widget
             {
                 foreach (FileInfo fi in directory.GetFiles(ptn))
                 {
-                    setRow(fi, null, i++);
+                    if (!fi.Name.StartsWith(".", StringComparison.Ordinal)) setRow(fi, null, i++);
                     yield return new WaitForEndOfFrame();
                 }
             }
             foreach (DirectoryInfo di in directory.GetDirectories())
             {
-                setRow(null, di, i++);
+                if (!di.Name.StartsWith(".", StringComparison.Ordinal))
+                {
+                    setRow(null, di, i++);
+                }
+
                 yield return new WaitForEndOfFrame();
             }
         }
