@@ -11,7 +11,13 @@ namespace Mod
         public int Price { get; set; }
         public string Type { get; set; }
 
-
+        public int gameCount
+        {
+            get
+            {
+                return (int)(Price / Game.get().price);
+            }
+        }
         public static IEnumerable<Goods> All()
         {
             return connection.Table<Goods>();

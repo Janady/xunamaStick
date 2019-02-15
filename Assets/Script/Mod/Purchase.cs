@@ -9,7 +9,7 @@ namespace Mod
         public bool doGame { get; set; }
         public int goodsId { get; set; }
         public int cabinetId { get; set; }
-        public uint amount { get; set; }
+        public float amount { get; set; }
 
         public static IEnumerable<Purchase> All()
         {

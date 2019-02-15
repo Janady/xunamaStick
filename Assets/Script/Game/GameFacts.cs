@@ -14,15 +14,15 @@ public class GameFacts
     public GameFacts(int level, int cabinetId)
     {
         Cabinet c = Cabinet.GetById(cabinetId);
-        int price = 0;
+        int count = 0;
         if (c != null)
         {
             Goods good = c.Good();
-            if (good != null) price = good.Price;
+            if (good != null) count = good.gameCount;
         }
         Game g = Game.get();
         // Debug.Log("lucky:"+ g.lucky + " offset:" + g.offset + " ratio:" + g.ratio + " once:" + g.price + " price:" + price);// price
-        calibrate = price / g.price * g.ratio / 100 - g.lucky * luckyRate / 100 + g.offset;
+        calibrate = count / g.coin * g.ratio / 100 - g.lucky * luckyRate / 100 + g.offset;
         if (calibrate > 100) calibrate = 100;
         if (calibrate < 0) calibrate = 0;
         this.level = level;

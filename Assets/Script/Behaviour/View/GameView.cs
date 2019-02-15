@@ -61,7 +61,7 @@ public class GameView : MonoBehaviour
         remainingText.text = "已投" + Coin.GetInstance().coin().ToString() + "币";
         actionSet = transform.FindChild("ActionSet");
         Text coinHint = actionSet.FindChild("Play").FindChild("coin").GetComponent<Text>();
-        coinHint.text = (uint)Mod.Game.get().price + "币/局";
+        coinHint.text = (uint)Mod.Game.get().coin + "币/局";
     }
     private void zoom(Transform tr, bool big)
     {

@@ -20,7 +20,7 @@ public class Coin
     }
     public void insert(uint amount = 0, PaymentType type = PaymentType.Coin)
     {
-        if (amount == 0) amount = (uint)Mod.Game.get().price;
+        if (amount == 0) amount = (uint)Mod.Game.get().coin;
         _amount += amount;
         Recharge charege = new Recharge
         {
@@ -37,7 +37,7 @@ public class Coin
     }
     public uint afford(uint amount = 0)
     {
-        if (amount == 0) amount = (uint)Mod.Game.get().price;
+        if (amount == 0) amount = (uint)Mod.Game.get().coin;
         return (_amount / amount);
     }
     public bool consume(int cabinetId, bool doGame = true, uint amount = 0)
@@ -45,7 +45,7 @@ public class Coin
         Cabinet cabinet = Cabinet.GetById(cabinetId);
         if (amount == 0)
         {
-            amount = doGame ? (uint)Mod.Game.get().price : (uint)cabinet.Good().Price;
+            amount = doGame ? (uint)Mod.Game.get().coin : (uint)(cabinet.Good().gameCount);
         }
         if (_amount < amount) return false;
         _amount -= amount;
@@ -54,7 +54,7 @@ public class Coin
         {
             dateTime = System.DateTime.Now,
             doGame = doGame,
-            amount = amount,
+            amount = amount * Game.get().price,
             cabinetId = cabinetId,
             goodsId = goodId
         };

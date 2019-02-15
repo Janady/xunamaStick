@@ -14,6 +14,7 @@ public class DeviceView : MonoBehaviour
     private Button btn;
     private Button btn3;
     private Button btn4;
+    private InputField value5Input;
     private bool inited = false;
     // Use this for initialization
     void Start()
@@ -33,7 +34,7 @@ public class DeviceView : MonoBehaviour
         slider1.onValueChanged.AddListener((float value) => {
             text1.text = (int)value + "";
             Game game = Game.get();
-            game.price = (int)value;
+            game.coin = (int)value;
             game.update();
         });
         slider2 = tr.FindChild("Slider2").GetComponent<Slider>();
@@ -60,6 +61,13 @@ public class DeviceView : MonoBehaviour
             game.offset = 0;
             game.update();
         });
+        value5Input = tr.FindChild("value5").GetComponent<InputField>();
+        value5Input.onValueChanged.AddListener((string value)=> {
+            Game game = Game.get();
+            game.price = float.Parse(value);
+            game.update();
+            Debug.Log("update value5");
+        });
         btn = tr.FindChild("Button").GetComponent<Button>();
         btn.onClick.AddListener(() => {
             Game.clear();
@@ -72,12 +80,13 @@ public class DeviceView : MonoBehaviour
     {
         if (!inited) return;
         Game game = Game.get();
-        text1.text = game.price + "";
-        slider1.value = game.price;
+        text1.text = game.coin + "";
+        slider1.value = game.coin;
         slider2.value = game.ratio;
         text2.text = game.ratio + "%";
         text3.text = game.lucky.ToString();
         text4.text = game.offset.ToString();
+        value5Input.text = game.price.ToString();
     }
 
     IEnumerator initNav()

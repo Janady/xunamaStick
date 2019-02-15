@@ -31,15 +31,22 @@ public class FinancialView : MonoBehaviour
         onlineText.text = "￥" + onlineSum.ToString();
         Text coinText = transform.FindChild("Content").FindChild("coin").GetComponent<Text>();
         coinText.text = "￥" + coinSum.ToString();
-        uint gameSum = 0;
+        float gameSum = 0;
+        float buySum = 0;
         foreach (Purchase p in Purchase.during(dateFrom, dateTo))
         {
             if (p.doGame)
             {
                 gameSum += p.amount;
             }
+            else
+            {
+                buySum += p.amount;
+            }
         }
         Text gameText = transform.FindChild("Content").FindChild("game").GetComponent<Text>();
         gameText.text = "￥" + gameSum.ToString();
+        Text buyText = transform.FindChild("Content").FindChild("buy").GetComponent<Text>();
+        buyText.text = "￥" + buySum.ToString();
     }
 }

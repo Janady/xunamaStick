@@ -223,7 +223,7 @@ public class GameManager : MonoBehaviour {
             Goods good = cabinet.Good();
             if (good == null) return;
             Game g = Game.get();
-            g.offset = good.Price / g.price - g.lucky;
+            g.offset = good.gameCount / g.coin - g.lucky;
             g.lucky = 0;
             g.update();
             Debug.Log(g);

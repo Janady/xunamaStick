@@ -7,7 +7,8 @@ namespace Mod
         public const int defaultRatio = 100;
         public const int defaultLucky = 0;
         public const int defaultOffset = 0;
-        public const int defaultPrice = 1;
+        public const float defaultPrice = 1.0f;
+        public const int defaultCoin = 1;
         /*
          * 0-200, default 100;
          */
@@ -32,7 +33,8 @@ namespace Mod
          * value = price - lucky;
          * default 1;
          */
-        public int price { set; get; }
+        public float price { set; get; }
+        public int coin { set; get; }
 
         public static Game get()
         {
@@ -44,7 +46,8 @@ namespace Mod
                     ratio = defaultRatio,
                     lucky = defaultLucky,
                     offset = defaultOffset,
-                    price = defaultPrice
+                    price = defaultPrice,
+                    coin = defaultCoin
                 };
                 g.insert();
             }
@@ -57,12 +60,13 @@ namespace Mod
             g.lucky = defaultLucky;
             g.offset = defaultOffset;
             g.price = defaultPrice;
+            g.coin = defaultCoin;
             g.update();
         }
 
-        public string ToString()
+        override public string ToString()
         {
-            return string.Format("[Game: Id={0}, ratio={1}, lucky={2}, offset={3}, price={4}]", Id, ratio, lucky, offset, price);
+            return string.Format("[Game: Id={0}, ratio={1}, lucky={2}, offset={3}, price={4}, coin={5}]", Id, ratio, lucky, offset, price, coin);
         }
     }
 }
