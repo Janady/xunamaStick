@@ -80,7 +80,7 @@ public class GameView : MonoBehaviour
             GameObject go = passSet.GetChild(i).gameObject as GameObject;
             Image img = go.GetComponent<Image>();
 
-            img.sprite = UIManager.GenSprite(UIManager.loadImage("Image/HeartPink", true));
+            img.sprite = UIManager.GenSprite("Image/HeartPink");
             GameObject l = passSet.GetChild(i).FindChild("lock").gameObject;
             l.SetActive(false);
         }
@@ -100,7 +100,7 @@ public class GameView : MonoBehaviour
         {
             GameObject go = passSet.GetChild(i).gameObject as GameObject;
             Image img = go.GetComponent<Image>();
-            img.sprite = UIManager.GenSprite(UIManager.loadImage("Image/HeartPink", true));
+            img.sprite = UIManager.GenSprite("Image/HeartPink");
 
             GameObject l = passSet.GetChild(i).FindChild("lock").gameObject;
             l.SetActive(false);
@@ -109,7 +109,7 @@ public class GameView : MonoBehaviour
         {
             GameObject go = passSet.GetChild(i).gameObject as GameObject;
             Image img = go.GetComponent<Image>();
-            img.sprite = UIManager.GenSprite(UIManager.loadImage("Image/HeartGrey", true));
+            img.sprite = UIManager.GenSprite("Image/HeartGrey");
 
             GameObject l = passSet.GetChild(i).FindChild("lock").gameObject;
             l.SetActive(false);

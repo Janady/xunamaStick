@@ -21,7 +21,7 @@ public class GoodsView : MonoBehaviour
             ev.setGoodAndCallback(null, Refresh);
         });
         nav.setBtn2("文件导入", () => {
-            UI.Widget.FileManager.openf(Config.Constant.UsbPath, onLoadFile, "*.json");
+            UI.Widget.FileManager.openf(Config.Constant.UsbPath, onLoadFile, "*.json", "*.txt");
         });
         list = transform.FindChild("Content").FindChild("GoodsList").GetComponent<GoodsListView>();
         list.setCallback(null, x=> {
@@ -60,13 +60,12 @@ public class GoodsView : MonoBehaviour
         {
             Goods g = new Goods
             {
-                Sku = goodsJson["SKU"].ToString(),
-                Title = goodsJson["name"].ToString(),
-                Price = (int)goodsJson["price"],
+                Sku = goodsJson["SKU"].Value,
+                Title = goodsJson["name"].Value,
+                Price = int.Parse(goodsJson["price"].Value),
                 ImagePath = FileUtil.storeFile(fi.Directory.FullName + "/" + goodsJson["Image"].Value.ToString(), Config.Constant.ImagePath),
                 Type = "999"
             };
-            //Debug.Log(g);
             g.insert();
         }
         stream.Close();

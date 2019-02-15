@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System;
+using System.Collections.Generic;
 
 namespace Libs.Resource
 {
@@ -78,7 +79,38 @@ namespace Libs.Resource
             Sprite sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
             return sprite;
         }
-        public static Texture2D loadImage(string filePath, bool local)
+        public static Sprite GenSprite(string filePath)
+        {
+            if (filePath == null) filePath = "Image/Gift";
+            if (resourceMap.ContainsKey(filePath))
+            {
+                return resourceMap[filePath];
+            }
+            Debug.Log("GenSprite:" + filePath);
+            Texture2D texture = null;
+            if (System.IO.File.Exists(filePath))
+            {
+                WWW www = new WWW("file://" + filePath);
+                if (www != null && string.IsNullOrEmpty(www.error))
+                {
+                    texture = www.texture;
+                }
+                if (www.isDone)
+                {
+                    www.Dispose();
+                }
+            }
+            else
+            {
+                texture = ResourceManager.LoadResource(filePath) as Texture2D;
+                if (texture == null) texture = ResourceManager.LoadResource("Image/Gift") as Texture2D;
+            }
+            Sprite sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
+            resourceMap.Add(filePath, sprite);
+            return sprite;
+        }
+        private static Dictionary<string, Sprite> resourceMap = new Dictionary<string, Sprite>();
+        private static Texture2D loadImage(string filePath, bool local)
         {
             if (local) return ResourceManager.LoadResource(filePath) as Texture2D;
             /*
@@ -100,6 +132,10 @@ namespace Libs.Resource
                 www.Dispose();
             }
             return texture;
+        }
+        public static void setImage(UnityEngine.UI.Image image, string path)
+        {
+            image.sprite = GenSprite(path);
         }
     }
 }

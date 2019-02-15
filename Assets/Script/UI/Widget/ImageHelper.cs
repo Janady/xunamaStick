@@ -13,14 +13,6 @@ namespace UI.Widget
             Folder,
             File
         }
-        public static Sprite GoodsImage(string path)
-        {
-            Texture2D texture2D;
-            if (path != null) texture2D = Libs.Resource.UIManager.loadImage(path, false);
-            else texture2D = Libs.Resource.UIManager.loadImage("Image/Gift", true);
-            if (texture2D == null) return null;
-            return Libs.Resource.UIManager.GenSprite(texture2D);
-        }
         public static Sprite DefaultImage(ImageTag tag = ImageTag.NoneImage)
         {
             string path;
@@ -42,8 +34,7 @@ namespace UI.Widget
                     path = "Image/Gift";
                     break;
             }
-            Texture2D texture2D = Libs.Resource.UIManager.loadImage(path, true);
-            return Libs.Resource.UIManager.GenSprite(texture2D);
+            return Libs.Resource.UIManager.GenSprite(path);
         }
     }
 }

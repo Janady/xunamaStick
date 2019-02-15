@@ -45,7 +45,7 @@ namespace View
                 {
                     image = transform.FindChild("Image").gameObject.GetComponent<Image>();
                 }
-                image.sprite = UI.Widget.ImageHelper.GoodsImage(value);
+                image.sprite = Libs.Resource.UIManager.GenSprite(value);
             }
         }
         public int Id

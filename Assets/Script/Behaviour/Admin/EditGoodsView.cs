@@ -32,21 +32,21 @@ public class EditGoodsView : MonoBehaviour
             nameField.text = "";
             priceField.text = "";
             imgStr = null;
-            image.sprite = UI.Widget.ImageHelper.GoodsImage(imgStr);
+            image.sprite = Libs.Resource.UIManager.GenSprite(imgStr);
         }
         else
         {
             nameField.text = _good.Title;
             priceField.text = _good.Price.ToString();
             imgStr = _good.ImagePath;
-            image.sprite = UI.Widget.ImageHelper.GoodsImage(imgStr);
+            image.sprite = Libs.Resource.UIManager.GenSprite(imgStr);
         }
     }
     void ChangeImage(GameObject go)
     {
         UI.Widget.FileManager.openf(Config.Constant.UsbPath, (string s)=> {
             imgStr = FileUtil.storeFile(s, Config.Constant.ImagePath);
-            image.sprite = UI.Widget.ImageHelper.GoodsImage(imgStr);
+            image.sprite = Libs.Resource.UIManager.GenSprite(imgStr);
         }, "*.png", "*.jpg", "*.jpeg", "*.bmp");
     }
     void OnClick()

@@ -28,11 +28,18 @@ public class GameManager : MonoBehaviour {
         GameObject go = UIManager.OpenUI(Config.UI.UIPath.GamePanel);
         gameView = go.AddComponent<GameView>();
         gameView.setupCallback(tryGame, playGame, buy);
+        // bird = GameObjectManager.InstantiatePrefabs("Bird");
+    }
+    private void showmovie(bool active)
+    {
 #if !UNITY_EDITOR
-        GameObject vedioObject = UIManager.OpenUI(Config.UI.UIPath.MoviePanel);
-        movie = vedioObject.GetComponent<MovieView>();
+        if (movie == null) {
+            GameObject vedioObject = UIManager.OpenUI(Config.UI.UIPath.MoviePanel);
+            movie = vedioObject.GetComponent<MovieView>();
+        }
+        if (active) movie.play();
+        else movie.stop();
 #endif
-        bird = GameObjectManager.InstantiatePrefabs("Bird");
     }
     private void birdMovement(System.Action action)
     {
@@ -72,17 +79,13 @@ public class GameManager : MonoBehaviour {
         if (Input.GetButtonDown("Fire1")) {
             vedioCount = 0;
             // Debug.Log("vedio stop" + System.DateTime.Now.ToString() + " " + System.DateTime.Now.Millisecond);
-#if !UNITY_EDITOR
-            movie.stop();
-#endif
+            showmovie(false);
         }
         if (vedioCount > vedioPlay)
         {
             // Debug.Log("vedio on" + System.DateTime.Now.ToString() + " " + System.DateTime.Now.Millisecond);
             vedioCount = -1;
-#if !UNITY_EDITOR
-            movie.play();
-#endif
+            showmovie(true);
         }
         /*
         switch (status)
@@ -226,7 +229,6 @@ public class GameManager : MonoBehaviour {
             g.offset = good.gameCount / g.coin - g.lucky;
             g.lucky = 0;
             g.update();
-            Debug.Log(g);
         }
     }
     private void showSuccess()
@@ -281,7 +283,7 @@ public class GameManager : MonoBehaviour {
             Mod.Cabinet cabinet = Mod.Cabinet.GetById(id);
             if (cabinet == null || cabinet.Good() == null) return;
             if (!cabinet.Enabled || cabinet.Count <= 0) return;
-            if (Coin.GetInstance().afford((uint)cabinet.Good().Price) > 0) {
+            if (Coin.GetInstance().afford((uint)cabinet.Good().gameCount) > 0) {
                 Coin.GetInstance().consume(id, false, (uint)cabinet.Good().Price);
                 showSuccess();
                 settle(false);

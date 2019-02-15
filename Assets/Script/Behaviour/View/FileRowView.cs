@@ -66,7 +66,7 @@ namespace View
                     case ".jpg":
                     case ".jpeg":
                     case ".bmp":
-                        HintImage.sprite = UI.Widget.ImageHelper.GoodsImage(fi.FullName);
+                        HintImage.sprite = UI.Widget.ImageHelper.DefaultImage(UI.Widget.ImageHelper.ImageTag.Picture); // GoodsImage(fi.FullName);
                         break;
                     default:
                         HintImage.sprite = UI.Widget.ImageHelper.DefaultImage(UI.Widget.ImageHelper.ImageTag.File);

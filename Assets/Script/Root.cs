@@ -31,18 +31,22 @@ public class Root : MonoBehaviour {
     }
     private IEnumerator loading()
     {
-        Debug.Log(">>>>>>>>>>>>>> loading " + System.DateTime.Now.ToShortTimeString() + System.DateTime.Now.Millisecond + " start <<<<<<<<<<<<<<<<<<");
-        GameObjectManager.InstantiatePrefabs("Bird", 0, true);
+        GameObject loadin = UIManager.OpenUI(Config.UI.UIPath.LoadingPanel);
+        Debug.Log(">>>>>>>>>>>>>> loading " + System.DateTime.Now.ToLongTimeString() + "-" + System.DateTime.Now.Millisecond + " start <<<<<<<<<<<<<<<<<<");
+        //GameObjectManager.InstantiatePrefabs("Bird", 0, true);
         yield return new WaitForEndOfFrame();
         for (int i=0; i<15; i++)
         {
             Libs.Resource.GameObjectManager.InstantiatePrefabs("pin", i, true);
+            yield return new WaitForEndOfFrame();
         }
         yield return new WaitForEndOfFrame();
         GameObjectManager.InstantiatePrefabs("targetDiamondPink", 0, true);
         GameObjectManager.InstantiatePrefabs("targetDiamondGreen", 0, true);
         GameObjectManager.InstantiatePrefabs("targetDiamondBlue", 0, true);
         yield return new WaitForEndOfFrame();
+
+        UIManager.OpenUI(Config.UI.UIPath.LoadingPanel);
 
         // loading music
         string APP_AUDIO_PATH = "Audio/";
@@ -51,6 +55,7 @@ public class Root : MonoBehaviour {
             ResourceManager.LoadResource(APP_AUDIO_PATH + AppAudioName.BGMRAND + i);
             yield return new WaitForEndOfFrame();
         }
+        UIManager.OpenUI(Config.UI.UIPath.LoadingPanel);
         ResourceManager.LoadResource(APP_AUDIO_PATH + AppAudioName.Button1);
         yield return new WaitForEndOfFrame();
         ResourceManager.LoadResource(APP_AUDIO_PATH + AppAudioName.Button2);
@@ -86,10 +91,14 @@ public class Root : MonoBehaviour {
         go = UIManager.OpenUI(Config.UI.UIPath.ContanerSelectPanel);
         go.SetActive(false);
         yield return new WaitForEndOfFrame();
-        UIManager.loadImage("Image/HeartPink", true);
-        UIManager.loadImage("Image/HeartPink", true);
-        UIManager.loadImage("Image/Gift", true);
-        Debug.Log(">>>>>>>>>>>>>> loading " + System.DateTime.Now.ToString() + "-" + System.DateTime.Now.Millisecond + " done!!! <<<<<<<<<<<<<<<<<<");
+        // good image
+        foreach (Mod.Goods goods in Mod.Goods.All())
+        {
+            UIManager.GenSprite(goods.ImagePath);
+            yield return new WaitForEndOfFrame();
+        }
+        Debug.Log(">>>>>>>>>>>>>> loading " + System.DateTime.Now.ToLongTimeString() + "-" + System.DateTime.Now.Millisecond + " done!!! <<<<<<<<<<<<<<<<<<");
+        GameObjectManager.Destroy(loadin);
     }
     private void Update()
     {

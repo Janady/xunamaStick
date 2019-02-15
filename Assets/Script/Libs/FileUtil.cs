@@ -38,14 +38,18 @@ public class FileUtil
         }
 
         FileInfo fi = new FileInfo(fullpath);
-        try
+        string to = rootPath + "/" + fi.Name;
+        if (!File.Exists(to))
         {
-            fi.CopyTo(rootPath + "/" + fi.Name);
+            try
+            {
+                fi.CopyTo(rootPath + "/" + fi.Name);
+            }
+            catch (System.Exception e)
+            {
+                UnityEngine.Debug.LogError(e.StackTrace);
+            }
         }
-        catch (System.Exception e)
-        {
-            UnityEngine.Debug.LogError(e.StackTrace);
-        }
-        return rootPath + "/" + fi.Name;
+        return to;
     }
 }

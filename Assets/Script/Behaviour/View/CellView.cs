@@ -58,7 +58,7 @@ namespace View
                 {
                     image = transform.FindChild("Image").gameObject.GetComponent<Image>();
                 }
-                image.sprite = UI.Widget.ImageHelper.GoodsImage(value);
+                image.sprite = Libs.Resource.UIManager.GenSprite(value);
             }
         }
         public int Num
@@ -87,7 +87,6 @@ namespace View
         {
             Transform tr = transform.FindChild("tag");
             Image img = tr.GetComponent<Image>();
-            Texture2D texture2D;
             switch (tag)
             {
                 case CellTag.None:
@@ -95,13 +94,13 @@ namespace View
                     break;
                 case CellTag.Sold:
                     tr.gameObject.SetActive(true);
-                    texture2D = Libs.Resource.UIManager.loadImage("Image/sold", true);
-                    img.sprite = Libs.Resource.UIManager.GenSprite(texture2D);
+                    //texture2D = Libs.Resource.UIManager.loadImage("Image/sold", true);
+                    img.sprite = Libs.Resource.UIManager.GenSprite("Image/sold");
                     break;
                 case CellTag.Disable :
                     tr.gameObject.SetActive(true);
-                    texture2D = Libs.Resource.UIManager.loadImage("Image/disable", true);
-                    img.sprite = Libs.Resource.UIManager.GenSprite(texture2D);
+                    //texture2D = Libs.Resource.UIManager.loadImage("Image/disable", true);
+                    img.sprite = Libs.Resource.UIManager.GenSprite("Image/disable");
                     break;
             }
         }

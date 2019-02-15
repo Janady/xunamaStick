@@ -60,7 +60,6 @@ public class GoodsSelectView : MonoBehaviour
         action.gameObject.SetActive(good != null);
 
         // set enabke
-        Button use = tr.FindChild("use").GetComponent<Button>();
         Text usetitle = tr.FindChild("use").FindChild("Text").GetComponent<Text>();
         bool useless = !_cabinet.Enabled;
         usetitle.text = useless ? "修复启用" : "损坏禁用";

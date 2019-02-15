@@ -19,7 +19,7 @@ public class MovieView : MonoBehaviour
             sciMedia.OnEnd += OnEnd;
             loadVideo();
         }
-        stop();
+        //stop();
     }
 
     private void OnDisable()

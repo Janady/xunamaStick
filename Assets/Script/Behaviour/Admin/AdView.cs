@@ -24,8 +24,18 @@ public class AdView : MonoBehaviour
     }
     private void onLoadFile(string filename)
     {
-        FileUtil.storeFile(filename, Config.Constant.VedioPath);
-        Refresh();
+        string text = "确定导入视频'" + filename + "吗?";
+        UI.Widget.CommonTips.showDelete(text, () =>
+        {
+            GameObject loadin = Libs.Resource.UIManager.OpenUI(Config.UI.UIPath.LoadingPanel);
+            Loom.RunAsync(() => {
+                FileUtil.storeFile(filename, Config.Constant.VedioPath);
+                Loom.QueueOnMainThread(() => {
+                    Refresh();
+                    Libs.Resource.GameObjectManager.Destroy(loadin);
+                });
+            });
+        });
     }
     // Update is called once per frame
     private void Refresh()
